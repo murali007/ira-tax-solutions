@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { MapPin, Calendar, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
@@ -45,28 +46,23 @@ export default function AddressInfo() {
         return;
       }
       try {
-        const res = await fetch('/api/address', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data) {
-            setMovedDuringYear(json.data.moved_during_year || 'no');
-            setAddressData({
-              primaryStreet: json.data.primary_street || '',
-              primaryCity: json.data.primary_city || '',
-              primaryState: json.data.primary_state || '',
-              primaryZip: json.data.primary_zip || '',
-              primaryStartDate: json.data.primary_start || '',
-              primaryEndDate: json.data.primary_end || '',
-              secondStreet: json.data.second_street || '',
-              secondCity: json.data.second_city || '',
-              secondState: json.data.second_state || '',
-              secondZip: json.data.second_zip || '',
-              secondStartDate: json.data.second_start || '',
-              secondEndDate: json.data.second_end || ''
-            });
-          }
+        const json = await api.address.get(token);
+        if (json && json.data) {
+          setMovedDuringYear(json.data.moved_during_year || 'no');
+          setAddressData({
+            primaryStreet: json.data.primary_street || '',
+            primaryCity: json.data.primary_city || '',
+            primaryState: json.data.primary_state || '',
+            primaryZip: json.data.primary_zip || '',
+            primaryStartDate: json.data.primary_start || '',
+            primaryEndDate: json.data.primary_end || '',
+            secondStreet: json.data.second_street || '',
+            secondCity: json.data.second_city || '',
+            secondState: json.data.second_state || '',
+            secondZip: json.data.second_zip || '',
+            secondStartDate: json.data.second_start || '',
+            secondEndDate: json.data.second_end || ''
+          });
         }
       } catch (e) {
         console.error('Error fetching address:', e);
@@ -95,26 +91,12 @@ export default function AddressInfo() {
     }
 
     try {
-      const res = await fetch('/api/address', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ addressData, movedDuringYear })
-      });
-
-      if (res.ok) {
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 3000);
-        return true;
-      } else {
-        const err = await res.json();
-        setErrorMessage(err.error || 'Failed to save address.');
-        return false;
-      }
-    } catch {
-      setErrorMessage('Network error saving address.');
+      await api.address.save({ addressData, movedDuringYear }, token);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 3000);
+      return true;
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to save address.');
       return false;
     }
   };

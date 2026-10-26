@@ -2,5 +2,11 @@ node_modules
 dist
 .DS_Store
 *.local
+.env
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+server/*.db*
 server/uploads/*
 !server/uploads/.gitkeep

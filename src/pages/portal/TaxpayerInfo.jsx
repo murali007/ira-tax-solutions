@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { 
   User, 
   Phone, 
@@ -63,36 +64,31 @@ export default function TaxpayerInfo() {
         return;
       }
       try {
-        const res = await fetch('/api/taxpayer', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data) {
-            setFormData({
-              firstName: json.data.first_name || '',
-              middleName: json.data.middle_name || '',
-              lastName: json.data.last_name || '',
-              gender: json.data.gender || '',
-              ssnItin: json.data.ssn_itin || '',
-              dob: json.data.dob || '',
-              employer: json.data.employer || '',
-              occupation: json.data.occupation || '',
-              visaType: json.data.visa_type || '',
-              contactNumber: json.data.contact_number || '',
-              alternateNumber: json.data.alternate_number || '',
-              timeZone: json.data.time_zone || 'PST',
-              citizenship: json.data.citizenship || '',
-              ownHome: json.data.own_home || '',
-              filingStatus: json.data.filing_status || '',
-              email: json.data.email || user?.email || '',
-              streetAddress: json.data.street_address || '',
-              city: json.data.city || '',
-              country: json.data.country || '',
-              state: json.data.state || '',
-              zipCode: json.data.zip_code || ''
-            });
-          }
+        const json = await api.taxpayer.get(token);
+        if (json && json.data) {
+          setFormData({
+            firstName: json.data.first_name || '',
+            middleName: json.data.middle_name || '',
+            lastName: json.data.last_name || '',
+            gender: json.data.gender || '',
+            ssnItin: json.data.ssn_itin || '',
+            dob: json.data.dob || '',
+            employer: json.data.employer || '',
+            occupation: json.data.occupation || '',
+            visaType: json.data.visa_type || '',
+            contactNumber: json.data.contact_number || '',
+            alternateNumber: json.data.alternate_number || '',
+            timeZone: json.data.time_zone || 'PST',
+            citizenship: json.data.citizenship || '',
+            ownHome: json.data.own_home || '',
+            filingStatus: json.data.filing_status || '',
+            email: json.data.email || user?.email || '',
+            streetAddress: json.data.street_address || '',
+            city: json.data.city || '',
+            country: json.data.country || '',
+            state: json.data.state || '',
+            zipCode: json.data.zip_code || ''
+          });
         }
       } catch (e) {
         console.error('Failed to load taxpayer record:', e);
@@ -121,24 +117,11 @@ export default function TaxpayerInfo() {
     }
 
     try {
-      const res = await fetch('/api/taxpayer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (res.ok) {
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
-      } else {
-        const err = await res.json();
-        setErrorMessage(err.error || 'Failed to save to database.');
-      }
-    } catch {
-      setErrorMessage('Network error saving to database.');
+      await api.taxpayer.save(formData, token);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to save to database.');
     }
   };
 

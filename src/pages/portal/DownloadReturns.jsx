@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { Download, FileText, Clock, AlertCircle } from 'lucide-react';
 import './UploadDocuments.css';
 
@@ -15,13 +16,8 @@ export default function DownloadReturns() {
         return;
       }
       try {
-        const res = await fetch('/api/tax-returns', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          setReturnsList(json.data || []);
-        }
+        const json = await api.returns.list(token);
+        setReturnsList(json.data || []);
       } catch (e) {
         console.error('Error fetching tax returns:', e);
       } finally {

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { api } from '../lib/api';
 
 const AuthContext = createContext(null);
 
@@ -14,11 +15,8 @@ export function AuthProvider({ children }) {
       const savedToken = localStorage.getItem('ira_token');
       if (savedToken) {
         try {
-          const res = await fetch('/api/auth/me', {
-            headers: { Authorization: `Bearer ${savedToken}` }
-          });
-          if (res.ok) {
-            const data = await res.json();
+          const data = await api.auth.getMe(savedToken);
+          if (data && data.user) {
             setUser(data.user);
             setToken(savedToken);
             setIsAuthenticated(true);
@@ -45,49 +43,29 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, message: data.error || 'Login failed.' };
-      }
-
+      const data = await api.auth.login(email, password);
       localStorage.setItem('ira_token', data.token);
       localStorage.setItem('ira_user_backup', JSON.stringify(data.user));
       setUser(data.user);
       setToken(data.token);
       setIsAuthenticated(true);
       return { success: true };
-    } catch {
-      return { success: false, message: 'Could not connect to database server. Please ensure the backend is running.' };
+    } catch (err) {
+      return { success: false, message: err.message || 'Login failed.' };
     }
   };
 
   const register = async (name, email, password, phone = '') => {
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, phone })
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        return { success: false, message: data.error || 'Registration failed.' };
-      }
-
+      const data = await api.auth.register(name, email, password, phone);
       localStorage.setItem('ira_token', data.token);
       localStorage.setItem('ira_user_backup', JSON.stringify(data.user));
       setUser(data.user);
       setToken(data.token);
       setIsAuthenticated(true);
       return { success: true };
-    } catch {
-      return { success: false, message: 'Could not connect to database server. Please ensure the backend is running.' };
+    } catch (err) {
+      return { success: false, message: err.message || 'Registration failed.' };
     }
   };
 

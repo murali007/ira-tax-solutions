@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { User, Calendar, Users, Info, Edit3, Plus, Trash2, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
@@ -32,29 +33,24 @@ export default function DependentInfo() {
         return;
       }
       try {
-        const res = await fetch('/api/dependents', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (Array.isArray(json.data) && json.data.length > 0) {
-            setDependents(
-              json.data.map(d => ({
-                id: d.id,
-                firstName: d.first_name || '',
-                middleName: d.middle_name || '',
-                lastName: d.last_name || '',
-                gender: d.gender || '',
-                dob: d.dob || '',
-                relationship: d.relationship || '',
-                visaType: d.visa_type || '',
-                taxIdType: d.tax_id_type || '',
-                days2025: d.days_2025 || '',
-                days2024: d.days_2024 || '',
-                days2023: d.days_2023 || ''
-              }))
-            );
-          }
+        const json = await api.dependents.get(token);
+        if (json && Array.isArray(json.data) && json.data.length > 0) {
+          setDependents(
+            json.data.map(d => ({
+              id: d.id,
+              firstName: d.first_name || '',
+              middleName: d.middle_name || '',
+              lastName: d.last_name || '',
+              gender: d.gender || '',
+              dob: d.dob || '',
+              relationship: d.relationship || '',
+              visaType: d.visa_type || '',
+              taxIdType: d.tax_id_type || '',
+              days2025: d.days_2025 || '',
+              days2024: d.days_2024 || '',
+              days2023: d.days_2023 || ''
+            }))
+          );
         }
       } catch (e) {
         console.error('Error fetching dependents:', e);
@@ -93,24 +89,11 @@ export default function DependentInfo() {
     }
 
     try {
-      const res = await fetch('/api/dependents', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ dependents })
-      });
-
-      if (res.ok) {
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
-      } else {
-        const err = await res.json();
-        setErrorMessage(err.error || 'Failed to save dependents.');
-      }
-    } catch {
-      setErrorMessage('Network error saving dependents.');
+      await api.dependents.save(dependents, token);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to save dependents.');
     }
   };
 

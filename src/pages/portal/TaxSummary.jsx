@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { FileText, Clock, AlertCircle, CreditCard, CheckCircle2 } from 'lucide-react';
 import './TaxSummary.css';
 
@@ -16,11 +17,8 @@ export default function TaxSummary() {
         return;
       }
       try {
-        const res = await fetch('/api/tax-summary', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
+        const json = await api.summary.get(token);
+        if (json && json.data) {
           setSummaryData(json.data);
         }
       } catch (e) {
@@ -36,14 +34,9 @@ export default function TaxSummary() {
   const handlePayFee = async () => {
     setPayingFee(true);
     try {
-      const res = await fetch('/api/tax-summary/pay-fee', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        setSummaryData(prev => prev ? { ...prev, fee_paid: 1 } : null);
-        alert('Payment confirmed and recorded in database.');
-      }
+      await api.summary.payFee(token);
+      setSummaryData(prev => prev ? { ...prev, fee_paid: 1 } : null);
+      alert('Payment confirmed and recorded in database.');
     } catch {
       alert('Error recording payment.');
     } finally {

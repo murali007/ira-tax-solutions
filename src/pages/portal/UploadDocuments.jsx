@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { Plus, Trash2, FileText, CheckCircle2, AlertCircle, Download } from 'lucide-react';
 import './UploadDocuments.css';
 
@@ -20,13 +21,8 @@ export default function UploadDocuments() {
       return;
     }
     try {
-      const res = await fetch('/api/documents', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const json = await res.json();
-        setUploadedList(json.data || []);
-      }
+      const res = await api.documents.list(token);
+      setUploadedList(res.data || []);
     } catch (e) {
       console.error('Error fetching documents:', e);
     } finally {
@@ -75,33 +71,15 @@ export default function UploadDocuments() {
       return;
     }
 
-    const formData = new FormData();
-    readyToUpload.forEach(r => {
-      formData.append('files', r.file);
-      formData.append('docTypes', r.docType);
-    });
-
     setIsUploading(true);
     try {
-      const res = await fetch('/api/documents/upload', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      });
-
-      const json = await res.json();
-      if (res.ok) {
-        setUploadMessage('Document(s) successfully uploaded.');
-        setDocRows([{ id: 1, docType: '', file: null }]);
-        fetchDocuments();
-        setTimeout(() => setUploadMessage(null), 4000);
-      } else {
-        setErrorMessage(json.error || 'Failed to upload document.');
-      }
-    } catch {
-      setErrorMessage('Network error during file upload.');
+      await api.documents.upload(readyToUpload, token);
+      setUploadMessage('Document(s) successfully uploaded and saved.');
+      setDocRows([{ id: 1, docType: '', file: null }]);
+      fetchDocuments();
+      setTimeout(() => setUploadMessage(null), 4000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to upload document.');
     } finally {
       setIsUploading(false);
     }
@@ -111,22 +89,19 @@ export default function UploadDocuments() {
     if (!window.confirm('Delete this uploaded tax document?')) return;
 
     try {
-      const res = await fetch(`/api/documents/${id}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        setUploadedList(uploadedList.filter(d => d.id !== id));
-      } else {
-        alert('Failed to remove document.');
-      }
-    } catch {
-      alert('Error connecting to database.');
+      await api.documents.delete(id, token);
+      setUploadedList(uploadedList.filter(d => d.id !== id));
+    } catch (err) {
+      alert(err.message || 'Failed to remove document.');
     }
   };
 
   const handleDownloadFile = (doc) => {
-    window.open(`/api/documents/download/${doc.id}?token=${token}`, '_blank');
+    if (doc.file_url) {
+      window.open(doc.file_url, '_blank');
+    } else {
+      window.open(`/api/documents/download/${doc.id}?token=${token}`, '_blank');
+    }
   };
 
   return (

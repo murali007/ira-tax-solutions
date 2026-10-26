@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { User, Calendar, Info, HelpCircle, Edit3, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
@@ -29,24 +30,19 @@ export default function SpouseInfo() {
         return;
       }
       try {
-        const res = await fetch('/api/spouse', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data) {
-            setFormData({
-              hasSpouse: json.data.has_spouse || 'yes',
-              firstName: json.data.first_name || '',
-              middleName: json.data.middle_name || '',
-              lastName: json.data.last_name || '',
-              gender: json.data.gender || '',
-              dob: json.data.dob || '',
-              occupation: json.data.occupation || '',
-              visaType: json.data.visa_type || '',
-              taxIdType: json.data.tax_id_type || ''
-            });
-          }
+        const json = await api.spouse.get(token);
+        if (json && json.data) {
+          setFormData({
+            hasSpouse: json.data.has_spouse || 'yes',
+            firstName: json.data.first_name || '',
+            middleName: json.data.middle_name || '',
+            lastName: json.data.last_name || '',
+            gender: json.data.gender || '',
+            dob: json.data.dob || '',
+            occupation: json.data.occupation || '',
+            visaType: json.data.visa_type || '',
+            taxIdType: json.data.tax_id_type || ''
+          });
         }
       } catch (e) {
         console.error('Error fetching spouse:', e);
@@ -75,24 +71,11 @@ export default function SpouseInfo() {
     }
 
     try {
-      const res = await fetch('/api/spouse', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(formData)
-      });
-
-      if (res.ok) {
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
-      } else {
-        const err = await res.json();
-        setErrorMessage(err.error || 'Failed to save spouse data.');
-      }
-    } catch {
-      setErrorMessage('Network error saving spouse data.');
+      await api.spouse.save(formData, token);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to save spouse data.');
     }
   };
 

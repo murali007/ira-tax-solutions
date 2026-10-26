@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { api } from '../../lib/api';
 import { Calendar, Clock, FileText, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
@@ -20,17 +21,12 @@ export default function ScheduleTaxNotes() {
         return;
       }
       try {
-        const res = await fetch('/api/schedule', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data) {
-            setTaxYear(json.data.tax_year || '2025');
-            setPreferredDate(json.data.preferred_date || '');
-            setPreferredTime(json.data.preferred_time || '11:00 AM - 12:00 PM EST');
-            setNotes(json.data.notes || '');
-          }
+        const json = await api.schedule.get(token);
+        if (json && json.data) {
+          setTaxYear(json.data.tax_year || 'AY 2025-26');
+          setPreferredDate(json.data.preferred_date || '');
+          setPreferredTime(json.data.preferred_time || '11:30 AM - 12:30 PM IST');
+          setNotes(json.data.notes || '');
         }
       } catch (e) {
         console.error('Error fetching schedule:', e);
@@ -52,24 +48,11 @@ export default function ScheduleTaxNotes() {
     }
 
     try {
-      const res = await fetch('/api/schedule', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ taxYear, preferredDate, preferredTime, notes })
-      });
-
-      if (res.ok) {
-        setSavedSuccess(true);
-        setTimeout(() => setSavedSuccess(false), 4000);
-      } else {
-        const err = await res.json();
-        setErrorMessage(err.error || 'Failed to save schedule notes.');
-      }
-    } catch {
-      setErrorMessage('Network error saving schedule notes.');
+      await api.schedule.save({ taxYear, preferredDate, preferredTime, notes }, token);
+      setSavedSuccess(true);
+      setTimeout(() => setSavedSuccess(false), 4000);
+    } catch (err) {
+      setErrorMessage(err.message || 'Failed to save schedule notes.');
     }
   };
 

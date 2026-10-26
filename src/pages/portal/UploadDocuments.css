@@ -1,0 +1,269 @@
+/* ========================================================
+   Upload Documents CSS matching Clips 6 & 10
+   ======================================================== */
+
+.upload-screen-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.upload-main-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 28px 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.upload-page-title {
+  font-size: 22px;
+  color: #37474f;
+  font-weight: 500;
+  margin: 0 0 16px;
+  border-bottom: 1px solid #eef2f6;
+  padding-bottom: 14px;
+}
+
+.upload-subtitle-text {
+  font-size: 13px;
+  color: #37474f;
+  margin-bottom: 24px;
+}
+
+.upload-success-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 3px;
+  margin-bottom: 16px;
+  border: 1px solid #c8e6c9;
+}
+
+/* Upload Input Row matching Clip 6 & 10 */
+.clip-upload-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.clip-col-type {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 280px;
+}
+
+.clip-col-type label,
+.clip-col-file label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #37474f;
+}
+
+.clip-col-type select {
+  padding: 7px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  font-size: 13px;
+  color: #333333;
+  background-color: #ffffff;
+  height: 35px;
+}
+
+.clip-col-type select:focus {
+  outline: none;
+  border-color: #337ab7;
+}
+
+.clip-col-file {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.clip-file-input-box input[type="file"] {
+  width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #ced4da;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #555555;
+  background-color: #ffffff;
+  height: 35px;
+}
+
+.clip-col-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 35px;
+}
+
+/* Blue square + button matching Clip 6 & 10 */
+.clip-blue-plus-btn {
+  width: 35px;
+  height: 35px;
+  background-color: #337ab7;
+  color: #ffffff;
+  border: 1px solid #2e6da4;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.clip-blue-plus-btn:hover {
+  background-color: #286090;
+}
+
+.clip-remove-slot-btn {
+  width: 35px;
+  height: 35px;
+  background-color: #f5f5f5;
+  color: #d32f2f;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* Action Buttons Bar matching Clip 6 & 10 */
+.clip-upload-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-upload-blue {
+  background-color: #337ab7;
+  color: #ffffff;
+  border: 1px solid #2e6da4;
+  padding: 7px 22px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-upload-blue:hover {
+  background-color: #286090;
+}
+
+.btn-cancel-gray {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #cccccc;
+  padding: 7px 18px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-cancel-gray:hover {
+  background-color: #e6e6e6;
+}
+
+/* Uploaded list section */
+.clip-uploaded-section {
+  margin-top: 36px;
+  border-top: 1px solid #eef2f6;
+  padding-top: 24px;
+}
+
+.section-title {
+  font-size: 15px;
+  color: #37474f;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.clip-empty-docs {
+  text-align: center;
+  padding: 30px;
+  color: #78909c;
+  font-size: 13px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.clip-doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.clip-doc-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  padding: 9px 12px;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+  font-size: 12px;
+}
+
+.clip-doc-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #333333;
+}
+
+.file-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-badge-verified {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.action-icon-btn {
+  background: none;
+  border: none;
+  color: #337ab7;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-icon-btn.delete {
+  color: #e53935;
+}
+
+@media (max-width: 768px) {
+  .clip-upload-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .clip-col-type {
+    width: 100%;
+  }
+}

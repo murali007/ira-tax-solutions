@@ -1,0 +1,540 @@
+/* ========================================================
+   Portal Layout CSS matching Clips 5, 6, 7, 8, 9, 10
+   ======================================================== */
+
+.portal-container-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f6f8;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 1. Portal Brand Row */
+.portal-brand-row {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e9f0;
+  padding: 8px 0;
+}
+
+.portal-brand-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.portal-top-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.logo-check-green {
+  color: #7bb828;
+}
+
+.logo-part-dark {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1e252b;
+}
+
+.logo-part-green {
+  font-size: 24px;
+  font-weight: 800;
+  color: #7bb828;
+}
+
+.logo-part-com {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e252b;
+  margin-left: 1px;
+}
+
+.portal-center-referral {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 4px 12px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+.portal-center-referral:hover {
+  background-color: #f1f5f9;
+}
+
+.refer-users-icon {
+  color: #0288d1;
+}
+
+.refer-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.refer-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #0288d1;
+  letter-spacing: 0.5px;
+}
+
+.refer-sub {
+  font-size: 11px;
+  color: #555555;
+  font-weight: 600;
+}
+
+.portal-top-contact-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.contact-line-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mail-icon-blue {
+  color: #0288d1;
+}
+
+.flag-circle {
+  font-size: 12px;
+}
+
+.portal-user-corner {
+  position: relative;
+}
+
+.portal-user-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.portal-user-pill-btn:hover {
+  border-color: #7bb828;
+}
+
+.user-icon-green {
+  color: #7bb828;
+}
+
+.user-greeting {
+  font-size: 12px;
+  font-weight: 700;
+  color: #7bb828;
+}
+
+.chevron-icon {
+  color: #7bb828;
+}
+
+.portal-user-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  min-width: 190px;
+  z-index: 100;
+  padding: 6px 0;
+}
+
+.dropdown-user-header {
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+}
+
+.dropdown-user-header strong {
+  color: #1e252b;
+}
+
+.dropdown-user-header span {
+  color: #64748b;
+  font-size: 11px;
+}
+
+.portal-user-dropdown hr {
+  margin: 4px 0;
+  border: none;
+  border-top: 1px solid #f1f5f9;
+}
+
+.portal-user-dropdown a,
+.dropdown-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #334155;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.portal-user-dropdown a:hover,
+.dropdown-logout-btn:hover {
+  background-color: #f8fafc;
+  color: #e53935;
+}
+
+/* 2. Vibrant Lime-Green Control Bar matching Clip 5/6 */
+.portal-green-control-bar {
+  background-color: #7bb828;
+  padding: 6px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.green-bar-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.green-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.file-id-badge {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.file-id-badge strong {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.status-pill-coral {
+  background-color: #e53935;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.green-bar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-refer-gold {
+  background-color: #fbc02d;
+  color: #212121;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background 0.15s;
+}
+
+.btn-refer-gold:hover {
+  background-color: #f9a825;
+}
+
+.btn-resources-cyan {
+  background-color: #00acc1;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: 3px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: background 0.15s;
+}
+
+.btn-resources-cyan:hover {
+  background-color: #0097a7;
+}
+
+.green-bar-right {
+  display: flex;
+  align-items: center;
+}
+
+.direct-no-text {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.red-bold-num {
+  color: #d32f2f;
+  font-weight: 800;
+  background-color: #ffffff;
+  padding: 1px 6px;
+  border-radius: 2px;
+  margin: 0 4px;
+}
+
+.ext-badge {
+  color: #d32f2f;
+  background-color: #ffffff;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-weight: 800;
+}
+
+/* 3. Announcement Ticker */
+.portal-ticker-bar {
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 6px 0;
+  font-size: 11px;
+}
+
+.ticker-text-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.ticker-label {
+  font-weight: 800;
+  color: #334155;
+  letter-spacing: 0.5px;
+}
+
+.ticker-item {
+  color: #475569;
+  font-weight: 500;
+}
+
+/* 4. Portal Main Workspace Body */
+.portal-workspace-body {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* Dark Slate Left Sidebar matching Clip 5 – 10 */
+.portal-dark-sidebar {
+  width: 250px;
+  background-color: #263238;
+  color: #cfd8dc;
+  flex-shrink: 0;
+  min-height: calc(100vh - 145px);
+  padding: 12px 0;
+}
+
+.portal-vertical-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-link-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  color: #eceff1;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.menu-link-item:hover {
+  background-color: #1e272c;
+  color: #ffffff;
+}
+
+.menu-link-item.active {
+  background-color: #1a2226;
+  color: #8bc34a;
+  border-left-color: #8bc34a;
+  font-weight: 600;
+}
+
+.menu-link-item.active .menu-icon {
+  color: #8bc34a;
+}
+
+.menu-icon {
+  color: #90a4ae;
+  flex-shrink: 0;
+}
+
+/* Collapsible Personal Information Group */
+.sidebar-group-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-header-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 20px;
+  background: none;
+  border: none;
+  color: #eceff1;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+}
+
+.group-header-btn:hover {
+  background-color: #1e272c;
+  color: #ffffff;
+}
+
+.group-header-btn.group-active {
+  background-color: #1a2226;
+}
+
+.group-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sub-menu-tree {
+  display: flex;
+  flex-direction: column;
+  background-color: #1a2226;
+  padding: 4px 0 8px;
+}
+
+.sub-link-item {
+  display: block;
+  padding: 8px 20px 8px 48px;
+  color: #b0bec5;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.sub-link-item:hover {
+  color: #ffffff;
+}
+
+.sub-link-item.sub-active {
+  color: #8bc34a;
+  font-weight: 700;
+}
+
+/* Canvas Area */
+.portal-canvas-area {
+  flex: 1;
+  padding: 24px 32px;
+  overflow-y: auto;
+  max-width: 1200px;
+}
+
+/* Mobile Toggle FAB */
+.portal-mobile-fab {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: #7bb828;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 140;
+}
+
+@media (max-width: 992px) {
+  .portal-dark-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: -250px;
+    z-index: 150;
+    transition: left 0.25s ease;
+  }
+
+  .portal-dark-sidebar.open {
+    left: 0;
+  }
+
+  .portal-sidebar-backdrop.open {
+    display: block;
+  }
+
+  .portal-mobile-fab {
+    display: flex;
+  }
+
+  .portal-canvas-area {
+    padding: 16px;
+  }
+
+  .portal-center-referral,
+  .portal-top-contact-col {
+    display: none;
+  }
+}

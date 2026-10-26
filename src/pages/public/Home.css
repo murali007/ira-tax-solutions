@@ -7,14 +7,12 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Hero Section matching Clip 1 */
+/* Hero Section matching exact reference */
 .clip-hero-section {
   position: relative;
-  background-color: #f7f9fa;
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 24px 24px;
-  border-bottom: 1px solid #e5e9f0;
-  padding: 60px 0 80px;
+  background: linear-gradient(100deg, #f1f3f5 0%, #edf0f2 45%, #f6f7f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+  padding: 40px 0 50px;
   overflow: hidden;
 }
 
@@ -25,7 +23,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 40px;
+  gap: 20px;
 }
 
 .clip-hero-text-col {
@@ -101,445 +99,53 @@
   border-color: #adb5bd;
 }
 
-/* Authentic Tax Document Collage matching Image 2 */
+/* Exact Tax Document Collage Graphic matching Reference Image */
 .clip-hero-graphic-col {
   position: relative;
-  width: 580px;
-  height: 440px;
+  width: 58%;
+  max-width: 680px;
+  height: 100%;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, black 25%, black 100%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 10%, black 25%, black 100%);
 }
 
-.tax-collage-canvas {
-  position: relative;
-  width: 640px;
-  height: 460px;
-  transform: rotate(-10.5deg) scale(0.96);
-  transform-origin: 80% 50%;
-}
-
-/* Layer 1: Financial Computation Ledger (Top Background) */
-.collage-ledger-card {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  width: 440px;
-  background: #fbfcfe;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
-  padding: 12px 16px;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 11px;
-  color: #334155;
-  z-index: 1;
-}
-
-.ledger-header-row {
-  display: grid;
-  grid-template-columns: 1.8fr 1.2fr 0.8fr;
-  padding: 5px 0;
-  border-bottom: 1px dotted #e2e8f0;
-  align-items: center;
-}
-
-.ledger-header-row.highlight {
-  background: #f1f5f9;
-  font-weight: 700;
-  color: #0f172a;
-  border-bottom: 1px solid #cbd5e1;
-}
-
-.ledger-header-row.refund {
-  border-bottom: none;
-  padding-top: 6px;
-}
-
-.col-val {
-  text-align: right;
-  font-weight: 600;
-}
-
-.col-pct {
-  text-align: right;
-  color: #64748b;
-  font-size: 10px;
-}
-
-.refund-text {
-  color: #15803d;
-  font-weight: 800;
-}
-
-.refund-badge {
-  color: #15803d;
-  font-weight: 800;
-}
-
-/* Layer 2: Form 1065 equivalent: ITR-4 SUGAM (Top-Right Background) */
-.collage-itr4-card {
-  position: absolute;
-  top: 15px;
-  right: -10px;
-  width: 320px;
-  background: #ffffff;
-  border: 1px solid #94a3b8;
-  border-radius: 4px;
-  padding: 12px 14px;
-  box-shadow: -4px 8px 20px rgba(15, 23, 42, 0.08);
-  z-index: 2;
-}
-
-.form-head-strip {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  border-bottom: 2px solid #0f172a;
-  padding-bottom: 6px;
-  margin-bottom: 6px;
-}
-
-.form-number-lg {
-  font-size: 22px;
-  font-weight: 900;
-  color: #0f172a;
-  line-height: 1;
+.exact-hero-tax-img {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
   display: block;
-  letter-spacing: -0.5px;
+  /* Soft left edge blend to merge seamlessly with background */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 18%, black 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 18%, black 100%);
 }
 
-.form-number-xl {
-  font-size: 24px;
-  font-weight: 900;
-  color: #0f172a;
-  line-height: 1;
-  display: block;
-  letter-spacing: -0.5px;
-}
-
-.dept-name {
-  font-size: 9px;
-  color: #475569;
-  line-height: 1.25;
-  display: block;
-  margin-top: 3px;
-}
-
-.form-meta-col {
-  text-align: right;
-}
-
-.year-title {
-  font-size: 10px;
-  font-weight: 700;
-  color: #0f172a;
-  display: block;
-}
-
-.portal-link {
-  font-size: 9px;
-  color: #2563eb;
-  display: block;
-  margin-top: 2px;
-}
-
-.form-sub-strip {
-  font-size: 9.5px;
-  color: #334155;
-  line-height: 1.35;
-}
-
-/* Layer 3: Form 1120 equivalent: Form 16 (Center-Left Background) */
-.collage-form16-card {
-  position: absolute;
-  bottom: 60px;
-  left: 0;
-  width: 340px;
-  background: #ffffff;
-  border: 1px solid #94a3b8;
-  border-radius: 4px;
-  padding: 14px 16px;
-  box-shadow: -8px 12px 28px rgba(15, 23, 42, 0.1);
-  z-index: 3;
-}
-
-.form-checklist-box {
-  margin-top: 8px;
-}
-
-.checklist-heading {
-  font-size: 10px;
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.check-row {
-  font-size: 10.5px;
-  color: #334155;
-  line-height: 1.5;
-  margin-bottom: 3px;
-}
-
-.box-checked {
-  color: #0f172a;
-  font-weight: 800;
-  font-size: 11px;
-  margin-right: 2px;
-}
-
-.box-unchecked {
-  color: #64748b;
-  font-size: 11px;
-  margin-right: 2px;
-}
-
-/* Layer 4: Giant Foreground Form 1040 equivalent: ITR-1 SAHAJ */
-.collage-itr1-card {
-  position: absolute;
-  bottom: -15px;
-  right: -15px;
-  width: 480px;
-  background: #ffffff;
-  border: 2px solid #0f172a;
-  border-radius: 4px;
-  padding: 16px 20px;
-  box-shadow: -15px 22px 42px rgba(15, 23, 42, 0.16), 0 4px 12px rgba(15, 23, 42, 0.08);
-  z-index: 4;
-}
-
-.itr1-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #0f172a;
-}
-
-.itr1-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.itr1-number {
-  font-size: 32px;
-  font-weight: 900;
-  color: #0f172a;
-  line-height: 1;
-  letter-spacing: -1px;
-}
-
-.itr1-auth {
-  display: flex;
-  flex-direction: column;
-}
-
-.dept-small {
-  font-size: 9px;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-
-.dept-main {
-  font-size: 11px;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.itr1-year-box {
-  text-align: right;
-}
-
-.ay-label {
-  font-size: 9px;
-  color: #64748b;
-  display: block;
-  text-transform: uppercase;
-}
-
-.ay-value {
-  font-size: 15px;
-  font-weight: 800;
-  color: #0f172a;
-  line-height: 1.1;
-  display: block;
-}
-
-.efile-arrow {
-  font-size: 9px;
-  color: #0369a1;
-  font-weight: 600;
-  display: block;
-  margin-top: 2px;
-}
-
-/* Authentic Cyan Highlight Bar matching Image 2 */
-.itr1-banner-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.title-highlight {
-  background: #d8f3fe;
-  color: #082f49;
-  font-size: 16px;
-  font-weight: 900;
-  letter-spacing: -0.3px;
-  padding: 3px 10px;
-  border-radius: 3px;
-  display: inline-block;
-  line-height: 1.25;
-}
-
-.sahaj-badge {
-  font-size: 11px;
-  font-weight: 800;
-  color: #0f172a;
-  border: 1px solid #0f172a;
-  padding: 2px 6px;
-  border-radius: 2px;
-  letter-spacing: 0.5px;
-}
-
-.itr1-section-divider {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid #0f172a;
-  border-bottom: 1px solid #0f172a;
-  padding: 6px 0;
-  margin-bottom: 10px;
-}
-
-.sec-label {
-  font-size: 10px;
-  font-weight: 800;
-  color: #0f172a;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.status-checks {
-  display: flex;
-  gap: 10px;
-  font-size: 10px;
-  color: #1e293b;
-  font-weight: 500;
-}
-
-.itr1-grid-table {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
-  background: #f8fafc;
-  border: 1px solid #cbd5e1;
-  padding: 8px 10px;
-  border-radius: 3px;
-  margin-bottom: 10px;
-}
-
-.grid-cell {
-  display: flex;
-  flex-direction: column;
-}
-
-.grid-cell.wide {
-  grid-column: span 1;
-}
-
-.grid-cell label {
-  font-size: 8.5px;
-  color: #64748b;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-  margin-bottom: 1px;
-}
-
-.cell-data {
-  font-size: 11px;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-.cell-data.bold {
-  font-weight: 800;
-  color: #0369a1;
-}
-
-.cell-data-mono {
-  font-family: 'SFMono-Regular', Consolas, monospace;
-  font-size: 11px;
-  font-weight: 700;
-  color: #0f172a;
-  letter-spacing: 0.5px;
-}
-
-.itr1-fine-lines {
-  border-top: 1px solid #cbd5e1;
-  padding-top: 6px;
-}
-
-.fine-line-row {
-  display: grid;
-  grid-template-columns: 16px 1fr 100px;
-  font-size: 9.5px;
-  color: #475569;
-  line-height: 1.5;
-  margin-bottom: 2px;
-}
-
-.fine-line-row.total {
-  font-weight: 800;
-  color: #0f172a;
-  border-top: 1px dotted #94a3b8;
-  padding-top: 4px;
-  margin-top: 3px;
-}
-
-.fine-line-row.total .f-val {
-  color: #0f172a;
-  font-size: 11px;
-}
-
-.f-num {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.f-val {
-  text-align: right;
-  font-family: 'SFMono-Regular', Consolas, monospace;
-  font-weight: 700;
-}
-
-@media (max-width: 1080px) {
+@media (max-width: 960px) {
   .clip-hero-graphic-col {
-    width: 480px;
-    height: 380px;
-  }
-  .tax-collage-canvas {
-    transform: rotate(-9deg) scale(0.82);
-    transform-origin: 90% 50%;
+    width: 50%;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
+  .clip-hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .clip-hero-buttons {
+    justify-content: center;
+  }
   .clip-hero-graphic-col {
-    display: none;
+    width: 100%;
+    max-width: 480px;
+    margin-top: 24px;
+    justify-content: center;
+  }
+  .exact-hero-tax-img {
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 }
 

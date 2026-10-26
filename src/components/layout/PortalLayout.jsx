@@ -82,11 +82,11 @@ export default function PortalLayout() {
           <div className="portal-top-contact-col">
             <div className="contact-line-item">
               <span className="flag-circle">🇮🇳</span>
-              <span>+91 91211 57586</span>
+              <span>+91 98765 43210 <small style={{ fontSize: '10px', color: '#e02424', fontWeight: 600 }}>(Dummy)</small></span>
             </div>
             <div className="contact-line-item">
               <span className="flag-circle">🇮🇳</span>
-              <span>+91 72070 57471</span>
+              <span>+91 98765 00000 <small style={{ fontSize: '10px', color: '#e02424', fontWeight: 600 }}>(Dummy)</small></span>
             </div>
             <div className="contact-line-item">
               <Mail size={12} className="mail-icon-blue" />
@@ -148,7 +148,7 @@ export default function PortalLayout() {
 
           <div className="green-bar-right">
             <span className="direct-no-text">
-              Direct Helpline : <span className="red-bold-num">+91 91211 57586</span> <span className="ext-badge">Ext: 102</span>
+              Direct Helpline : <span className="red-bold-num">+91 98765 43210</span> <span className="ext-badge">Ext: 102</span> <small style={{ fontSize: '11px', color: '#ffdd57', marginLeft: '4px' }}>(Dummy)</small>
             </span>
           </div>
         </div>

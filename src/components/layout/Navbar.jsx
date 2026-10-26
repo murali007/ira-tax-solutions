@@ -51,15 +51,15 @@ export default function Navbar() {
             </span>
             <span className="top-item">
               <span className="flag-icon">🇮🇳</span>
-              <a href="tel:+919121157586">+91 91211 57586</a>
+              <a href="tel:+919876543210">+91 98765 43210 <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
             </span>
             <span className="top-item">
               <span className="flag-icon">🇮🇳</span>
-              <a href="tel:+917207057471">+91 72070 57471</a>
+              <a href="tel:+919876500000">+91 98765 00000 <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
             </span>
             <span className="top-item">
               <span className="flag-icon">💬</span>
-              <a href="https://wa.me/919121157586" target="_blank" rel="noreferrer">WhatsApp Chat</a>
+              <a href="#" onClick={(e) => e.preventDefault()}>WhatsApp Chat <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
             </span>
           </div>
 

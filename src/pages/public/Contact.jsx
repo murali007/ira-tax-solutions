@@ -42,9 +42,9 @@ export default function Contact() {
                 <Phone className="item-icon" size={20} />
                 <div>
                   <strong>Phone &amp; WhatsApp Lines</strong>
-                  <p>Direct CA Helpline: +91 91211 57586</p>
-                  <p>Client Advisory: +91 72070 57471</p>
-                  <p>WhatsApp Chat: +91 91211 57586</p>
+                  <p>Direct CA Helpline: +91 98765 43210 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
+                  <p>Client Advisory: +91 98765 00000 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
+                  <p>WhatsApp Chat: +91 98765 43210 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
                 </div>
               </div>
 

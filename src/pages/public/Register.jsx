@@ -90,7 +90,7 @@ export default function Register() {
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="10-digit mobile number (e.g. 9121157586)"
+              placeholder="10-digit mobile number (e.g. 9876543210)"
             />
           </div>
 

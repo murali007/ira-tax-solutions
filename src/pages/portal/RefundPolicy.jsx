@@ -57,7 +57,7 @@ export default function RefundPolicy() {
         <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--color-charcoal)' }}>
           Approved refund requests are credited back in INR to the original method of payment (UPI / Netbanking / RuPay / Cards) within 5 to 7 business days. 
           To initiate a request, contact our Indian support desk at <strong>support@irataxsolutions.com</strong> or call 
-          our direct helpline at <strong>+91 91211 57586 / +91 72070 57471</strong>.
+          our direct helpline at <strong>+91 98765 43210 / +91 98765 00000</strong> <em style={{ fontSize: '12px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em>.
         </p>
       </div>
     </div>

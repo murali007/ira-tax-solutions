@@ -63,13 +63,13 @@ export default function Footer() {
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+91 91211 57586</span>
+                <span>+91 98765 43210 <em style={{ fontSize: '11px', opacity: 0.8 }}>(Dummy)</em></span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+91 72070 57471</span>
+                <span>+91 98765 00000 <em style={{ fontSize: '11px', opacity: 0.8 }}>(Dummy)</em></span>
               </div>
             </li>
             <li>

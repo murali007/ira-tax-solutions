@@ -63,9 +63,9 @@ export default function PortalLayout() {
           <Link to="/" className="portal-top-logo">
             <CheckSquare size={26} className="logo-check-green" />
             <div className="logo-text-group">
-              <span className="logo-part-dark">USTax</span>
-              <span className="logo-part-green">Filer</span>
-              <span className="logo-part-com">.com</span>
+              <span className="logo-part-dark">IRA</span>
+              <span className="logo-part-green">Tax</span>
+              <span className="logo-part-dark">Solutions</span>
             </div>
           </Link>
 
@@ -90,7 +90,7 @@ export default function PortalLayout() {
             </div>
             <div className="contact-line-item">
               <Mail size={12} className="mail-icon-blue" />
-              <span>contact@ustaxfiler.com</span>
+              <span>contact@irataxsolutions.com</span>
             </div>
           </div>
 

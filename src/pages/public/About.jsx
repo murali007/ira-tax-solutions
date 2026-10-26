@@ -58,7 +58,7 @@ export default function About() {
             <div className="clip-why-left-banner">
               <div className="clip-why-banner-content">
                 <span className="banner-small-why">Why</span>
-                <span className="banner-bold-brand">UsTaxFiler</span>
+                <span className="banner-bold-brand">IRATaxSolutions</span>
                 <p className="banner-subtext">
                   Witness our Masterful Experience on Tax Strategies and Filing of Individual and Business Tax Returns.
                 </p>
@@ -90,7 +90,7 @@ export default function About() {
           <div className="clip-track-content-row">
             <div className="clip-track-text">
               <p>
-                UsTaxFiler is a leading tax consulting firm with a proven track record of delivering exceptional results. 
+                IRATaxSolutions is a leading tax consulting firm with a proven track record of delivering exceptional results. 
                 Our team of experienced tax professionals has helped numerous clients navigate complex tax regulations 
                 and optimize their tax positions for both Federal and All-State jurisdictions.
               </p>

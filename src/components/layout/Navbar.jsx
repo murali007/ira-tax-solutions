@@ -92,9 +92,9 @@ export default function Navbar() {
               <CheckSquare size={28} className="logo-check-icon" />
             </div>
             <div className="logo-text-group">
-              <span className="logo-title-dark">USTax</span>
-              <span className="logo-title-green">Filer</span>
-              <span className="logo-com">.com</span>
+              <span className="logo-title-dark">IRA</span>
+              <span className="logo-title-green">Tax</span>
+              <span className="logo-title-dark">Solutions</span>
             </div>
           </Link>
 

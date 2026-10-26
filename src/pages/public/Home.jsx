@@ -30,10 +30,10 @@ export default function Home() {
       <section className="clip-hero-section">
         <div className="clip-hero-inner">
           <div className="clip-hero-text-col">
-            <span className="clip-eyebrow">LOCAL, STATE</span>
-            <h1 className="clip-heading">or Federal Taxes</h1>
+            <span className="clip-eyebrow">INCOME TAX (ITR), TDS</span>
+            <h1 className="clip-heading">&amp; GST Filing in India</h1>
             <p className="clip-subtext">
-              Maximum Tax Refunds With The Best In Class Customer Service At An Affordable &amp; Lowest Tax Filing Fee
+              Maximum Tax Savings &amp; Guaranteed Accuracy With Expert Chartered Accountant (CA) Assistance At The Most Affordable Fees
             </p>
             <div className="clip-hero-buttons">
               <Link to="/contact" className="clip-btn-green">
@@ -46,18 +46,18 @@ export default function Home() {
           </div>
 
           <div className="clip-hero-graphic-col">
-            {/* Watermark 1040/1120 Forms Graphic representation matching Clip 1 */}
+            {/* Watermark ITR-1 / ITR-2 Forms Graphic representation for India */}
             <div className="form-1040-watermark-card">
               <div className="watermark-header">
-                <span className="form-title-tag">Form 1040</span>
-                <span className="form-subtitle-tag">Department of the Treasury — Internal Revenue Service</span>
-                <h3 className="form-main-header">U.S. Individual Income Tax Return</h3>
+                <span className="form-title-tag">ITR-1 (SAHAJ)</span>
+                <span className="form-subtitle-tag">Government of India — Income Tax Department</span>
+                <h3 className="form-main-header">Indian Individual Income Tax Return (AY 2025-26)</h3>
               </div>
               <div className="watermark-body">
                 <div className="watermark-field-row">
-                  <span className="checkbox-mock">☑ Single</span>
-                  <span className="checkbox-mock">☐ Married filing jointly</span>
-                  <span className="checkbox-mock">☐ Married filing separately</span>
+                  <span className="checkbox-mock">☑ Salaried Individual</span>
+                  <span className="checkbox-mock">☐ One House Property</span>
+                  <span className="checkbox-mock">☐ Interest / Other Income</span>
                 </div>
                 <div className="watermark-lines">
                   <div className="line-mock" />
@@ -69,8 +69,8 @@ export default function Home() {
 
             <div className="form-1120-watermark-card">
               <div className="watermark-header">
-                <span className="form-title-tag">Form 1120</span>
-                <span className="form-subtitle-tag">U.S. Corporation Income Tax Return</span>
+                <span className="form-title-tag">ITR-2 &amp; ITR-4 (SUGAM)</span>
+                <span className="form-subtitle-tag">Capital Gains, Trading, &amp; Presumptive Business (Sec 44AD/ADA)</span>
               </div>
               <div className="watermark-lines">
                 <div className="line-mock" />

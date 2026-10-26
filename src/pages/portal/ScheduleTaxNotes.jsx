@@ -5,9 +5,9 @@ import './TaxpayerInfo.css';
 
 export default function ScheduleTaxNotes() {
   const { token } = useAuth();
-  const [taxYear, setTaxYear] = useState('2025');
+  const [taxYear, setTaxYear] = useState('AY 2025-26');
   const [preferredDate, setPreferredDate] = useState('');
-  const [preferredTime, setPreferredTime] = useState('11:00 AM - 12:00 PM EST');
+  const [preferredTime, setPreferredTime] = useState('11:30 AM - 12:30 PM IST');
   const [notes, setNotes] = useState('');
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -106,20 +106,20 @@ export default function ScheduleTaxNotes() {
         <form onSubmit={handleSave}>
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>Tax Year for Filing</label>
+              <label>Assessment Year (AY) for Filing</label>
               <div className="input-with-icon">
                 <Calendar size={15} className="field-icon" />
                 <select value={taxYear} onChange={(e) => setTaxYear(e.target.value)}>
-                  <option value="2025">2025</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                  <option value="Amendment">Prior Year Amendment</option>
+                  <option value="AY 2025-26">AY 2025-26 (FY 2024-25 - Current)</option>
+                  <option value="AY 2024-25">AY 2024-25 (FY 2023-24)</option>
+                  <option value="AY 2023-24">AY 2023-24 (FY 2022-23)</option>
+                  <option value="ITR-U 139(8A)">Updated Return u/s 139(8A) [ITR-U]</option>
                 </select>
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Preferred Review Call Date</label>
+              <label>Preferred CA Call Date</label>
               <div className="input-with-icon">
                 <Calendar size={15} className="field-icon" />
                 <input
@@ -131,29 +131,29 @@ export default function ScheduleTaxNotes() {
             </div>
 
             <div className="input-field-group">
-              <label>Preferred Time Slot</label>
+              <label>Preferred Time Slot (IST)</label>
               <div className="input-with-icon">
                 <Clock size={15} className="field-icon" />
                 <select value={preferredTime} onChange={(e) => setPreferredTime(e.target.value)}>
-                  <option value="09:00 AM - 10:00 AM EST">09:00 AM - 10:00 AM EST</option>
-                  <option value="11:00 AM - 12:00 PM EST">11:00 AM - 12:00 PM EST</option>
-                  <option value="02:00 PM - 03:00 PM EST">02:00 PM - 03:00 PM EST</option>
-                  <option value="04:00 PM - 05:00 PM EST">04:00 PM - 05:00 PM EST</option>
-                  <option value="07:00 PM - 08:00 PM EST">07:00 PM - 08:00 PM EST</option>
+                  <option value="10:00 AM - 11:00 AM IST">10:00 AM - 11:00 AM IST</option>
+                  <option value="11:30 AM - 12:30 PM IST">11:30 AM - 12:30 PM IST</option>
+                  <option value="02:30 PM - 03:30 PM IST">02:30 PM - 03:30 PM IST</option>
+                  <option value="04:30 PM - 05:30 PM IST">04:30 PM - 05:30 PM IST</option>
+                  <option value="07:00 PM - 08:00 PM IST">07:00 PM - 08:00 PM IST (Evening)</option>
                 </select>
               </div>
             </div>
           </div>
 
           <div className="input-field-group" style={{ marginTop: '16px' }}>
-            <label>Tax Notes / Client Comments</label>
+            <label>Tax Notes / Queries for Chartered Accountant (CA)</label>
             <div className="input-with-icon" style={{ alignItems: 'flex-start' }}>
               <FileText size={15} className="field-icon" style={{ top: '10px' }} />
               <textarea
                 rows={6}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Enter any tax questions, special circumstances, or instructions for your CPA..."
+                placeholder="Enter any queries regarding New vs Old Tax Regime, Form 10E for salary arrears, 80C/80D investments, mutual funds capital gains, or specific instructions for your Chartered Accountant..."
               />
             </div>
           </div>

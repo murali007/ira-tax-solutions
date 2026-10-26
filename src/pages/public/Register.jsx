@@ -47,8 +47,8 @@ export default function Register() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-logo">IRA</div>
-          <h2>Create Filing Account</h2>
-          <p>Get an official File ID and begin your tax filing workflow</p>
+          <h2>Create Tax Filing Account</h2>
+          <p>Get an official File ID and begin your Indian ITR filing workflow</p>
         </div>
 
         {error && (
@@ -90,7 +90,7 @@ export default function Register() {
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="Contact phone number"
+              placeholder="10-digit mobile number (e.g. 9121157586)"
             />
           </div>
 

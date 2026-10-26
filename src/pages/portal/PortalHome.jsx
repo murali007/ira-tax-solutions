@@ -5,31 +5,31 @@ export default function PortalHome() {
   const stages = [
     {
       num: 1,
-      title: 'Fill Basic Information Pages and Upload Relevant Tax Documents',
+      title: 'Fill Basic PAN / Aadhaar Profile & Upload Form 16, AIS, 26AS Tax Documents',
       link: '/portal/taxpayer',
       className: 'stage-item-orange'
     },
     {
       num: 2,
-      title: 'Choose Your Convenient Time and Provide Additional Tax Information',
+      title: 'Choose Convenient CA Consultation Slot & Declare Chapter VI-A Deductions',
       link: '/portal/schedule',
       className: 'stage-item-teal'
     },
     {
       num: 3,
-      title: 'Get Tax Summary and Pay Preparer Fees',
+      title: 'Review Tax Computation (New vs Old Regime) & Pay CA Filing Fees (₹)',
       link: '/portal/summary',
       className: 'stage-item-purple'
     },
     {
       num: 4,
-      title: 'Review Your Tax Returns and Approve it for Filing',
+      title: 'Review Final ITR Computation Sheet & Approve for Government E-Filing',
       link: '/portal/download',
       className: 'stage-item-coral'
     },
     {
       num: 5,
-      title: 'Tax Returns Are E-Filed/Paper-Filed',
+      title: 'ITR E-Filed with Income Tax Dept (CBDT) & E-Verified via Aadhaar OTP',
       link: '/refund-status',
       className: 'stage-item-slate'
     }

@@ -5,45 +5,45 @@ import './About.css';
 const whyUs = [
   {
     icon: <Calendar size={28} />,
-    title: 'Open All The Year',
-    desc: "Our responsibility don't end with just tax filing. We are open round the year and always at your service in case of queries from tax agencies",
+    title: 'Open 365 Days a Year',
+    desc: "Our responsibility doesn't end with just ITR filing. We are available year-round to assist with Income Tax Department intimations, AIS discrepancies, and revised returns.",
   },
   {
     icon: <Users size={28} />,
-    title: 'Complementary Services',
-    desc: 'Offer free services like Extension, W4, FBAR & India Tax Filing as a token of gratitude. This is our way of saying thank you for being a valued part of our success',
+    title: 'Complimentary Tax Checks',
+    desc: 'Get free Form 26AS review, AIS/TIS data check, Old vs New Tax Regime comparisons, and advance tax estimations as part of our client-first advisory model.',
   },
   {
     icon: <DollarSign size={28} />,
-    title: 'Transparent Pricing',
-    desc: 'Competitive pricing without compromising on quality. No Hidden Fees & Clear Cost Breakdown through tax estimates',
+    title: 'Transparent Indian Pricing',
+    desc: 'Upfront fee structure in Indian Rupees (₹) with no hidden charges. Clear invoices with GST input tax credit for eligible business and consulting clients.',
   },
 ];
 
 const resources = [
   {
     id: 1,
-    title: 'Check Your Federal and State Refund Status',
-    category: 'Refund Tracker',
+    title: 'Check Your Income Tax Refund Status (CPC Bangalore)',
+    category: 'Govt Refund Tracker',
     link: '/refund-status'
   },
   {
     id: 2,
-    title: 'Pay Federal and State Taxes Online',
-    category: 'Direct Government Payments',
-    link: 'https://www.irs.gov/payments'
+    title: 'Pay Income Tax & Advance Tax Online (Challan 280 / e-Pay Tax)',
+    category: 'Govt e-Pay Tax Portal',
+    link: 'https://eportal.incometax.gov.in/iec/foservices/#/e-pay-tax-prelogin/user-details'
   },
   {
     id: 3,
-    title: 'Apply ITIN for Yourself, Spouse or Dependents',
-    category: 'Form W-7 Guidance',
-    link: '/services'
+    title: 'View & Download Form 26AS / AIS on TRACES',
+    category: 'TRACES TDS Portal',
+    link: 'https://contents.tdscpc.gov.in/'
   },
   {
     id: 4,
-    title: 'Record Keeping Management',
-    category: 'Tax Compliance & Bookkeeping',
-    link: '/services'
+    title: 'GST Portal & Annual Return Filing (CBIC)',
+    category: 'GST Compliance',
+    link: 'https://www.gst.gov.in/'
   },
 ];
 
@@ -90,13 +90,13 @@ export default function About() {
           <div className="clip-track-content-row">
             <div className="clip-track-text">
               <p>
-                IRATaxSolutions is a leading tax consulting firm with a proven track record of delivering exceptional results. 
-                Our team of experienced tax professionals has helped numerous clients navigate complex tax regulations 
-                and optimize their tax positions for both Federal and All-State jurisdictions.
+                IRATaxSolutions is a premier Indian tax advisory firm powered by qualified Chartered Accountants (ICAI members) 
+                and authorized E-Return Intermediaries (ERIs). We deliver end-to-end tax compliance for salaried professionals, 
+                tech workers with global RSUs, freelancers, and businesses under the Income Tax Act, 1961.
               </p>
               <p>
-                With deep specialized domain knowledge in dual-status returns, foreign income tax treaties, FBAR/FATCA compliance, 
-                and multi-state wage allocations, we ensure that every deduction and credit you qualify for is accurately captured.
+                With deep specialized domain knowledge in Chapter VI-A deductions, Section 87A tax rebates, Section 115BAC New Tax Regime 
+                optimization, capital gains indexation, and DTAA foreign tax credits (Form 67), we ensure every legal tax exemption is claimed accurately.
               </p>
             </div>
           </div>

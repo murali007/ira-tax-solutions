@@ -5,52 +5,52 @@ import './Pricing.css';
 export default function Pricing() {
   const tiers = [
     {
-      name: 'Individual Standard',
-      price: '$49',
+      name: 'Salaried Basic (ITR-1 Sahaj)',
+      price: '₹499',
       period: 'per filing',
-      desc: 'Ideal for W-2 wage earners, students, and simple tax situations.',
+      desc: 'Ideal for salaried employees, pensioners, and single-employer income earners.',
       features: [
-        'Federal Form 1040 Preparation',
-        'Single State Tax Return Included',
-        'W-2 Income & Standard Deductions',
-        'Direct Deposit Setup',
-        'Electronic Filing (E-File)',
-        'Basic Email & Phone Support'
+        'Single Form 16 & Salary Income Filing',
+        'Standard Deduction (₹75,000 New Regime)',
+        'One House Property & Other Sources (Interest)',
+        'Form 26AS & AIS / TIS Data Reconciliation',
+        'Instant E-Filing & Official ITR-V Generation',
+        'Email & Phone Assistance by Tax Experts'
       ],
       popular: false,
-      cta: 'Get Started'
+      cta: 'File ITR-1 Now'
     },
     {
-      name: 'Comprehensive / Visa Filers',
-      price: '$99',
+      name: 'Capital Gains & Tech Filers (ITR-2)',
+      price: '₹1,499',
       period: 'per filing',
-      desc: 'Specialized for H-1B, L-1, F-1 visa holders, ITIN applicants, and dual status.',
+      desc: 'Specialized for techies with RSUs/ESOPs, stock market investors, crypto, and multi-state earners.',
       features: [
-        'Form 1040 / 1040-NR Dual Status',
-        'All State Returns Supported',
-        'FBAR (FinCEN 114) & FATCA Review',
-        'Free ITIN Application Assistance',
-        'Stock Options / ESPP / RSUs',
-        'Dedicated Senior Tax Preparer'
+        'Multiple Form 16s from Job Switches',
+        'Mutual Funds & Equity P&L (Zerodha, Groww, CAMS)',
+        'Foreign Assets & US Stocks Schedule (FA) for RSUs',
+        'Crypto / VDA Taxation & Loss Carry-Forward',
+        'Multiple House Properties & Home Loan Interest',
+        'Dedicated Chartered Accountant (CA) Review'
       ],
       popular: true,
-      cta: 'Start Filing'
+      cta: 'File ITR-2 with CA'
     },
     {
-      name: 'Business & Self-Employed',
-      price: '$189',
+      name: 'Freelancers & Business (ITR-4 / 3)',
+      price: '₹2,999',
       period: 'per filing',
-      desc: 'For freelancers, independent contractors (1099), LLCs, and small corporations.',
+      desc: 'For software consultants, doctors, lawyers, creative freelancers, and F&O traders.',
       features: [
-        'Schedule C (Business Profit/Loss)',
-        'Form 1065 / 1120 / 1120-S',
-        'Depreciation & Expense Optimizations',
-        'Multi-State Tax Apportionment',
-        'Year-Round Audit Representation',
-        'Unlimited Tax Strategy Advice'
+        'Presumptive Taxation u/s 44ADA (50% Profit Declared)',
+        'Small Business & Trading u/s 44AD / 44AE',
+        'F&O / Intraday Trading Turnover & P&L Statements',
+        'Advance Tax Calculation & Challan 280 Support',
+        'Notice Assistance for Sec 143(1) & 139(9) Defective Returns',
+        'Year-Round Direct Consultation with Senior CA'
       ],
       popular: false,
-      cta: 'Consult an Expert'
+      cta: 'Consult a CA'
     }
   ];
 
@@ -58,10 +58,10 @@ export default function Pricing() {
     <div className="pricing-page">
       <div className="container">
         <header className="pricing-header">
-          <span className="badge">Transparent & Affordable</span>
-          <h1>Straightforward Tax Filing Plans</h1>
+          <span className="badge">Transparent &amp; Regulated Indian Pricing</span>
+          <h1>Affordable ITR Filing Packages for India</h1>
           <p>
-            No hidden fees. Every package includes expert review, error-checking, and comprehensive support.
+            Zero hidden fees. Complete reconciliation with Income Tax Department AIS, TIS, and Form 26AS data.
           </p>
         </header>
 
@@ -73,8 +73,8 @@ export default function Pricing() {
                 <h3>{tier.name}</h3>
                 <p className="card-desc">{tier.desc}</p>
                 <div className="price-tag">
-                  <span className="currency">$</span>
-                  <span className="amount">{tier.price.replace('$', '')}</span>
+                  <span className="currency">₹</span>
+                  <span className="amount">{tier.price.replace('₹', '')}</span>
                   <span className="period">/{tier.period}</span>
                 </div>
               </div>
@@ -98,23 +98,12 @@ export default function Pricing() {
         </div>
 
         <div className="pricing-notes">
-          <div className="note-card">
-            <Shield className="note-icon" size={24} />
+          <div className="notes-box">
+            <Shield className="notes-icon" size={24} />
             <div>
-              <h4>100% Fee Refund Guarantee</h4>
+              <h4>Government Authorized &amp; 100% Secure</h4>
               <p>
-                If you are not fully satisfied with our tax review and estimate prior to filing approval,
-                our preparer fee is 100% refundable as per our fee refund policy.
-              </p>
-            </div>
-          </div>
-          <div className="note-card">
-            <HelpCircle className="note-icon" size={24} />
-            <div>
-              <h4>Custom or Complex Situations?</h4>
-              <p>
-                Have multiple rental properties, crypto trading, or foreign entity filings? 
-                <Link to="/contact"> Contact our team </Link> for a free personalized estimate.
+                All tax returns are validated according to the Income Tax Act, 1961, and e-filed directly with the Income Tax Department of India (CBDT). Prices are in INR (₹). Secure payments supported via UPI, RuPay, Netbanking, and Cards.
               </p>
             </div>
           </div>

@@ -258,7 +258,7 @@ export default function DependentInfo() {
                         type="text"
                         value={dep.dob}
                         onChange={(e) => handleFieldChange(dep.id, 'dob', e.target.value)}
-                        placeholder="MM-DD-YYYY"
+                        placeholder="DD-MM-YYYY"
                       />
                     </div>
                   </div>
@@ -267,92 +267,95 @@ export default function DependentInfo() {
                     <label>Relationship</label>
                     <div className="input-with-icon">
                       <Users size={15} className="field-icon" />
-                      <input
-                        type="text"
+                      <select
                         value={dep.relationship}
                         onChange={(e) => handleFieldChange(dep.id, 'relationship', e.target.value)}
-                        placeholder="Enter Relationship"
-                      />
+                      >
+                        <option value="">Select Relationship</option>
+                        <option value="Son">Son</option>
+                        <option value="Daughter">Daughter</option>
+                        <option value="Father">Father (Senior Citizen)</option>
+                        <option value="Mother">Mother (Senior Citizen)</option>
+                        <option value="Brother">Brother</option>
+                        <option value="Sister">Sister</option>
+                        <option value="Other">Other Dependent</option>
+                      </select>
                     </div>
                   </div>
                 </div>
 
-                {/* Row 3: Visa Type, Tax Id Type */}
+                {/* Row 3: Tax Deduction Category, PAN, Aadhaar */}
                 <div className="form-grid-3">
                   <div className="input-field-group">
-                    <label>Visa Type</label>
+                    <label>Tax Benefit Category</label>
                     <div className="input-with-icon">
                       <Info size={15} className="field-icon" />
                       <select
                         value={dep.visaType}
                         onChange={(e) => handleFieldChange(dep.id, 'visaType', e.target.value)}
                       >
-                        <option value="">Select Visa Type</option>
-                        <option value="H-4">H-4</option>
-                        <option value="L-2">L-2</option>
-                        <option value="F-2">F-2</option>
-                        <option value="US Citizen">US Citizen</option>
-                        <option value="Green Card">Green Card</option>
-                        <option value="Other">Other</option>
+                        <option value="">Select Deduction Type</option>
+                        <option value="Sec 80C Child Tuition">Child Tuition Fees (Sec 80C)</option>
+                        <option value="Sec 80D Parents Medical">Parents Medical Insurance (Sec 80D up to ₹50k)</option>
+                        <option value="Sec 80DD Disability">Differently Abled Dependent (Sec 80DD)</option>
+                        <option value="General Dependent">General Dependent</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Tax Id Type</label>
+                    <label>PAN (Optional if Minor)</label>
                     <div className="input-with-icon">
                       <Edit3 size={15} className="field-icon" />
-                      <select
+                      <input
+                        type="text"
+                        maxLength={10}
                         value={dep.taxIdType}
-                        onChange={(e) => handleFieldChange(dep.id, 'taxIdType', e.target.value)}
-                      >
-                        <option value="">Select Tax id type</option>
-                        <option value="SSN">SSN</option>
-                        <option value="ITIN">ITIN</option>
-                        <option value="Need ITIN">Apply for ITIN</option>
-                        <option value="None">None</option>
-                      </select>
+                        onChange={(e) => handleFieldChange(dep.id, 'taxIdType', e.target.value.toUpperCase())}
+                        placeholder="e.g. ABCDE1234F"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-field-group">
+                    <label>Aadhaar Number (12 Digits)</label>
+                    <div className="input-with-icon">
+                      <Edit3 size={15} className="field-icon" />
+                      <input
+                        type="text"
+                        maxLength={12}
+                        value={dep.days2025}
+                        onChange={(e) => handleFieldChange(dep.id, 'days2025', e.target.value)}
+                        placeholder="12-digit Aadhaar Number"
+                      />
                     </div>
                   </div>
                 </div>
 
-                {/* Row 4: Days Resided in USA in 2025, 2024, 2023 */}
+                {/* Row 4: Annual Expenditure / Deduction amounts in INR */}
                 <div className="form-grid-3">
                   <div className="input-field-group">
-                    <label>Days Resided in USA in 2025</label>
+                    <label>Annual Medical Insurance Premium Paid (₹)</label>
                     <div className="input-with-icon">
-                      <Calendar size={15} className="field-icon" />
+                      <Info size={15} className="field-icon" />
                       <input
-                        type="text"
-                        value={dep.days2025}
-                        onChange={(e) => handleFieldChange(dep.id, 'days2025', e.target.value)}
-                        placeholder="Days Resided in USA in 2025"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="input-field-group">
-                    <label>Days Resided in USA in 2024</label>
-                    <div className="input-with-icon">
-                      <Calendar size={15} className="field-icon" />
-                      <input
-                        type="text"
+                        type="number"
                         value={dep.days2024}
                         onChange={(e) => handleFieldChange(dep.id, 'days2024', e.target.value)}
-                        placeholder="Days Resided in USA in 2024"
+                        placeholder="e.g. 25000"
                       />
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Days Resided in USA in 2023</label>
+                    <label>School/College Tuition Fees Paid (₹ - Sec 80C)</label>
                     <div className="input-with-icon">
-                      <Calendar size={15} className="field-icon" />
+                      <Info size={15} className="field-icon" />
                       <input
-                        type="text"
+                        type="number"
                         value={dep.days2023}
                         onChange={(e) => handleFieldChange(dep.id, 'days2023', e.target.value)}
-                        placeholder="Days Resided in USA in 2023"
+                        placeholder="e.g. 60000"
                       />
                     </div>
                   </div>

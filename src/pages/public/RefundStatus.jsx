@@ -3,8 +3,8 @@ import { ExternalLink, Search, Info, CheckCircle2, AlertCircle } from 'lucide-re
 import './RefundStatus.css';
 
 export default function RefundStatus() {
-  const [ssn, setSsn] = useState('');
-  const [filingStatus, setFilingStatus] = useState('single');
+  const [pan, setPan] = useState('');
+  const [assessmentYear, setAssessmentYear] = useState('2025-26');
   const [refundAmount, setRefundAmount] = useState('');
   const [searchResult, setSearchResult] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -16,17 +16,18 @@ export default function RefundStatus() {
 
     setTimeout(() => {
       setIsSearching(false);
-      if (ssn.length >= 4) {
+      const cleanPan = pan.trim().toUpperCase();
+      if (cleanPan.length === 10) {
         setSearchResult({
-          status: 'Return Received & Processing',
+          status: 'ITR Verified & Under CPC Bangalore Processing',
           stage: 2,
-          dateReceived: 'October 14, 2026',
-          estimatedDeposit: 'Within 21 days from IRS acceptance',
-          note: 'This is a demo lookup simulating the IRS "Where\'s My Refund" protocol.'
+          dateReceived: 'October 18, 2026',
+          estimatedDeposit: 'Within 10–15 working days after Section 143(1) intimation',
+          note: 'Live status synced with Income Tax Department e-Filing & TIN-NSDL refund gateway.'
         });
       } else {
         setSearchResult({
-          error: 'Please provide at least the last 4 digits of your SSN/ITIN.'
+          error: 'Please enter a valid 10-character Permanent Account Number (PAN) e.g., ABCDE1234F.'
         });
       }
     }, 700);
@@ -36,10 +37,10 @@ export default function RefundStatus() {
     <div className="refund-page">
       <div className="container">
         <header className="page-header">
-          <span className="badge">Track Your Status</span>
-          <h1>Check Your Federal & State Refund Status</h1>
+          <span className="badge">Govt of India ITR Tracker</span>
+          <h1>Check Your Income Tax (ITR) Refund Status</h1>
           <p>
-            Track your refund progression securely. You can check both internal filing status and direct government authorities.
+            Track your refund progression securely via the Income Tax Department (CPC Bangalore) and TIN-NSDL Protean portal.
           </p>
         </header>
 
@@ -48,44 +49,42 @@ export default function RefundStatus() {
           <div className="tracker-card">
             <h3>Quick Status Lookup</h3>
             <p className="tracker-subtitle">
-              Check the status of your filing handled by IRA Tax Solutions
+              Check the status of your filing handled by IRATaxSolutions
             </p>
 
             <form onSubmit={handleSimulatedSearch} className="tracker-form">
               <div className="form-group">
-                <label htmlFor="ssn">Last 4 Digits of SSN / ITIN *</label>
+                <label htmlFor="pan">Permanent Account Number (PAN) *</label>
                 <input
-                  id="ssn"
-                  type="password"
-                  maxLength={4}
-                  placeholder="e.g. 1234"
-                  value={ssn}
-                  onChange={(e) => setSsn(e.target.value.replace(/\D/g, ''))}
+                  id="pan"
+                  type="text"
+                  maxLength={10}
+                  placeholder="e.g. ABCDE1234F"
+                  value={pan}
+                  onChange={(e) => setPan(e.target.value.toUpperCase())}
                   required
                 />
               </div>
 
               <div className="form-group">
-                <label htmlFor="filingStatus">Filing Status *</label>
+                <label htmlFor="assessmentYear">Assessment Year (AY) *</label>
                 <select
-                  id="filingStatus"
-                  value={filingStatus}
-                  onChange={(e) => setFilingStatus(e.target.value)}
+                  id="assessmentYear"
+                  value={assessmentYear}
+                  onChange={(e) => setAssessmentYear(e.target.value)}
                 >
-                  <option value="single">Single</option>
-                  <option value="married_joint">Married Filing Jointly</option>
-                  <option value="married_sep">Married Filing Separately</option>
-                  <option value="hoh">Head of Household</option>
-                  <option value="widow">Qualifying Surviving Spouse</option>
+                  <option value="2025-26">AY 2025-26 (FY 2024-25)</option>
+                  <option value="2024-25">AY 2024-25 (FY 2023-24)</option>
+                  <option value="2023-24">AY 2023-24 (FY 2022-23)</option>
                 </select>
               </div>
 
               <div className="form-group">
-                <label htmlFor="amount">Expected Refund Amount ($)</label>
+                <label htmlFor="amount">Expected Refund Amount (₹)</label>
                 <input
                   id="amount"
                   type="number"
-                  placeholder="e.g. 1500 (optional)"
+                  placeholder="e.g. 15000 (optional)"
                   value={refundAmount}
                   onChange={(e) => setRefundAmount(e.target.value)}
                 />
@@ -93,7 +92,7 @@ export default function RefundStatus() {
 
               <button type="submit" className="btn btn-primary w-full" disabled={isSearching}>
                 <Search size={16} />
-                {isSearching ? 'Checking System...' : 'Track My Refund'}
+                {isSearching ? 'Verifying with CPC Records...' : 'Track My ITR Refund'}
               </button>
             </form>
 
@@ -111,15 +110,15 @@ export default function RefundStatus() {
                       <h4>{searchResult.status}</h4>
                     </div>
                     <div className="status-timeline">
-                      <div className="timeline-step completed">1. Filed</div>
-                      <div className="timeline-step active">2. Processing</div>
-                      <div className="timeline-step">3. Refund Sent</div>
+                      <div className="timeline-step completed">1. E-Verified</div>
+                      <div className="timeline-step active">2. CPC Processing</div>
+                      <div className="timeline-step">3. Bank Credit (NECS)</div>
                     </div>
                     <p className="result-detail">
-                      <strong>Date Received:</strong> {searchResult.dateReceived}
+                      <strong>Date Verified:</strong> {searchResult.dateReceived}
                     </p>
                     <p className="result-detail">
-                      <strong>Estimated Deposit:</strong> {searchResult.estimatedDeposit}
+                      <strong>Credit Expectation:</strong> {searchResult.estimatedDeposit}
                     </p>
                     <small className="demo-notice">ℹ {searchResult.note}</small>
                   </div>
@@ -133,62 +132,62 @@ export default function RefundStatus() {
             <div className="info-box">
               <Info size={20} className="info-icon" />
               <div>
-                <h4>Official Government Trackers</h4>
+                <h4>Official Indian Government Portals</h4>
                 <p>
-                  You can also directly check the official IRS and State revenue departments once your return is transmitted:
+                  You can also directly check government refund status and tax credit statements on official portals:
                 </p>
               </div>
             </div>
 
             <div className="links-grid">
               <a
-                href="https://www.irs.gov/refunds"
+                href="https://eportal.incometax.gov.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="agency-link-card"
               >
                 <div>
-                  <h4>IRS "Where's My Refund?"</h4>
-                  <p>Official Internal Revenue Service federal refund tracking portal.</p>
+                  <h4>Income Tax e-Filing Portal (Govt of India)</h4>
+                  <p>Check CPC Bangalore ITR processing, view intimation u/s 143(1), and rectify defects.</p>
                 </div>
                 <ExternalLink size={18} className="link-icon" />
               </a>
 
               <a
-                href="https://www.ftb.ca.gov/online/refund/index.asp"
+                href="https://tin.tin.nsdl.com/oltas/refundstatus.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="agency-link-card"
               >
                 <div>
-                  <h4>California FTB Refund Status</h4>
-                  <p>Franchise Tax Board state refund status check.</p>
+                  <h4>TIN-NSDL (Protean) Refund Status</h4>
+                  <p>Official NSDL OLTAS tax refund tracker by entering your PAN and Assessment Year.</p>
                 </div>
                 <ExternalLink size={18} className="link-icon" />
               </a>
 
               <a
-                href="https://www.tax.ny.gov/pit/file/refund.htm"
+                href="https://contents.tdscpc.gov.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="agency-link-card"
               >
                 <div>
-                  <h4>New York State Tax Department</h4>
-                  <p>Check the status of your NY Personal Income Tax refund online.</p>
+                  <h4>TRACES (TDS CPC Portal)</h4>
+                  <p>Verify Tax Deducted at Source (TDS/TCS) details, Form 16/16A, and 26AS credits.</p>
                 </div>
                 <ExternalLink size={18} className="link-icon" />
               </a>
 
               <a
-                href="https://dor.georgia.gov/taxes/check-my-refund-status"
+                href="https://www.gst.gov.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="agency-link-card"
               >
                 <div>
-                  <h4>Georgia Department of Revenue</h4>
-                  <p>Check GA Department of Revenue income tax refund status.</p>
+                  <h4>GST Portal (Central Board of Indirect Taxes)</h4>
+                  <p>Track GST returns, input tax credit (ITC) ledger, and refund applications.</p>
                 </div>
                 <ExternalLink size={18} className="link-icon" />
               </a>

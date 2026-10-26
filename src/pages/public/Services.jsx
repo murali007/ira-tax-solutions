@@ -11,33 +11,33 @@ import './Services.css';
 const services = [
   {
     icon: <User size={28} />,
-    title: 'Individual Tax Filing',
-    desc: 'Specialized in Planning, Preparation and Filing of Individual Tax Returns for Federal and all States including Gift, FATCA & FBAR(Form 1040/1040-NR)',
+    title: 'Salaried ITR Filing (ITR-1 Sahaj)',
+    desc: 'Comprehensive filing for salaried employees with single or multiple Form 16s, house property income, interest earnings, and automated AIS/26AS reconciliation.',
   },
   {
     icon: <Building size={28} />,
-    title: 'Business Tax Filing',
-    desc: 'Planning & Filing of Corporate Tax Returns for Federal and all States: 1065/1120/1120-S',
-  },
-  {
-    icon: <Globe size={28} />,
-    title: 'International Tax Filing',
-    desc: 'Robust Experience in handling International Taxpayer Returns invoking Tax Treaties',
-  },
-  {
-    icon: <Users size={28} />,
-    title: 'Apply for ITIN',
-    desc: 'Seamless and Effortless Procedure to get ITIN for Spouse and Dependents through US Tax Filer',
-  },
-  {
-    icon: <ShieldAlert size={28} />,
-    title: 'Audit Represenation',
-    desc: "Our service & responsibility don't end with tax filing, we are open 365 days to assist in case of queries from tax agencies",
+    title: 'Capital Gains & Trading (ITR-2)',
+    desc: 'Expert taxation for mutual funds, direct equities (STCG/LTCG), intraday & crypto/VDA assets, foreign stocks (RSU/ESOPs), and multiple house properties.',
   },
   {
     icon: <FileEdit size={28} />,
-    title: 'Amendments',
-    desc: "Whether it's correcting errors, claiming overlooked deductions, or updating your filing status, our team of experts will guide you through every step",
+    title: 'Freelancers & Presumptive Tax (ITR-4)',
+    desc: 'Simplified presumptive taxation under Section 44ADA & 44AD for software consultants, doctors, lawyers, creative designers, and small business owners.',
+  },
+  {
+    icon: <Globe size={28} />,
+    title: 'NRI Taxation & DTAA Relief',
+    desc: 'Specialized NRI filing covering NRE/NRO accounts, Double Taxation Avoidance Agreement (DTAA u/s 90/91), Foreign Tax Credit (Form 67), and 15CA/CB certs.',
+  },
+  {
+    icon: <ShieldAlert size={28} />,
+    title: 'Notice Assistance & Defective ITR',
+    desc: 'Dedicated CA support for resolving Section 143(1) intimations, Section 139(9) defective return notices, outstanding demand disputes, and AIS mismatches.',
+  },
+  {
+    icon: <Users size={28} />,
+    title: 'GST & Corporate Tax Compliance',
+    desc: 'GST registration, monthly GSTR-1 & 3B returns, annual GSTR-9 audits, TDS return filing (24Q/26Q), and MCA compliance for private limited & LLP firms.',
   },
 ];
 

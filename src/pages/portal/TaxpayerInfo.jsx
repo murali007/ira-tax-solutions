@@ -39,6 +39,16 @@ const BLANK_STATE = {
   zipCode: ''
 };
 
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Delhi (NCR)', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
+  'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra',
+  'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha',
+  'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+  'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Chandigarh', 'Jammu & Kashmir', 'Ladakh', 'Puducherry', 'Other UT'
+];
+
 export default function TaxpayerInfo() {
   const { token, user } = useAuth();
   const [formData, setFormData] = useState(BLANK_STATE);
@@ -210,7 +220,7 @@ export default function TaxpayerInfo() {
             </div>
           </div>
 
-          {/* Row 2: Gender, SSN/ITIN, Date of Birth */}
+          {/* Row 2: Gender, PAN Number, Date of Birth */}
           <div className="form-grid-3">
             <div className="input-field-group">
               <label>Gender</label>
@@ -239,21 +249,23 @@ export default function TaxpayerInfo() {
             </div>
 
             <div className="input-field-group">
-              <label>SSN/ITIN</label>
+              <label>Permanent Account Number (PAN) *</label>
               <div className="input-with-icon">
                 <Info size={15} className="field-icon" />
                 <input
                   type="text"
                   name="ssnItin"
+                  maxLength={10}
                   value={formData.ssnItin}
-                  onChange={handleChange}
-                  placeholder="SSN/ITIN"
+                  onChange={(e) => setFormData({ ...formData, ssnItin: e.target.value.toUpperCase() })}
+                  placeholder="e.g. ABCDE1234F"
+                  required
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Date of Birth</label>
+              <label>Date of Birth (As per PAN/Aadhaar) *</label>
               <div className="input-with-icon">
                 <Calendar size={15} className="field-icon" />
                 <input
@@ -261,16 +273,17 @@ export default function TaxpayerInfo() {
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  placeholder="MM-DD-YYYY"
+                  placeholder="DD-MM-YYYY"
+                  required
                 />
               </div>
             </div>
           </div>
 
-          {/* Row 3: Current Employer, Occupation in USA, Visa Type */}
+          {/* Row 3: Current Employer, Nature of Employment, Residential Status */}
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>Current Employer</label>
+              <label>Current Employer / Business Entity</label>
               <div className="input-with-icon">
                 <User size={15} className="field-icon" />
                 <input
@@ -278,27 +291,35 @@ export default function TaxpayerInfo() {
                   name="employer"
                   value={formData.employer}
                   onChange={handleChange}
-                  placeholder="Current Employer"
+                  placeholder="Company / Business Name"
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Occupation in USA</label>
+              <label>Nature of Employment / Profession</label>
               <div className="input-with-icon">
                 <Info size={15} className="field-icon" />
-                <input
-                  type="text"
+                <select
                   name="occupation"
                   value={formData.occupation}
                   onChange={handleChange}
-                  placeholder="Occupation in USA"
-                />
+                >
+                  <option value="">- Select Category -</option>
+                  <option value="Salaried (Private Sector)">Salaried (Private Sector)</option>
+                  <option value="Salaried (Central/State Govt)">Salaried (Central/State Govt)</option>
+                  <option value="Salaried (PSU)">Salaried (PSU)</option>
+                  <option value="Professional (IT / Doctor / CA / Lawyer)">Professional (IT / Doctor / CA / Lawyer)</option>
+                  <option value="Business / Proprietary Concern">Business / Proprietary Concern</option>
+                  <option value="Freelancer / Consultant (Sec 44ADA)">Freelancer / Consultant (Sec 44ADA)</option>
+                  <option value="Pensioner / Senior Citizen">Pensioner / Senior Citizen</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Visa Type</label>
+              <label>Residential Status (Section 6)</label>
               <div className="input-with-icon">
                 <Info size={15} className="field-icon" />
                 <select
@@ -306,37 +327,36 @@ export default function TaxpayerInfo() {
                   value={formData.visaType}
                   onChange={handleChange}
                 >
-                  <option value="">Select Visa Type</option>
-                  <option value="H-1B">H-1B</option>
-                  <option value="L-1">L-1</option>
-                  <option value="F-1">F-1</option>
-                  <option value="B-1/B-2">B-1/B-2</option>
-                  <option value="Green Card">Green Card</option>
-                  <option value="US Citizen">US Citizen</option>
-                  <option value="Other">Other</option>
+                  <option value="">Select Residential Status</option>
+                  <option value="Resident &amp; Ordinarily Resident (ROR)">Resident &amp; Ordinarily Resident (ROR)</option>
+                  <option value="Resident but Not Ordinarily Resident (RNOR)">Resident but Not Ordinarily Resident (RNOR)</option>
+                  <option value="Non-Resident Indian (NRI)">Non-Resident Indian (NRI)</option>
+                  <option value="OCI / Foreign Citizen">OCI / Foreign Citizen</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Row 4: Contact Number, Alternate Number, Time Zone */}
+          {/* Row 4: Mobile Number (Aadhaar linked), Alternate Number, Preferred Tax Regime */}
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>Contact Number</label>
+              <label>Mobile Number (Aadhaar-Linked for OTP) *</label>
               <div className="input-with-icon">
                 <Phone size={15} className="field-icon" />
                 <input
                   type="tel"
                   name="contactNumber"
+                  maxLength={10}
                   value={formData.contactNumber}
                   onChange={handleChange}
-                  placeholder="Contact Number"
+                  placeholder="10-digit mobile number"
+                  required
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Alternate Number</label>
+              <label>Alternate Mobile / WhatsApp</label>
               <div className="input-with-icon">
                 <Phone size={15} className="field-icon" />
                 <input
@@ -344,13 +364,13 @@ export default function TaxpayerInfo() {
                   name="alternateNumber"
                   value={formData.alternateNumber}
                   onChange={handleChange}
-                  placeholder="Alternate Number"
+                  placeholder="Alternate Contact Number"
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Time Zone</label>
+              <label>Preferred Tax Regime</label>
               <div className="input-with-icon">
                 <Clock size={15} className="field-icon" />
                 <select
@@ -358,40 +378,34 @@ export default function TaxpayerInfo() {
                   value={formData.timeZone}
                   onChange={handleChange}
                 >
-                  <option value="PST">PST</option>
-                  <option value="EST">EST</option>
-                  <option value="CST">CST</option>
-                  <option value="MST">MST</option>
-                  <option value="IST">IST</option>
+                  <option value="New Regime">New Tax Regime u/s 115BAC (Default)</option>
+                  <option value="Old Regime">Old Tax Regime (With Deductions)</option>
+                  <option value="CA Evaluate">Let CA Choose Maximum Tax Savings</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Row 5: Country of Citizenship, Own a Home in USA?, Filing Status */}
+          {/* Row 5: Aadhaar Number, Own House Property?, ITR Form */}
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>Country of Citizenship</label>
+              <label>Aadhaar Number (12 Digits) *</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
-                <select
+                <input
+                  type="text"
                   name="citizenship"
+                  maxLength={12}
                   value={formData.citizenship}
                   onChange={handleChange}
-                >
-                  <option value="">Select Country</option>
-                  <option value="India">India</option>
-                  <option value="United States">United States</option>
-                  <option value="Canada">Canada</option>
-                  <option value="Mexico">Mexico</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Other">Other</option>
-                </select>
+                  placeholder="12-digit Aadhaar Number"
+                  required
+                />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Own A Home in USA?</label>
+              <label>Own House Property in India?</label>
               <div className="radio-group-horizontal">
                 <label className="radio-label">
                   <input
@@ -417,7 +431,7 @@ export default function TaxpayerInfo() {
             </div>
 
             <div className="input-field-group">
-              <label>Filing Status</label>
+              <label>ITR Form Type</label>
               <div className="input-with-icon">
                 <FileText size={15} className="field-icon" />
                 <select
@@ -425,12 +439,11 @@ export default function TaxpayerInfo() {
                   value={formData.filingStatus}
                   onChange={handleChange}
                 >
-                  <option value="">- Select -</option>
-                  <option value="Single">Single</option>
-                  <option value="Married Filing Jointly">Married Filing Jointly</option>
-                  <option value="Married Filing Separately">Married Filing Separately</option>
-                  <option value="Head of Household">Head of Household</option>
-                  <option value="Qualifying Widow">Qualifying Widow</option>
+                  <option value="">- Select ITR Form -</option>
+                  <option value="ITR-1 (Sahaj)">ITR-1 (Sahaj - Salaried)</option>
+                  <option value="ITR-2 (Capital Gains / RSUs)">ITR-2 (Capital Gains &amp; Stocks)</option>
+                  <option value="ITR-3 (Business &amp; Trading)">ITR-3 (Business / F&amp;O Trading)</option>
+                  <option value="ITR-4 (Sugam - Presumptive)">ITR-4 (Sugam - Presumptive)</option>
                 </select>
               </div>
             </div>
@@ -439,7 +452,7 @@ export default function TaxpayerInfo() {
           {/* Row 6: Email, Street Address & Apt No., City */}
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>Email</label>
+              <label>Email (For Income Tax Dept Notice &amp; OTP)</label>
               <div className="input-with-icon">
                 <Mail size={15} className="field-icon" />
                 <input
@@ -447,13 +460,13 @@ export default function TaxpayerInfo() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Email"
+                  placeholder="Official Email Address"
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Street Address &amp; Apt No.</label>
+              <label>Flat / Door No., Premises &amp; Locality</label>
               <div className="input-with-icon">
                 <Edit3 size={15} className="field-icon" />
                 <input
@@ -461,13 +474,13 @@ export default function TaxpayerInfo() {
                   name="streetAddress"
                   value={formData.streetAddress}
                   onChange={handleChange}
-                  placeholder="Address"
+                  placeholder="e.g. Flat 402, Royal Residency, Road No 10"
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>City</label>
+              <label>City / Town / District</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
                 <input
@@ -475,13 +488,13 @@ export default function TaxpayerInfo() {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="City"
+                  placeholder="e.g. Hyderabad / Bengaluru"
                 />
               </div>
             </div>
           </div>
 
-          {/* Row 7: Country, State, ZIP/PIN Code */}
+          {/* Row 7: Country, State, PIN Code */}
           <div className="form-grid-3">
             <div className="input-field-group">
               <label>Country</label>
@@ -489,50 +502,49 @@ export default function TaxpayerInfo() {
                 <MapPin size={15} className="field-icon" />
                 <select
                   name="country"
-                  value={formData.country}
+                  value={formData.country || 'India'}
                   onChange={handleChange}
                 >
-                  <option value="">Select Country</option>
-                  <option value="United States">United States</option>
                   <option value="India">India</option>
-                  <option value="Canada">Canada</option>
+                  <option value="United States">United States (NRI)</option>
+                  <option value="United Kingdom">United Kingdom (NRI)</option>
+                  <option value="UAE / Middle East">UAE / Middle East (NRI)</option>
+                  <option value="Singapore">Singapore (NRI)</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>State</label>
+              <label>State / Union Territory *</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
                 <select
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
+                  required
                 >
-                  <option value="">Select state</option>
-                  <option value="CA">California (CA)</option>
-                  <option value="GA">Georgia (GA)</option>
-                  <option value="TX">Texas (TX)</option>
-                  <option value="NY">New York (NY)</option>
-                  <option value="WA">Washington (WA)</option>
-                  <option value="NJ">New Jersey (NJ)</option>
-                  <option value="IL">Illinois (IL)</option>
-                  <option value="Other">Other State</option>
+                  <option value="">Select State / UT</option>
+                  {INDIAN_STATES.map((st) => (
+                    <option key={st} value={st}>{st}</option>
+                  ))}
                 </select>
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>ZIP/PIN Code</label>
+              <label>PIN Code (6 Digits) *</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
                 <input
                   type="text"
                   name="zipCode"
+                  maxLength={6}
                   value={formData.zipCode}
                   onChange={handleChange}
-                  placeholder="Zipcode"
+                  placeholder="e.g. 500081"
+                  required
                 />
               </div>
             </div>

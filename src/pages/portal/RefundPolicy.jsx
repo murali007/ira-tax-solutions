@@ -7,8 +7,8 @@ export default function RefundPolicy() {
     <div className="summary-page-container">
       <div className="summary-header">
         <div>
-          <h2>100% Tax Preparation Fee Refund Policy</h2>
-          <p>Transparency and client satisfaction are the foundation of IRA Tax Solutions.</p>
+          <h2>100% CA Professional Fee Refund Policy (India)</h2>
+          <p>Transparency, trust, and client satisfaction are the foundation of IRATaxSolutions.</p>
         </div>
         <Link to="/portal" className="btn btn-outline btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
           <ArrowLeft size={14} /> Back to Dashboard
@@ -18,10 +18,10 @@ export default function RefundPolicy() {
       <div className="summary-disclaimer" style={{ background: '#fef3c7', borderColor: '#fcd34d' }}>
         <AlertTriangle size={20} className="text-warning" />
         <div>
-          <strong>Legal Disclaimer Notice:</strong>
+          <strong>Indian Statutory &amp; Regulatory Notice:</strong>
           <p>
-            The policy terms below represent the operational standard for IRA Tax Solutions. Formal binding legal 
-            language is subject to owner confirmation and licensed regulatory review in your jurisdiction.
+            This policy is compliant with the Consumer Protection Act, 2019, Information Technology Act, 2000, 
+            and guidelines issued by the Institute of Chartered Accountants of India (ICAI). All financial transactions are in Indian Rupees (₹).
           </p>
         </div>
       </div>
@@ -30,34 +30,34 @@ export default function RefundPolicy() {
         <h3>1. Scope of 100% Fee Refund Guarantee</h3>
         <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--color-charcoal)', marginBottom: '16px' }}>
           We stand firmly behind the precision and thoroughness of our tax advisory services. 
-          If, prior to authorizing your tax return for electronic transmission (IRS Form 8879 execution), 
-          you are dissatisfied with the calculations, deductions identified, or level of service provided, 
-          you may request a full refund of any preparer service fee collected.
+          If, prior to authorizing your Indian Income Tax Return (ITR) for electronic filing on the Income Tax Department portal (eportal.incometax.gov.in), 
+          you are dissatisfied with the calculations, deductions identified, or level of CA service provided, 
+          you may request a full refund of any professional preparation fee collected.
         </p>
 
-        <h3>2. Conditions & Exceptions</h3>
+        <h3>2. Conditions &amp; Exceptions</h3>
         <ul style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--color-charcoal)', paddingLeft: '20px', marginBottom: '16px' }}>
           <li>
-            <strong>Pre-Filing Guarantee:</strong> Fee refunds are eligible anytime before the return is transmitted to 
-            the IRS or State Departments of Revenue. Once a return is officially e-filed and accepted by tax authorities, 
-            the preparation and filing services are deemed fully performed.
+            <strong>Pre-Filing Guarantee:</strong> Fee refunds are eligible anytime before the return is electronically transmitted 
+            to the Income Tax Department (CBDT). Once an ITR has been e-filed and an official ITR-V acknowledgement number is generated, 
+            the filing service is deemed fully executed.
           </li>
           <li>
-            <strong>Government Tax Liability / Penalties:</strong> Our guarantee applies strictly to our professional 
-            preparation fee. Taxes owed to government authorities, statutory penalties, or interest assessed by the IRS 
-            due to inaccurate taxpayer disclosures are not covered.
+            <strong>Statutory Taxes &amp; Interest (Sec 234A/B/C):</strong> Our guarantee applies strictly to our professional CA 
+            consulting fee. Taxes owed to the Government of India (Challan 280 / e-Pay Tax) or statutory late filing fees u/s 234F 
+            resulting from incomplete taxpayer disclosures are not covered.
           </li>
           <li>
             <strong>Material Accuracy:</strong> The refund policy requires that the taxpayer provides authentic, accurate, 
-            and complete financial documents during the filing process.
+            and complete Form 16, bank statements, and AIS records during the onboarding process.
           </li>
         </ul>
 
         <h3>3. Refund Processing Timelines</h3>
         <p style={{ fontSize: '14px', lineHeight: '1.6', color: 'var(--color-charcoal)' }}>
-          Approved refund requests are credited back to the original method of payment within 5 to 7 business days. 
-          To initiate a request, contact our support team at <strong>support@irataxsolutions.com</strong> or call 
-          our direct line at <strong>+1 (470) 444-8100 Ext: 102</strong>.
+          Approved refund requests are credited back in INR to the original method of payment (UPI / Netbanking / RuPay / Cards) within 5 to 7 business days. 
+          To initiate a request, contact our Indian support desk at <strong>support@irataxsolutions.com</strong> or call 
+          our direct helpline at <strong>+91 91211 57586 / +91 72070 57471</strong>.
         </p>
       </div>
     </div>

@@ -165,16 +165,18 @@ export default function UploadDocuments() {
                   required
                 >
                   <option value="">Select Document Type</option>
-                  <option value="Form W-2">Form W-2</option>
-                  <option value="Form 1099-MISC / 1099-NEC">Form 1099-MISC / 1099-NEC</option>
-                  <option value="Form 1099-INT">Form 1099-INT</option>
-                  <option value="Form 1099-DIV">Form 1099-DIV</option>
-                  <option value="Form 1099-B">Form 1099-B</option>
-                  <option value="Form 1098">Form 1098</option>
-                  <option value="Prior Year Return">Prior Year Tax Return</option>
-                  <option value="Passport / Visa Copy">Passport / Visa Copy</option>
-                  <option value="FBAR Records">FBAR Records</option>
-                  <option value="Other Tax Document">Other Document</option>
+                  <option value="Form 16 (Part A &amp; B)">Form 16 (Part A &amp; B - Salary)</option>
+                  <option value="Annual Information Statement (AIS)">Annual Information Statement (AIS)</option>
+                  <option value="Taxpayer Information Summary (TIS)">Taxpayer Information Summary (TIS)</option>
+                  <option value="Form 26AS (TDS Statement)">Form 26AS (Tax Credit Statement)</option>
+                  <option value="Form 16A / 16B / 16C">Form 16A / 16B (Other TDS)</option>
+                  <option value="Capital Gains P&amp;L Statement">Capital Gains Statement (Zerodha/Groww/CAMS)</option>
+                  <option value="Bank Interest Certificate">Bank Savings &amp; FD Interest Certificate</option>
+                  <option value="Rent Receipts &amp; Landlord PAN">Rent Receipts &amp; Landlord PAN (HRA)</option>
+                  <option value="Chapter VI-A Proofs (80C/80D/NPS)">Chapter VI-A Proofs (PPF/ELSS/80D/NPS)</option>
+                  <option value="Home Loan Interest Cert (Sec 24b)">Home Loan Certificate (Section 24b)</option>
+                  <option value="Prior Year ITR-V">Prior Year ITR-V Acknowledgement</option>
+                  <option value="Other Tax Document">Other Supporting Document</option>
                 </select>
               </div>
 

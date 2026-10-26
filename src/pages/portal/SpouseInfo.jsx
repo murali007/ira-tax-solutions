@@ -174,7 +174,7 @@ export default function SpouseInfo() {
             </div>
           </div>
 
-          {/* Row 2: Gender, Date of Birth, Occupation in USA */}
+          {/* Row 2: Gender, Date of Birth, Occupation */}
           <div className="form-grid-3">
             <div className="input-field-group">
               <label>Gender</label>
@@ -211,64 +211,61 @@ export default function SpouseInfo() {
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
-                  placeholder="MM-DD-YYYY"
+                  placeholder="DD-MM-YYYY"
                 />
               </div>
             </div>
 
             <div className="input-field-group">
-              <label>Occupation in USA</label>
+              <label>Occupation / Employment Status</label>
               <div className="input-with-icon">
                 <HelpCircle size={15} className="field-icon" />
-                <input
-                  type="text"
+                <select
                   name="occupation"
                   value={formData.occupation}
                   onChange={handleChange}
-                  placeholder="Occupation in USA"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Row 3: Visa Type, Tax Id Type */}
-          <div className="form-grid-3">
-            <div className="input-field-group">
-              <label>Visa Type</label>
-              <div className="input-with-icon">
-                <Info size={15} className="field-icon" />
-                <select
-                  name="visaType"
-                  value={formData.visaType}
-                  onChange={handleChange}
                 >
-                  <option value="">Select Visa Type</option>
-                  <option value="H-4">H-4</option>
-                  <option value="H-1B">H-1B</option>
-                  <option value="L-2">L-2</option>
-                  <option value="F-2">F-2</option>
-                  <option value="Green Card">Green Card</option>
-                  <option value="US Citizen">US Citizen</option>
+                  <option value="">- Select Occupation -</option>
+                  <option value="Salaried (Private)">Salaried (Private)</option>
+                  <option value="Salaried (Govt/PSU)">Salaried (Govt/PSU)</option>
+                  <option value="Business / Professional">Business / Professional</option>
+                  <option value="Homemaker">Homemaker</option>
+                  <option value="Retired">Retired</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
             </div>
+          </div>
+
+          {/* Row 3: Spouse PAN, Spouse Aadhaar */}
+          <div className="form-grid-3">
+            <div className="input-field-group">
+              <label>Spouse PAN (Optional if not working)</label>
+              <div className="input-with-icon">
+                <Info size={15} className="field-icon" />
+                <input
+                  type="text"
+                  name="visaType"
+                  maxLength={10}
+                  value={formData.visaType}
+                  onChange={(e) => setFormData({ ...formData, visaType: e.target.value.toUpperCase() })}
+                  placeholder="e.g. ABCDE1234F"
+                />
+              </div>
+            </div>
 
             <div className="input-field-group">
-              <label>Tax Id Type</label>
+              <label>Spouse Aadhaar Number</label>
               <div className="input-with-icon">
                 <Edit3 size={15} className="field-icon" />
-                <select
+                <input
+                  type="text"
                   name="taxIdType"
+                  maxLength={12}
                   value={formData.taxIdType}
                   onChange={handleChange}
-                >
-                  <option value="">Select Tax id type</option>
-                  <option value="SSN">SSN</option>
-                  <option value="ITIN">ITIN</option>
-                  <option value="Need ITIN">Need to Apply for ITIN</option>
-                  <option value="None">None</option>
-                </select>
+                  placeholder="12-digit Aadhaar Number"
+                />
               </div>
             </div>
           </div>

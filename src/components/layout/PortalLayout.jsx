@@ -81,12 +81,12 @@ export default function PortalLayout() {
           {/* Contact Direct Numbers */}
           <div className="portal-top-contact-col">
             <div className="contact-line-item">
-              <span className="flag-circle">🇺🇸</span>
-              <span>+1-470-444-8100</span>
+              <span className="flag-circle">🇮🇳</span>
+              <span>+91 91211 57586</span>
             </div>
             <div className="contact-line-item">
               <span className="flag-circle">🇮🇳</span>
-              <span>+91 9121157586 / +91 7207057471</span>
+              <span>+91 72070 57471</span>
             </div>
             <div className="contact-line-item">
               <Mail size={12} className="mail-icon-blue" />
@@ -139,16 +139,16 @@ export default function PortalLayout() {
 
           <div className="green-bar-center">
             <Link to="/refer" className="btn-refer-gold">
-              Refer a Friend &amp; Earn
+              Refer a Friend &amp; Earn ₹500
             </Link>
             <Link to="/about" className="btn-resources-cyan">
-              Resources
+              Resources &amp; ITR Guides
             </Link>
           </div>
 
           <div className="green-bar-right">
             <span className="direct-no-text">
-              Direct No : <span className="red-bold-num">470-444-8100</span> <span className="ext-badge">Ext: 102</span>
+              Direct Helpline : <span className="red-bold-num">+91 91211 57586</span> <span className="ext-badge">Ext: 102</span>
             </span>
           </div>
         </div>
@@ -157,15 +157,15 @@ export default function PortalLayout() {
       {/* 3. Announcement Ticker matching Clip 5/6 */}
       <div className="portal-ticker-bar">
         <div className="ticker-text-wrapper">
-          <span className="ticker-label">REFERRAL BONUS:</span>
+          <span className="ticker-label">REFERRAL REWARDS:</span>
           <span className="ticker-item">
-            Refer Your Friends and Relatives and Earn Unlimited Income
+            Refer your friends, colleagues &amp; family to file ITR and earn ₹500 per successful filing via direct UPI!
           </span>
           <span className="ticker-item">
-            💵 Earn Upto $50 for Each successful Referral
+            🏛️ ITR e-Filing &amp; Advance Tax for AY 2025-26 (FY 2024-25) is now live under New &amp; Old Tax Regimes
           </span>
           <span className="ticker-item">
-            👥 Refer Your Friends and Relatives and Earn Unlimited Income
+            ⚡ Quick E-Verification with Aadhaar OTP &amp; Instant ITR-V generation
           </span>
         </div>
       </div>

@@ -29,18 +29,18 @@ export default function Refer() {
         {/* Banner Section */}
         <div className="refer-hero">
           <div className="hero-content">
-            <span className="badge">Partner Program</span>
-            <h1>Refer a Friend & Make Extra Income</h1>
+            <span className="badge">Partner &amp; Referral Program</span>
+            <h1>Refer a Colleague &amp; Earn ₹500 via UPI</h1>
             <p>
-              Share the benefits of hassle-free tax filing with colleagues, friends, and family. 
-              Earn up to <strong>$50</strong> for every successful tax return filed!
+              Share the convenience of CA-assisted ITR filing with colleagues, friends, and family across India. 
+              Earn <strong>₹500</strong> credited straight to your UPI account for every successful return filed!
             </p>
           </div>
           <div className="hero-reward-card">
-            <DollarSign className="reward-icon" size={32} />
-            <div className="reward-amount">$50</div>
-            <div className="reward-label">Per Successful Referral</div>
-            <div className="reward-sub">Unlimited Earnings Potential</div>
+            <div className="reward-icon" style={{ fontSize: '28px', fontWeight: 800 }}>₹</div>
+            <div className="reward-amount">₹500</div>
+            <div className="reward-label">Per Successful ITR Referral</div>
+            <div className="reward-sub">Direct UPI / Bank Transfer</div>
           </div>
         </div>
 
@@ -49,20 +49,20 @@ export default function Refer() {
           <div className="step-card">
             <div className="step-num">01</div>
             <Users className="step-icon" size={24} />
-            <h4>Share Contact Info</h4>
-            <p>Fill out the referral form below with your details and your referral's details.</p>
+            <h4>Share Contact Details</h4>
+            <p>Fill out the quick referral form below with your UPI ID and your friend's contact information.</p>
           </div>
           <div className="step-card">
             <div className="step-num">02</div>
             <Gift className="step-icon" size={24} />
-            <h4>We Contact & Prepare</h4>
-            <p>Our tax professionals reach out, review documents, and provide a complimentary estimate.</p>
+            <h4>Our CAs Guide &amp; E-File</h4>
+            <p>Our expert tax team contacts your friend, reconciles Form 16 &amp; AIS, and prepares their return.</p>
           </div>
           <div className="step-card">
             <div className="step-num">03</div>
-            <DollarSign className="step-icon" size={24} />
-            <h4>Get Rewarded</h4>
-            <p>Once your referral authorizes and completes their tax return, your reward is paid promptly.</p>
+            <div className="step-icon" style={{ fontSize: '20px', fontWeight: 700, color: '#38b449' }}>₹</div>
+            <h4>Instant Reward Transfer</h4>
+            <p>As soon as their ITR-V acknowledgement is generated, ₹500 is sent directly to your UPI ID.</p>
           </div>
         </div>
 
@@ -181,7 +181,7 @@ export default function Refer() {
                     <textarea
                       rows={3}
                       name="notes"
-                      placeholder="e.g. Recently moved from California to Texas, needs FBAR filing assistance..."
+                      placeholder="e.g. Switched company recently, has Form 16 + capital gains in mutual funds..."
                       value={formData.notes}
                       onChange={handleChange}
                     />

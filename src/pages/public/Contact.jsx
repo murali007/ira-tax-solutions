@@ -22,29 +22,29 @@ export default function Contact() {
       <div className="container">
         <header className="page-header">
           <span className="badge">Get in Touch</span>
-          <h1>Contact Our Tax Experts</h1>
+          <h1>Contact Our Indian Tax Experts</h1>
           <p>
-            Have questions about federal, state, or foreign asset filings? 
-            Our dedicated team is ready to assist you.
+            Have questions about ITR-1, ITR-2, capital gains, Section 44ADA, or notice management? 
+            Our dedicated team of Chartered Accountants is ready to assist you.
           </p>
         </header>
 
         <div className="contact-grid">
           {/* Contact Details Card */}
           <div className="contact-info-card">
-            <h3>Office & Support Information</h3>
+            <h3>Office &amp; Support Information</h3>
             <p className="info-intro">
-              Reach out directly by phone, email, or schedule an in-depth tax consultation.
+              Reach out directly by phone, WhatsApp, email, or schedule a 1-on-1 CA consultation.
             </p>
 
             <div className="info-items">
               <div className="info-item">
                 <Phone className="item-icon" size={20} />
                 <div>
-                  <strong>Phone Lines</strong>
-                  <p>USA Direct: +1 (470) 444-8100 Ext: 102</p>
-                  <p>India Office: +91 91211 57586</p>
-                  <p>WhatsApp Support: +91 72070 57471</p>
+                  <strong>Phone &amp; WhatsApp Lines</strong>
+                  <p>Direct CA Helpline: +91 91211 57586</p>
+                  <p>Client Advisory: +91 72070 57471</p>
+                  <p>WhatsApp Chat: +91 91211 57586</p>
                 </div>
               </div>
 
@@ -60,24 +60,25 @@ export default function Contact() {
               <div className="info-item">
                 <MapPin className="item-icon" size={20} />
                 <div>
-                  <strong>Corporate Headquarters</strong>
-                  <p>12000 Findley Road, Suite 250</p>
-                  <p>Johns Creek, GA 30097, USA</p>
+                  <strong>Indian Registered Offices</strong>
+                  <p>Cyber Gateway, Block B, HITEC City</p>
+                  <p>Madhapur, Hyderabad, Telangana 500081</p>
+                  <p style={{ marginTop: '4px', fontSize: '13px', color: '#64748b' }}>Branch: Prestige Tech Park, Marathahalli, Bengaluru 560103</p>
                 </div>
               </div>
 
               <div className="info-item">
                 <Clock className="item-icon" size={20} />
                 <div>
-                  <strong>Business Hours</strong>
-                  <p>Tax Season: 24/7 Round-the-Clock Support</p>
-                  <p>Off-Season: Mon - Fri, 9:00 AM - 6:00 PM EST</p>
+                  <strong>Business Hours (IST)</strong>
+                  <p>Monday – Saturday: 9:30 AM – 7:30 PM IST</p>
+                  <p>ITR Peak Filing Season: 24/7 Extended Support</p>
                 </div>
               </div>
             </div>
 
             <div className="map-placeholder">
-              <span>Interactive Map Location (Johns Creek, GA Office)</span>
+              <span>Interactive Location Map (Hyderabad &amp; Bengaluru, India)</span>
             </div>
           </div>
 

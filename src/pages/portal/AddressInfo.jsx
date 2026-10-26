@@ -19,6 +19,16 @@ const BLANK_ADDRESS = {
   secondEndDate: ''
 };
 
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Delhi (NCR)', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh',
+  'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra',
+  'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha',
+  'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana',
+  'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Chandigarh', 'Jammu & Kashmir', 'Ladakh', 'Puducherry', 'Other UT'
+];
+
 export default function AddressInfo() {
   const navigate = useNavigate();
   const { token } = useAuth();
@@ -174,31 +184,35 @@ export default function AddressInfo() {
             </div>
 
             <div className="input-field-group">
-              <label>State</label>
+              <label>State / Union Territory</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
-                <input
-                  type="text"
+                <select
                   name="primaryState"
                   value={addressData.primaryState}
                   onChange={handleChange}
-                  placeholder="State"
-                />
+                >
+                  <option value="">Select State / UT</option>
+                  {INDIAN_STATES.map((st) => (
+                    <option key={st} value={st}>{st}</option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
 
           <div className="form-grid-3">
             <div className="input-field-group">
-              <label>ZIP Code</label>
+              <label>PIN Code (6 Digits)</label>
               <div className="input-with-icon">
                 <MapPin size={15} className="field-icon" />
                 <input
                   type="text"
                   name="primaryZip"
+                  maxLength={6}
                   value={addressData.primaryZip}
                   onChange={handleChange}
-                  placeholder="Zipcode"
+                  placeholder="e.g. 500081"
                 />
               </div>
             </div>

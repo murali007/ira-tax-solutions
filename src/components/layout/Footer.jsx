@@ -40,19 +40,19 @@ export default function Footer() {
 
         {/* Services */}
         <div className="footer-column">
-          <h4>Services</h4>
+          <h4>ITR &amp; Tax Services</h4>
           <ul>
-            <li><Link to="/services">Individual Tax Filing</Link></li>
-            <li><Link to="/services">Joint Tax Filing</Link></li>
-            <li><Link to="/services">ITIN Applications</Link></li>
-            <li><Link to="/services">Tax Amendments</Link></li>
-            <li><Link to="/refer">Refer &amp; Earn</Link></li>
+            <li><Link to="/services">Salaried ITR-1 Sahaj</Link></li>
+            <li><Link to="/services">Capital Gains &amp; Stocks (ITR-2)</Link></li>
+            <li><Link to="/services">Freelancer Presumptive (ITR-4)</Link></li>
+            <li><Link to="/services">NRI Taxation &amp; DTAA</Link></li>
+            <li><Link to="/refer">Refer &amp; Earn ₹500</Link></li>
           </ul>
         </div>
 
         {/* Contact */}
         <div className="footer-column">
-          <h4>Contact Us</h4>
+          <h4>Indian Support Offices</h4>
           <ul>
             <li>
               <div className="footer-contact-item">
@@ -63,19 +63,19 @@ export default function Footer() {
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+1 (555) 123-4567</span>
+                <span>+91 91211 57586</span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+91 98765 43210</span>
+                <span>+91 72070 57471</span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">📍</span>
-                <span>Demo Address, Suite 100<br />City, State 00000</span>
+                <span>Cyber Gateway, HITEC City<br />Hyderabad, Telangana 500081</span>
               </div>
             </li>
           </ul>
@@ -85,11 +85,11 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
-          <span>© {currentYear} IRA Tax Solutions. All rights reserved. <span className="demo-badge">DEMO</span></span>
+          <span>© {currentYear} IRATaxSolutions. All rights reserved. In compliance with the Income Tax Act, 1961 (Govt of India).</span>
           <div className="footer-bottom-links">
-            <Link to="/portal/refund-policy">Refund Policy</Link>
-            <Link to="/portal/service-agreement">Service Agreement</Link>
-            <a href="#">Privacy Policy</a>
+            <Link to="/portal/refund-policy">Refund Policy (India)</Link>
+            <Link to="/portal/service-agreement">Terms of Service</Link>
+            <a href="https://incometax.gov.in" target="_blank" rel="noopener noreferrer">e-Filing Portal</a>
           </div>
         </div>
       </div>

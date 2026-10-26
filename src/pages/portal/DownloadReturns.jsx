@@ -39,14 +39,14 @@ export default function DownloadReturns() {
   return (
     <div className="upload-page-wrapper">
       <div className="upload-header-card">
-        <h2>Download Tax Returns</h2>
+        <h2>Download ITR Returns &amp; ITR-V Acknowledgements</h2>
         <p className="subtitle">
-          Access and download your finalized Federal and State tax returns, schedules, and IRS Form 8879 authorizations.
+          Access and download your finalized Indian Income Tax Return (ITR), detailed CA Tax Computation Sheet, and official ITR-V acknowledgements.
         </p>
       </div>
 
       <div className="uploaded-list-box">
-        <h3>Finalized Returns & Transcripts</h3>
+        <h3>Finalized Returns &amp; Government Receipts</h3>
         {returnsList.length === 0 ? (
           <div className="empty-upload-state" style={{ padding: '60px 24px' }}>
             <Clock size={44} style={{ color: 'var(--color-primary)', margin: '0 auto 16px' }} />
@@ -54,8 +54,8 @@ export default function DownloadReturns() {
               No Returns Available for Download Yet
             </h4>
             <p style={{ color: 'var(--color-text-light)', maxWidth: '520px', margin: '0 auto', fontSize: '14px', lineHeight: '1.6' }}>
-              Your tax return is currently in the preparation queue. Once your tax professional prepares and finalizes 
-              your Form 1040 and state returns, the downloadable PDF packages will be published directly to this page.
+              Your tax return is currently in the preparation queue. Once your Chartered Accountant finalizes 
+              your ITR and transmits it to the Income Tax Department, the official ITR-V acknowledgement PDF and computation sheet will be published here.
             </p>
           </div>
         ) : (

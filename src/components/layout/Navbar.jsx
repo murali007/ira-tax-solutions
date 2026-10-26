@@ -50,16 +50,16 @@ export default function Navbar() {
               <a href="mailto:contact@irataxsolutions.com">contact@irataxsolutions.com</a>
             </span>
             <span className="top-item">
-              <span className="flag-icon">🇺🇸</span>
-              <a href="tel:+14704448100">+1-470-444-8100</a>
+              <span className="flag-icon">🇮🇳</span>
+              <a href="tel:+919121157586">+91 91211 57586</a>
             </span>
             <span className="top-item">
               <span className="flag-icon">🇮🇳</span>
-              <a href="tel:+917207057471">+91 7207057471</a>
+              <a href="tel:+917207057471">+91 72070 57471</a>
             </span>
             <span className="top-item">
               <span className="flag-icon">💬</span>
-              <a href="tel:+919121157586">+91 9121157586</a>
+              <a href="https://wa.me/919121157586" target="_blank" rel="noreferrer">WhatsApp Chat</a>
             </span>
           </div>
 

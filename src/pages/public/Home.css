@@ -10,25 +10,26 @@
 /* Hero Section matching exact reference */
 .clip-hero-section {
   position: relative;
-  background: linear-gradient(100deg, #f1f3f5 0%, #edf0f2 45%, #f6f7f9 100%);
+  background-color: #edf0f2;
   border-bottom: 1px solid #e2e8f0;
-  padding: 40px 0 50px;
+  padding: 30px 0 35px;
   overflow: hidden;
 }
 
 .clip-hero-inner {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
 }
 
 .clip-hero-text-col {
-  max-width: 580px;
+  max-width: 540px;
   z-index: 2;
+  flex-shrink: 0;
 }
 
 .clip-eyebrow {
@@ -99,13 +100,11 @@
   border-color: #adb5bd;
 }
 
-/* Exact Tax Document Collage Graphic matching Reference Image */
+/* Exact Tax Document Collage Graphic with natural diffusion into endings */
 .clip-hero-graphic-col {
   position: relative;
-  width: 58%;
-  max-width: 680px;
-  height: 100%;
-  flex-shrink: 0;
+  flex: 1;
+  max-width: 740px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -115,17 +114,16 @@
 .exact-hero-tax-img {
   width: 100%;
   height: auto;
-  max-height: 380px;
+  max-height: 400px;
   object-fit: contain;
   display: block;
-  /* Soft left edge blend to merge seamlessly with background */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 18%, black 100%);
-  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 18%, black 100%);
+  mix-blend-mode: multiply;
+  filter: contrast(1.02);
 }
 
 @media (max-width: 960px) {
   .clip-hero-graphic-col {
-    width: 50%;
+    max-width: 50%;
   }
 }
 
@@ -142,10 +140,6 @@
     max-width: 480px;
     margin-top: 24px;
     justify-content: center;
-  }
-  .exact-hero-tax-img {
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }
 

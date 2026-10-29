@@ -9,9 +9,10 @@ const NAV_LINKS = [
   { to: '/about', label: 'ABOUT US' },
   { to: '/services', label: 'SERVICES' },
   { to: '/pricing', label: 'PRICING' },
-  { to: '/refund-status', label: 'REFUND STATUS' },
+  { to: '/security', label: 'SECURITY & PRIVACY' },
+  { to: '/refund-status', label: 'IRS REFUND STATUS' },
   { to: '/refer', label: 'REFER & EARN' },
-  { to: '/contact', label: 'CONTACT US' },
+  { to: '/contact', label: 'BOOK CONSULTATION' },
 ];
 
 export default function Navbar() {
@@ -41,25 +42,24 @@ export default function Navbar() {
 
   return (
     <header className="site-header">
-      {/* Top Black Info Bar matching Clip 1 */}
+      {/* Top Black Info Bar matching Brand Guide */}
       <div className="top-black-bar">
         <div className="top-black-inner">
           <div className="top-contact-items">
             <span className="top-item">
               <Mail size={13} className="top-icon" />
-              <a href="mailto:contact@irataxsolutions.com">contact@irataxsolutions.com</a>
+              <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
             </span>
             <span className="top-item">
-              <span className="flag-icon">🇮🇳</span>
-              <a href="tel:+919876543210">+91 98765 43210 <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
-            </span>
-            <span className="top-item">
-              <span className="flag-icon">🇮🇳</span>
-              <a href="tel:+919876500000">+91 98765 00000 <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
+              <span className="flag-icon">🇺🇸</span>
+              <a href="tel:+19014532499">+1 (901) 453-2499</a>
             </span>
             <span className="top-item">
               <span className="flag-icon">💬</span>
-              <a href="#" onClick={(e) => e.preventDefault()}>WhatsApp Chat <small style={{ opacity: 0.8 }}>(Dummy)</small></a>
+              <a href="https://wa.me/19014532499" target="_blank" rel="noreferrer">WhatsApp Chat</a>
+            </span>
+            <span className="top-item highlight-tag">
+              Your Global Tax Partner • Form 1040 Tax Preparation
             </span>
           </div>
 

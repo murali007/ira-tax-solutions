@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { Download, FileText, Clock, AlertCircle } from 'lucide-react';
+import { Download, FileText, Clock, ShieldCheck } from 'lucide-react';
 import './UploadDocuments.css';
 
 export default function DownloadReturns() {
@@ -35,9 +35,12 @@ export default function DownloadReturns() {
   return (
     <div className="upload-page-wrapper">
       <div className="upload-header-card">
-        <h2>Download ITR Returns &amp; ITR-V Acknowledgements</h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+          <ShieldCheck size={20} style={{ color: '#16a34a' }} />
+          <h2 style={{ margin: 0 }}>Download Form 1040 Returns &amp; IRS Receipts</h2>
+        </div>
         <p className="subtitle">
-          Access and download your finalized Indian Income Tax Return (ITR), detailed CA Tax Computation Sheet, and official ITR-V acknowledgements.
+          Access and download your finalized US Federal Form 1040, State Tax Returns, detailed computation schedules, and official IRS e-File Submission &amp; Acceptance receipts.
         </p>
       </div>
 
@@ -50,8 +53,7 @@ export default function DownloadReturns() {
               No Returns Available for Download Yet
             </h4>
             <p style={{ color: 'var(--color-text-light)', maxWidth: '520px', margin: '0 auto', fontSize: '14px', lineHeight: '1.6' }}>
-              Your tax return is currently in the preparation queue. Once your Chartered Accountant finalizes 
-              your ITR and transmits it to the Income Tax Department, the official ITR-V acknowledgement PDF and computation sheet will be published here.
+              Your tax return is currently being prepared and reviewed. Once our dedicated preparer and separate quality reviewer finalize your draft and you sign Form 8879, your official Form 1040 PDF and IRS e-File acceptance confirmation will be published here.
             </p>
           </div>
         ) : (
@@ -59,8 +61,8 @@ export default function DownloadReturns() {
             <table className="doc-table">
               <thead>
                 <tr>
-                  <th>Document / Form Title</th>
-                  <th>Type</th>
+                  <th>Document / Return Title</th>
+                  <th>Jurisdiction</th>
                   <th>Tax Year</th>
                   <th>Status</th>
                   <th>File Size</th>
@@ -73,20 +75,20 @@ export default function DownloadReturns() {
                     <td>
                       <div className="file-cell">
                         <FileText size={16} className="text-primary" />
-                        <strong>{ret.form_title}</strong>
+                        <strong>{ret.form_title || 'Form 1040 Individual Return'}</strong>
                       </div>
                     </td>
-                    <td>{ret.return_type}</td>
-                    <td>{ret.tax_year}</td>
+                    <td>{ret.return_type || 'US Federal (IRS)'}</td>
+                    <td>{ret.tax_year || 'Tax Year 2024'}</td>
                     <td>
                       <span className="status-pill verified">
-                        {ret.status}
+                        {ret.status || 'IRS Accepted'}
                       </span>
                     </td>
                     <td>{ret.file_size || '—'}</td>
                     <td>
                       <button
-                        onClick={() => alert(`Downloading ${ret.form_title}`)}
+                        onClick={() => alert(`Downloading ${ret.form_title || 'Tax Return PDF'}`)}
                         className="btn btn-outline btn-sm"
                         style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                       >
@@ -99,17 +101,6 @@ export default function DownloadReturns() {
             </table>
           </div>
         )}
-      </div>
-
-      <div className="security-notice-card">
-        <AlertCircle size={20} className="text-warning" />
-        <div>
-          <h4>IRS E-File Status Notification</h4>
-          <p>
-            Tax returns are uploaded here immediately following preparation. You will receive an automated email 
-            notification once Form 1040 and state schedules are ready for your signature.
-          </p>
-        </div>
       </div>
     </div>
   );

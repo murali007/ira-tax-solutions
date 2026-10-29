@@ -1,56 +1,59 @@
 import { Link } from 'react-router-dom';
-import { Check, Shield, HelpCircle } from 'lucide-react';
+import { Check, ShieldCheck, Info, ArrowRight } from 'lucide-react';
 import './Pricing.css';
 
 export default function Pricing() {
   const tiers = [
     {
-      name: 'Salaried Basic (ITR-1 Sahaj)',
-      price: '₹499',
-      period: 'per filing',
-      desc: 'Ideal for salaried employees, pensioners, and single-employer income earners.',
+      name: 'Basic',
+      badge: 'For Simple W-2 Returns',
+      price: '$XX',
+      period: 'starting from',
+      desc: 'Ideal for single or married professionals with standard W-2 income and standard deductions.',
       features: [
-        'Single Form 16 & Salary Income Filing',
-        'Standard Deduction (₹75,000 New Regime)',
-        'One House Property & Other Sources (Interest)',
-        'Form 26AS & AIS / TIS Data Reconciliation',
-        'Instant E-Filing & Official ITR-V Generation',
-        'Email & Phone Assistance by Tax Experts'
+        'W-2 wage and salary income reporting',
+        'Standard deduction optimization ($14,600 / $29,200)',
+        'Basic tax credits (EITC, Standard Child Credit)',
+        'Direct IRS & Single State electronic e-filing',
+        'Dedicated preparer & separate QA review',
+        'Year-round support for IRS inquiries'
       ],
       popular: false,
-      cta: 'File ITR-1 Now'
+      cta: 'Book Consultation & File'
     },
     {
-      name: 'Capital Gains & Tech Filers (ITR-2)',
-      price: '₹1,499',
-      period: 'per filing',
-      desc: 'Specialized for techies with RSUs/ESOPs, stock market investors, crypto, and multi-state earners.',
+      name: 'Standard',
+      badge: 'For Most Individuals',
+      price: '$XX',
+      period: 'starting from',
+      desc: 'Comprehensive filing for salaried employees with 1099 income, deductions, and common credits.',
       features: [
-        'Multiple Form 16s from Job Switches',
-        'Mutual Funds & Equity P&L (Zerodha, Groww, CAMS)',
-        'Foreign Assets & US Stocks Schedule (FA) for RSUs',
-        'Crypto / VDA Taxation & Loss Carry-Forward',
-        'Multiple House Properties & Home Loan Interest',
-        'Dedicated Chartered Accountant (CA) Review'
+        'W-2 + Form 1099 income (Interest, Dividends, Misc)',
+        'Itemized vs. standard deduction comparison',
+        'Child Tax Credit, Dependent Care & Education Credits',
+        'Single State Tax Return filing included',
+        'Dedicated preparer & separate QA review',
+        'Plain-English video/call draft walkthrough'
       ],
       popular: true,
-      cta: 'File ITR-2 with CA'
+      cta: 'Book Consultation & File'
     },
     {
-      name: 'Freelancers & Business (ITR-4 / 3)',
-      price: '₹2,999',
-      period: 'per filing',
-      desc: 'For software consultants, doctors, lawyers, creative freelancers, and F&O traders.',
+      name: 'Complex',
+      badge: 'For Investors & Self-Employed',
+      price: 'Custom Quote',
+      period: 'tailored to return',
+      desc: 'Tailored for independent consultants, small business owners, active investors, and multi-state movers.',
       features: [
-        'Presumptive Taxation u/s 44ADA (50% Profit Declared)',
-        'Small Business & Trading u/s 44AD / 44AE',
-        'F&O / Intraday Trading Turnover & P&L Statements',
-        'Advance Tax Calculation & Challan 280 Support',
-        'Notice Assistance for Sec 143(1) & 139(9) Defective Returns',
-        'Year-Round Direct Consultation with Senior CA'
+        'Schedule C / Schedule E (Sole prop / Rental properties)',
+        'Stock sales, ESPP, RSUs & Crypto (Schedule D / 8949)',
+        'Multi-state returns for relocations & remote work',
+        'International accounts (FBAR FinCEN 114 & Form 8938)',
+        'Quarterly estimated tax payment calculations',
+        'Priority Senior Reviewer & CPA consultation'
       ],
       popular: false,
-      cta: 'Consult a CA'
+      cta: 'Get a Custom Quote'
     }
   ];
 
@@ -58,10 +61,12 @@ export default function Pricing() {
     <div className="pricing-page">
       <div className="container">
         <header className="pricing-header">
-          <span className="badge">Transparent &amp; Regulated Indian Pricing</span>
-          <h1>Affordable ITR Filing Packages for India</h1>
+          <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '12px' }}>
+            CLEAR PRICING. NO SURPRISES.
+          </span>
+          <h1>Simple &amp; Transparent US Tax Pricing</h1>
           <p>
-            Zero hidden fees. Complete reconciliation with Income Tax Department AIS, TIS, and Form 26AS data.
+            Know the fee before we start. The exact fee depends on the complexity of your return — we'll discuss the pricing transparently during your free consultation.
           </p>
         </header>
 
@@ -71,11 +76,13 @@ export default function Pricing() {
               {tier.popular && <span className="popular-badge">Most Popular</span>}
               <div className="card-top">
                 <h3>{tier.name}</h3>
+                <span style={{ fontSize: '12px', fontWeight: 600, color: '#0284c7', display: 'block', marginBottom: '8px' }}>
+                  {tier.badge}
+                </span>
                 <p className="card-desc">{tier.desc}</p>
                 <div className="price-tag">
-                  <span className="currency">₹</span>
-                  <span className="amount">{tier.price.replace('₹', '')}</span>
-                  <span className="period">/{tier.period}</span>
+                  <span className="amount">{tier.price}</span>
+                  <span className="period" style={{ marginLeft: '6px' }}>/ {tier.period}</span>
                 </div>
               </div>
 
@@ -89,7 +96,7 @@ export default function Pricing() {
               </ul>
 
               <div className="card-bottom">
-                <Link to="/register" className={`btn ${tier.popular ? 'btn-primary' : 'btn-outline'}`}>
+                <Link to="/contact" className={`btn ${tier.popular ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', textAlign: 'center' }}>
                   {tier.cta}
                 </Link>
               </div>
@@ -97,15 +104,14 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="pricing-notes">
-          <div className="notes-box">
-            <Shield className="notes-icon" size={24} />
-            <div>
-              <h4>Government Authorized &amp; 100% Secure</h4>
-              <p>
-                All tax returns are validated according to the Income Tax Act, 1961, and e-filed directly with the Income Tax Department of India (CBDT). Prices are in INR (₹). Secure payments supported via UPI, RuPay, Netbanking, and Cards.
-              </p>
-            </div>
+        {/* Pricing notice callout matching Brand Card 6 */}
+        <div style={{ marginTop: '40px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <Info size={24} style={{ color: '#0284c7', flexShrink: 0 }} />
+          <div>
+            <strong style={{ color: '#1e293b', fontSize: '15px' }}>Transparent Fee Guarantee:</strong>
+            <p style={{ color: '#64748b', fontSize: '14px', margin: '4px 0 0', lineHeight: '1.5' }}>
+              The exact fee depends on the complexity of your return (e.g. number of W-2s, states, stock trades, or rental units). We will review your documents and provide a confirmed, fixed price during your free 15-minute consultation before any filing work begins.
+            </p>
           </div>
         </div>
       </div>

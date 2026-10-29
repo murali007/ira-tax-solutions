@@ -9,8 +9,6 @@ import {
   Upload, 
   FileText, 
   Download, 
-  ShieldCheck, 
-  FileSignature, 
   LogOut, 
   Menu, 
   X,
@@ -56,7 +54,7 @@ export default function PortalLayout() {
 
   return (
     <div className="portal-container-root">
-      {/* 1. Portal Brand & Contact Row (Clip 5/6 top) */}
+      {/* 1. Portal Brand & Contact Row */}
       <div className="portal-brand-row">
         <div className="portal-brand-inner">
           {/* Logo */}
@@ -74,23 +72,23 @@ export default function PortalLayout() {
             <Users size={22} className="refer-users-icon" />
             <div className="refer-text-col">
               <span className="refer-title">REFER A FRIEND</span>
-              <span className="refer-sub">&amp; Make Some Extra Income</span>
+              <span className="refer-sub">&amp; Earn $50 Reward</span>
             </div>
           </Link>
 
-          {/* Contact Direct Numbers */}
+          {/* Contact Direct Numbers - US Contact from Brand Guide */}
           <div className="portal-top-contact-col">
             <div className="contact-line-item">
-              <span className="flag-circle">🇮🇳</span>
-              <span>+91 98765 43210 <small style={{ fontSize: '10px', color: '#e02424', fontWeight: 600 }}>(Dummy)</small></span>
+              <span className="flag-circle">🇺🇸</span>
+              <span>+1 (901) 453-2499 <span className="ext-badge" style={{ fontSize: '11px', background: '#e0f2fe', color: '#0369a1', padding: '1px 5px', borderRadius: '4px', fontWeight: 600 }}>Ext: 102</span></span>
             </div>
             <div className="contact-line-item">
-              <span className="flag-circle">🇮🇳</span>
-              <span>+91 98765 00000 <small style={{ fontSize: '10px', color: '#e02424', fontWeight: 600 }}>(Dummy)</small></span>
+              <span className="flag-circle">🇺🇸</span>
+              <span>+1 (901) 453-2499</span>
             </div>
             <div className="contact-line-item">
               <Mail size={12} className="mail-icon-blue" />
-              <span>contact@irataxsolutions.com</span>
+              <span>info@irataxsolutions.com</span>
             </div>
           </div>
 
@@ -116,6 +114,9 @@ export default function PortalLayout() {
                 <Link to="/" onClick={() => setUserMenuOpen(false)}>
                   Public Home
                 </Link>
+                <Link to="/security" onClick={() => setUserMenuOpen(false)}>
+                  Security &amp; Privacy
+                </Link>
                 <button onClick={handleLogout} className="dropdown-logout-btn">
                   <LogOut size={13} /> Sign Out
                 </button>
@@ -125,7 +126,7 @@ export default function PortalLayout() {
         </div>
       </div>
 
-      {/* 2. Vibrant Lime-Green Control Bar matching Clip 5/6 */}
+      {/* 2. Vibrant Lime-Green Control Bar */}
       <div className="portal-green-control-bar">
         <div className="green-bar-inner">
           <div className="green-bar-left">
@@ -138,34 +139,34 @@ export default function PortalLayout() {
           </div>
 
           <div className="green-bar-center">
-            <Link to="/refer" className="btn-refer-gold">
-              Refer a Friend &amp; Earn ₹500
+            <Link to="/contact" className="btn-refer-gold">
+              Book a Free 15-Min Consultation
             </Link>
             <Link to="/about" className="btn-resources-cyan">
-              Resources &amp; ITR Guides
+              Resources &amp; Form 1040 Guides
             </Link>
           </div>
 
           <div className="green-bar-right">
             <span className="direct-no-text">
-              Direct Helpline : <span className="red-bold-num">+91 98765 43210</span> <span className="ext-badge">Ext: 102</span> <small style={{ fontSize: '11px', color: '#ffdd57', marginLeft: '4px' }}>(Dummy)</small>
+              Direct Helpline : <span className="red-bold-num">+1 (901) 453-2499</span> <span className="ext-badge">Ext: 102</span>
             </span>
           </div>
         </div>
       </div>
 
-      {/* 3. Announcement Ticker matching Clip 5/6 */}
+      {/* 3. Announcement Ticker */}
       <div className="portal-ticker-bar">
         <div className="ticker-text-wrapper">
-          <span className="ticker-label">REFERRAL REWARDS:</span>
+          <span className="ticker-label">TAX SEASON 2025:</span>
           <span className="ticker-item">
-            Refer your friends, colleagues &amp; family to file ITR and earn ₹500 per successful filing via direct UPI!
+            🇺🇸 Form 1040, W-2, 1099, Multi-State Returns &amp; FBAR e-filing for Tax Year 2024 is now open!
           </span>
           <span className="ticker-item">
-            🏛️ ITR e-Filing &amp; Advance Tax for AY 2025-26 (FY 2024-25) is now live under New &amp; Old Tax Regimes
+            🔒 Strict IRS Section 7216 Data Confidentiality &amp; 256-bit Bank-Level Encryption for all client files
           </span>
           <span className="ticker-item">
-            ⚡ Quick E-Verification with Aadhaar OTP &amp; Instant ITR-V generation
+            ⚡ Every return prepared by a dedicated specialist and verified by a separate senior reviewer
           </span>
         </div>
       </div>
@@ -178,7 +179,7 @@ export default function PortalLayout() {
           onClick={() => setMobileMenuOpen(false)}
         />
 
-        {/* Left Dark Sidebar matching Clip 5 - 10 */}
+        {/* Left Dark Sidebar */}
         <aside className={`portal-dark-sidebar ${mobileMenuOpen ? 'open' : ''}`}>
           <nav className="portal-vertical-nav">
             <NavLink 
@@ -202,30 +203,33 @@ export default function PortalLayout() {
                   <User className="menu-icon" size={17} />
                   <span>Personal Information</span>
                 </div>
+                <span className="toggle-symbol">{personalInfoOpen ? '▲' : '▼'}</span>
               </button>
 
               {personalInfoOpen && (
-                <div className="sub-menu-tree">
+                <div className="group-sublinks-container">
                   <NavLink 
                     to="/portal/taxpayer" 
-                    className={({ isActive }) => `sub-link-item ${isActive ? 'sub-active' : ''}`}
+                    className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    » Taxpayer
+                    <span>Taxpayer Info</span>
                   </NavLink>
+
                   <NavLink 
                     to="/portal/spouse" 
-                    className={({ isActive }) => `sub-link-item ${isActive ? 'sub-active' : ''}`}
+                    className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    » Spouse, If Married
+                    <span>Spouse Info</span>
                   </NavLink>
+
                   <NavLink 
                     to="/portal/dependents" 
-                    className={({ isActive }) => `sub-link-item ${isActive ? 'sub-active' : ''}`}
+                    className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    » Dependents
+                    <span>Dependent Info</span>
                   </NavLink>
                 </div>
               )}
@@ -246,7 +250,7 @@ export default function PortalLayout() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <MapPin className="menu-icon" size={17} />
-              <span>Address of Living in Tax Year</span>
+              <span>Address Information</span>
             </NavLink>
 
             <NavLink 
@@ -274,24 +278,6 @@ export default function PortalLayout() {
             >
               <Download className="menu-icon" size={17} />
               <span>Download Tax Returns</span>
-            </NavLink>
-
-            <NavLink 
-              to="/portal/refund-policy" 
-              className={({ isActive }) => `menu-link-item ${isActive ? 'active' : ''}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <ShieldCheck className="menu-icon" size={17} />
-              <span>100% Fee Refund Policy</span>
-            </NavLink>
-
-            <NavLink 
-              to="/portal/service-agreement" 
-              className={({ isActive }) => `menu-link-item ${isActive ? 'active' : ''}`}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <FileSignature className="menu-icon" size={17} />
-              <span>Service Agreement</span>
             </NavLink>
           </nav>
         </aside>

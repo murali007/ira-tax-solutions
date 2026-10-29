@@ -5,32 +5,32 @@ export default function PortalHome() {
   const stages = [
     {
       num: 1,
-      title: 'Fill Basic PAN / Aadhaar Profile & Upload Form 16, AIS, 26AS Tax Documents',
-      link: '/portal/taxpayer',
+      title: 'Share Documents: Upload W-2, 1099s & Tax Questionnaire through Our Secure Vault',
+      link: '/portal/upload',
       className: 'stage-item-orange'
     },
     {
       num: 2,
-      title: 'Choose Convenient CA Consultation Slot & Declare Chapter VI-A Deductions',
-      link: '/portal/schedule',
+      title: 'We Prepare: Detailed Form 1040 Preparation with Quality & Deduction Checks',
+      link: '/portal/taxpayer',
       className: 'stage-item-teal'
     },
     {
       num: 3,
-      title: 'Review Tax Computation (New vs Old Regime) & Pay CA Filing Fees (₹)',
-      link: '/portal/summary',
+      title: 'Separate Review: In-Depth QA Review by a Second Experienced Tax Specialist',
+      link: '/portal/schedule',
       className: 'stage-item-purple'
     },
     {
       num: 4,
-      title: 'Review Final ITR Computation Sheet & Approve for Government E-Filing',
-      link: '/portal/download',
+      title: 'We Explain: Walkthrough of Your Federal & State Computations in Plain English',
+      link: '/portal/summary',
       className: 'stage-item-coral'
     },
     {
       num: 5,
-      title: 'ITR E-Filed with Income Tax Dept (CBDT) & E-Verified via Aadhaar OTP',
-      link: '/refund-status',
+      title: 'We File: Official IRS & State E-Filing with Direct Acceptance Confirmation',
+      link: '/portal/download',
       className: 'stage-item-slate'
     }
   ];
@@ -39,9 +39,12 @@ export default function PortalHome() {
     <div className="portal-welcome-page">
       <div className="welcome-headline-card">
         <h1>Welcome to IRATAXSOLUTIONS.COM</h1>
+        <p style={{ color: '#64748b', fontSize: '14px', marginTop: '6px' }}>
+          Your Global Tax Partner — Professional &amp; Personalized Form 1040 Preparation.
+        </p>
       </div>
 
-      {/* 5 Stages Infographic matching Clip 5 */}
+      {/* 5 Stages Infographic matching Brand Card 5 */}
       <div className="stages-diagram-container">
         <div className="stages-diagram-inner">
           {/* Central Blue Hub */}
@@ -49,7 +52,7 @@ export default function PortalHome() {
             <div className="central-hub-circle">
               <span className="hub-large-num">5</span>
               <span className="hub-label-sub">Stages Of</span>
-              <span className="hub-label-main">Tax Filing</span>
+              <span className="hub-label-main">US Tax Filing</span>
             </div>
           </div>
 

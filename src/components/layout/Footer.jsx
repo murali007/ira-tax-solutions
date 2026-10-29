@@ -14,11 +14,9 @@ export default function Footer() {
             IRA Tax Solutions
           </div>
           <p>
-            Professional tax filing services for individuals and families.
-            Accurate, affordable, and trusted by thousands of taxpayers.
+            Your Global Tax Partner. Professional &amp; personalized US Form 1040 tax preparation for individuals, families, and professionals across all 50 states.
           </p>
           <div className="footer-social">
-            {/* Placeholder social icons */}
             <a href="#" aria-label="Facebook" title="Facebook">f</a>
             <a href="#" aria-label="Twitter" title="Twitter">𝕏</a>
             <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
@@ -34,48 +32,51 @@ export default function Footer() {
             <li><Link to="/about">About Us</Link></li>
             <li><Link to="/services">Services</Link></li>
             <li><Link to="/pricing">Pricing</Link></li>
-            <li><Link to="/refund-status">Refund Status</Link></li>
+            <li><Link to="/security">Security &amp; Privacy</Link></li>
+            <li><Link to="/refund-status">IRS Refund Status</Link></li>
+            <li><Link to="/contact">Book Consultation</Link></li>
           </ul>
         </div>
 
-        {/* Services */}
+        {/* US Tax Services */}
         <div className="footer-column">
-          <h4>ITR &amp; Tax Services</h4>
+          <h4>US Tax Services</h4>
           <ul>
-            <li><Link to="/services">Salaried ITR-1 Sahaj</Link></li>
-            <li><Link to="/services">Capital Gains &amp; Stocks (ITR-2)</Link></li>
-            <li><Link to="/services">Freelancer Presumptive (ITR-4)</Link></li>
-            <li><Link to="/services">NRI Taxation &amp; DTAA</Link></li>
-            <li><Link to="/refer">Refer &amp; Earn ₹500</Link></li>
+            <li><Link to="/services">Individual Form 1040 (W-2)</Link></li>
+            <li><Link to="/services">Self-Employed &amp; 1099 (Schedule C)</Link></li>
+            <li><Link to="/services">Stocks &amp; Crypto (Schedule D)</Link></li>
+            <li><Link to="/services">Multi-State Tax Filings</Link></li>
+            <li><Link to="/services">FBAR &amp; FATCA Form 8938</Link></li>
+            <li><Link to="/refer">Refer a Friend &amp; Earn $50</Link></li>
           </ul>
         </div>
 
         {/* Contact */}
         <div className="footer-column">
-          <h4>Indian Support Offices</h4>
+          <h4>Contact &amp; Support</h4>
           <ul>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">✉</span>
-                <span>contact@irataxsolutions.com</span>
+                <span>info@irataxsolutions.com</span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+91 98765 43210 <em style={{ fontSize: '11px', opacity: 0.8 }}>(Dummy)</em></span>
+                <span>+1 (901) 453-2499</span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
-                <span className="icon">☎</span>
-                <span>+91 98765 00000 <em style={{ fontSize: '11px', opacity: 0.8 }}>(Dummy)</em></span>
+                <span className="icon">💬</span>
+                <span>WhatsApp: +1 90145 32499</span>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">📍</span>
-                <span>Cyber Gateway, HITEC City<br />Hyderabad, Telangana 500081</span>
+                <span>United States &bull; Global Tax Advisory Services</span>
               </div>
             </li>
           </ul>
@@ -85,11 +86,11 @@ export default function Footer() {
       {/* Bottom Bar */}
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
-          <span>© {currentYear} IRATaxSolutions. All rights reserved. In compliance with the Income Tax Act, 1961 (Govt of India).</span>
+          <span>© {currentYear} IRATaxSolutions. All rights reserved. Registered US Tax Preparation Firm adhering to IRS Circular 230 standards.</span>
           <div className="footer-bottom-links">
-            <Link to="/portal/refund-policy">Refund Policy (India)</Link>
-            <Link to="/portal/service-agreement">Terms of Service</Link>
-            <a href="https://incometax.gov.in" target="_blank" rel="noopener noreferrer">e-Filing Portal</a>
+            <Link to="/security">Privacy &amp; Security Policy</Link>
+            <Link to="/about">About Our Firm</Link>
+            <a href="https://www.irs.gov/refunds" target="_blank" rel="noopener noreferrer">IRS Where's My Refund</a>
           </div>
         </div>
       </div>

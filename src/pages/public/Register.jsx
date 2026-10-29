@@ -47,8 +47,8 @@ export default function Register() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-logo">IRA</div>
-          <h2>Create Tax Filing Account</h2>
-          <p>Get an official File ID and begin your Indian ITR filing workflow</p>
+          <h2>Create US Tax Filing Account</h2>
+          <p>Get your official File ID and begin your Form 1040 preparation workflow</p>
         </div>
 
         {error && (
@@ -84,13 +84,13 @@ export default function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="reg-phone">Phone Number</label>
+            <label htmlFor="reg-phone">US Phone Number</label>
             <input
               id="reg-phone"
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="10-digit mobile number (e.g. 9876543210)"
+              placeholder="+1 (901) 453-2499 or (555) 000-0000"
             />
           </div>
 

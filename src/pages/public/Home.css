@@ -1,18 +1,19 @@
 /* ========================================================
-   Public Home CSS matching Clip 1
+   Public Home CSS - US Tax Preparation & Poster 1 Integration
    ======================================================== */
 
 .clip-home-root {
   background-color: #ffffff;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e293b;
 }
 
-/* Hero Section matching exact reference */
+/* 1. Hero Section matching exact reference */
 .clip-hero-section {
   position: relative;
   background-color: #edf0f2;
   border-bottom: 1px solid #e2e8f0;
-  padding: 30px 0 35px;
+  padding: 36px 0 40px;
   overflow: hidden;
 }
 
@@ -27,7 +28,7 @@
 }
 
 .clip-hero-text-col {
-  max-width: 540px;
+  max-width: 560px;
   z-index: 2;
   flex-shrink: 0;
 }
@@ -35,27 +36,27 @@
 .clip-eyebrow {
   display: block;
   font-size: 13px;
-  font-weight: 600;
-  color: #555555;
+  font-weight: 700;
+  color: #0369a1;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .clip-heading {
-  font-size: 46px;
+  font-size: 44px;
   font-weight: 800;
-  color: #1e252b;
+  color: #0f172a;
   line-height: 1.15;
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   letter-spacing: -0.8px;
 }
 
 .clip-subtext {
-  font-size: 15px;
+  font-size: 15.5px;
   line-height: 1.6;
   color: #475569;
-  margin: 0 0 32px;
+  margin: 0 0 28px;
 }
 
 .clip-hero-buttons {
@@ -66,29 +67,29 @@
 }
 
 .clip-btn-green {
-  background-color: #28a745;
+  background-color: #16a34a;
   color: #ffffff;
   padding: 12px 28px;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 6px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-decoration: none;
   transition: background-color 0.15s ease;
-  box-shadow: 0 2px 6px rgba(40, 167, 69, 0.25);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
 }
 
 .clip-btn-green:hover {
-  background-color: #218838;
+  background-color: #15803d;
 }
 
 .clip-btn-outline {
   background-color: #ffffff;
-  color: #1e252b;
-  border: 1px solid #ced4da;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
   padding: 12px 28px;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 6px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-decoration: none;
@@ -96,8 +97,8 @@
 }
 
 .clip-btn-outline:hover {
-  background-color: #f1f5f9;
-  border-color: #adb5bd;
+  background-color: #f8fafc;
+  border-color: #94a3b8;
 }
 
 /* Exact Tax Document Collage Graphic with natural diffusion into endings */
@@ -121,9 +122,394 @@
   filter: contrast(1.02);
 }
 
-@media (max-width: 960px) {
-  .clip-hero-graphic-col {
-    max-width: 50%;
+/* 2. Poster 1 Showcase Section */
+.home-poster-showcase-section {
+  padding: 70px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.home-poster-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.poster1-card-wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12), 0 3px 10px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease;
+}
+
+.poster1-card-wrapper:hover {
+  transform: translateY(-4px);
+}
+
+.poster1-fluid-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.section-pill {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0284c7;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.poster1-content-col h2 {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.25;
+  margin: 0 0 14px;
+  letter-spacing: -0.6px;
+}
+
+.poster1-intro {
+  font-size: 15.5px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.poster1-bullet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.bullet-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.b-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.b-icon.blue { background: #e0f2fe; color: #0284c7; }
+.b-icon.red { background: #fee2e2; color: #dc2626; }
+.b-icon.green { background: #dcfce7; color: #16a34a; }
+.b-icon.amber { background: #fef3c7; color: #d97706; }
+.b-icon.purple { background: #f3e8ff; color: #9333ea; }
+
+.bullet-row strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 3px;
+}
+
+.bullet-row p {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.poster1-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-bold {
+  background: #16a34a;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  transition: background 0.15s ease;
+}
+
+.btn-primary-bold:hover {
+  background: #15803d;
+}
+
+.btn-secondary-link {
+  color: #0284c7;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-secondary-link:hover {
+  text-decoration: underline;
+}
+
+/* 3. Who We Help Section */
+.who-we-help-section {
+  padding: 70px 24px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.who-we-help-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.section-title-center {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 48px;
+}
+
+.section-title-center h2 {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 8px 0;
+  letter-spacing: -0.5px;
+}
+
+.section-title-center p {
+  font-size: 16px;
+  color: #64748b;
+  margin: 0;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.who-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.who-card:hover {
+  transform: translateY(-3px);
+  border-color: #0284c7;
+}
+
+.who-icon-wrapper {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.who-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.who-card p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 4. Our 5-Step Process */
+.process-step-section {
+  padding: 70px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.process-step-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.step-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 24px 18px;
+  text-align: center;
+  position: relative;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+
+.step-card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px;
+}
+
+.step-card p {
+  font-size: 12.5px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.process-bottom-banner {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+  color: #065f46;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 5. Confidence CTA Section */
+.confidence-cta-section {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  color: #ffffff;
+  padding: 60px 24px;
+}
+
+.confidence-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.confidence-text-col h2 {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+.confidence-text-col p {
+  font-size: 16px;
+  color: #93c5fd;
+  margin: 0 0 16px;
+}
+
+.confidence-pillars {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13.5px;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.confidence-btn-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.btn-confidence-green {
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 26px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+  transition: background 0.15s ease;
+}
+
+.btn-confidence-green:hover {
+  background: #15803d;
+}
+
+.contact-meta-quick {
+  display: flex;
+  gap: 16px;
+  font-size: 12.5px;
+  color: #93c5fd;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1080px) {
+  .home-poster-inner {
+    grid-template-columns: 1fr;
+  }
+  .poster1-visual-col {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+  .steps-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .who-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .confidence-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .confidence-btn-col {
+    text-align: center;
+  }
+  .confidence-pillars,
+  .contact-meta-quick {
+    justify-content: center;
   }
 }
 
@@ -141,86 +527,10 @@
     margin-top: 24px;
     justify-content: center;
   }
-}
-
-/* 3 Numbered Feature Columns matching Clip 1 */
-.clip-features-section {
-  background-color: #ffffff;
-  padding: 50px 0;
-  border-bottom: 1px solid #f1f5f9;
-}
-
-.clip-features-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 36px;
-}
-
-.clip-feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.clip-feature-badge-col {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.clip-num-bubble {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background-color: #1e252b;
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.clip-icon-box {
-  width: 48px;
-  height: 48px;
-  background-color: #e8f5e9;
-  color: #28a745;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.clip-feature-desc-col {
-  flex: 1;
-}
-
-.clip-feature-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e252b;
-  margin: 0 0 6px;
-}
-
-.clip-feature-p {
-  font-size: 13px;
-  line-height: 1.5;
-  color: #475569;
-  margin: 0;
-}
-
-@media (max-width: 1024px) {
-  .clip-hero-graphic-col {
-    display: none;
-  }
-
-  .clip-features-inner {
+  .who-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+  }
+  .steps-row {
+    grid-template-columns: 1fr;
   }
 }

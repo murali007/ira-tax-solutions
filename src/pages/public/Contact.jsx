@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users } from 'lucide-react';
+import poster3Img from '../../assets/posters/poster3-booking.jpg';
 import './Contact.css';
 
 export default function Contact() {
@@ -7,7 +8,10 @@ export default function Contact() {
     name: '',
     email: '',
     phone: '',
-    subject: '',
+    taxSituation: 'W-2 Employee',
+    preferredDate: '',
+    timeSlot: 'Morning (9:00 AM - 12:00 PM EST)',
+    timeZone: 'EST (Eastern Time)',
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -21,150 +25,200 @@ export default function Contact() {
     <div className="contact-page">
       <div className="container">
         <header className="page-header">
-          <span className="badge">Get in Touch</span>
-          <h1>Contact Our Indian Tax Experts</h1>
+          <span className="badge">Schedule Free Consultation</span>
+          <h1>Let's Make Tax Filing Simple</h1>
           <p>
-            Have questions about ITR-1, ITR-2, capital gains, Section 44ADA, or notice management? 
-            Our dedicated team of Chartered Accountants is ready to assist you.
+            Have questions about your US taxes? Schedule a free 15-minute call and get your doubts answered by our experienced US tax professionals.
           </p>
         </header>
 
-        <div className="contact-grid">
-          {/* Contact Details Card */}
-          <div className="contact-info-card">
-            <h3>Office &amp; Support Information</h3>
-            <p className="info-intro">
-              Reach out directly by phone, WhatsApp, email, or schedule a 1-on-1 CA consultation.
-            </p>
-
-            <div className="info-items">
-              <div className="info-item">
-                <Phone className="item-icon" size={20} />
-                <div>
-                  <strong>Phone &amp; WhatsApp Lines</strong>
-                  <p>Direct CA Helpline: +91 98765 43210 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
-                  <p>Client Advisory: +91 98765 00000 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
-                  <p>WhatsApp Chat: +91 98765 43210 <em style={{ fontSize: '11px', color: '#e02424', fontWeight: 600 }}>(Dummy)</em></p>
-                </div>
-              </div>
-
-              <div className="info-item">
-                <Mail className="item-icon" size={20} />
-                <div>
-                  <strong>Email Inquiries</strong>
-                  <p>contact@irataxsolutions.com</p>
-                  <p>support@irataxsolutions.com</p>
-                </div>
-              </div>
-
-              <div className="info-item">
-                <MapPin className="item-icon" size={20} />
-                <div>
-                  <strong>Indian Registered Offices</strong>
-                  <p>Cyber Gateway, Block B, HITEC City</p>
-                  <p>Madhapur, Hyderabad, Telangana 500081</p>
-                  <p style={{ marginTop: '4px', fontSize: '13px', color: '#64748b' }}>Branch: Prestige Tech Park, Marathahalli, Bengaluru 560103</p>
-                </div>
-              </div>
-
-              <div className="info-item">
-                <Clock className="item-icon" size={20} />
-                <div>
-                  <strong>Business Hours (IST)</strong>
-                  <p>Monday – Saturday: 9:30 AM – 7:30 PM IST</p>
-                  <p>ITR Peak Filing Season: 24/7 Extended Support</p>
-                </div>
-              </div>
+        <div className="contact-booking-grid">
+          {/* Left Column: Authentic Poster 3 Feature */}
+          <div className="booking-poster-col">
+            <div className="poster-frame-card">
+              <img 
+                src={poster3Img} 
+                alt="Poster 3 - Let's Make Tax Filing Simple: Book a Free 15-Minute Consultation" 
+                className="poster-img-booking"
+              />
             </div>
 
-            <div className="map-placeholder">
-              <span>Interactive Location Map (Hyderabad &amp; Bengaluru, India)</span>
+            {/* Direct Contact Block */}
+            <div className="direct-contact-pill-card">
+              <h4>Direct Support Channels</h4>
+              <div className="direct-item">
+                <Phone size={18} className="text-green" />
+                <div>
+                  <strong>Call &amp; WhatsApp:</strong>
+                  <a href="tel:+19014532499">+1 (901) 453-2499</a>
+                </div>
+              </div>
+              <div className="direct-item">
+                <Mail size={18} className="text-blue" />
+                <div>
+                  <strong>Official Email:</strong>
+                  <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
+                </div>
+              </div>
+              <div className="direct-item">
+                <Clock size={18} className="text-amber" />
+                <div>
+                  <strong>Hours of Operation:</strong>
+                  <span>Mon – Sat: 9:00 AM – 8:00 PM EST (24/7 Peak Season)</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Contact Inquiry Form */}
+          {/* Right Column: 15-Minute Consultation Booking Form */}
           <div className="contact-form-card">
             {submitted ? (
               <div className="success-box">
-                <CheckCircle2 size={48} className="text-primary" />
-                <h3>Message Received!</h3>
+                <CheckCircle2 size={54} style={{ color: '#16a34a', margin: '0 auto 16px' }} />
+                <h3>Consultation Scheduled!</h3>
                 <p>
-                  Thank you for contacting IRA Tax Solutions, <strong>{formData.name}</strong>.
-                  A tax specialist will respond to <strong>{formData.email}</strong> within 1 business day.
+                  Thank you, <strong>{formData.name}</strong>! Your free 15-minute consultation request has been received for <strong>{formData.preferredDate || 'the upcoming slot'}</strong> ({formData.timeZone}).
+                </p>
+                <p style={{ fontSize: '13.5px', color: '#64748b', marginTop: '8px' }}>
+                  A confirmation invitation has been dispatched to <strong>{formData.email}</strong>. Our US tax preparer looks forward to speaking with you!
                 </p>
                 <button
                   onClick={() => {
                     setSubmitted(false);
-                    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+                    setFormData({
+                      name: '',
+                      email: '',
+                      phone: '',
+                      taxSituation: 'W-2 Employee',
+                      preferredDate: '',
+                      timeSlot: 'Morning (9:00 AM - 12:00 PM EST)',
+                      timeZone: 'EST (Eastern Time)',
+                      message: ''
+                    });
                   }}
                   className="btn btn-outline"
+                  style={{ marginTop: '20px' }}
                 >
-                  Send Another Message
+                  Book Another Session
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit}>
-                <h3>Send Us a Message</h3>
-                <p className="form-subtext">Fill out this form and we will get back to you promptly.</p>
+              <form onSubmit={handleSubmit} className="booking-form-inner">
+                <div className="form-header-title">
+                  <h3>Book Your Free 15-Minute Consultation</h3>
+                  <p>Get clarity on your tax situation, document requirements, and transparent pricing with no obligation.</p>
+                </div>
 
-                <div className="form-group">
-                  <label>Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your full name"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
+                <div className="three-value-pills">
+                  <span className="pill-badge">💡 Get Doubts Cleared</span>
+                  <span className="pill-badge">📋 Understand Process</span>
+                  <span className="pill-badge">💲 Know Estimated Fee</span>
                 </div>
 
                 <div className="form-row">
+                  <div className="form-group">
+                    <label>Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. John Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    />
+                  </div>
                   <div className="form-group">
                     <label>Email Address *</label>
                     <input
                       type="email"
                       required
-                      placeholder="name@example.com"
+                      placeholder="john@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     />
                   </div>
+                </div>
+
+                <div className="form-row">
                   <div className="form-group">
-                    <label>Contact Number</label>
+                    <label>Phone Number *</label>
                     <input
                       type="tel"
-                      placeholder="+1 (470) 444-8100"
+                      required
+                      placeholder="+1 (555) 000-0000"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
+                  <div className="form-group">
+                    <label>Your Tax Situation / Needs *</label>
+                    <select
+                      value={formData.taxSituation}
+                      onChange={(e) => setFormData({ ...formData, taxSituation: e.target.value })}
+                    >
+                      <option value="W-2 Employee">W-2 Salaried Employee</option>
+                      <option value="1099 / Self-Employed">1099 Freelancer / Self-Employed (Schedule C)</option>
+                      <option value="Family & Dependents">Family &amp; Child Tax Credit Filings</option>
+                      <option value="Investments & Crypto">Stocks, Crypto &amp; Capital Gains (Schedule D)</option>
+                      <option value="Multi-State Return">Multi-State Tax Filings</option>
+                      <option value="FBAR / Expat Tax">International / FBAR (FinCEN 114) &amp; Form 8938</option>
+                      <option value="Other / Notice">IRS Notice / General Question</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Preferred Consultation Date</label>
+                    <input
+                      type="date"
+                      value={formData.preferredDate}
+                      onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Your Time Zone *</label>
+                    <select
+                      value={formData.timeZone}
+                      onChange={(e) => setFormData({ ...formData, timeZone: e.target.value })}
+                    >
+                      <option value="EST (Eastern Time)">EST (Eastern Time - New York/Atlanta)</option>
+                      <option value="CST (Central Time)">CST (Central Time - Chicago/Dallas)</option>
+                      <option value="MST (Mountain Time)">MST (Mountain Time - Denver/Phoenix)</option>
+                      <option value="PST (Pacific Time)">PST (Pacific Time - Los Angeles/Seattle)</option>
+                      <option value="Other / International">Other / Expat Time Zone</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Subject / Tax Year</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. 2025 Tax Filing Inquiry / FBAR Guidance"
-                    value={formData.subject}
-                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  />
+                  <label>Preferred Time Slot</label>
+                  <select
+                    value={formData.timeSlot}
+                    onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
+                  >
+                    <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
+                    <option value="Afternoon (12:00 PM - 4:00 PM)">Afternoon (12:00 PM - 4:00 PM)</option>
+                    <option value="Evening (4:00 PM - 8:00 PM)">Evening (4:00 PM - 8:00 PM)</option>
+                  </select>
                 </div>
 
                 <div className="form-group">
-                  <label>Message *</label>
+                  <label>What specific questions would you like to discuss?</label>
                   <textarea
-                    rows={4}
-                    required
-                    placeholder="Briefly describe your tax inquiry or schedule request..."
+                    rows={3}
+                    placeholder="Briefly describe your tax questions or documents you have..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full">
-                  <Send size={16} />
-                  Send Message
+                <button type="submit" className="btn btn-primary w-full booking-submit-btn">
+                  <Calendar size={18} />
+                  Book Your Free 15-Minute Consultation
                 </button>
+                <p className="no-obligation-note">
+                  🔒 No obligation. Your information is 100% confidential under IRS rules.
+                </p>
               </form>
             )}
           </div>

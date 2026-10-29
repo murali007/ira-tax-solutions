@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { User, Calendar, Users, Info, Edit3, Plus, Trash2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { User, Calendar, Users, Info, Plus, Trash2, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
 const BLANK_DEPENDENT = {
@@ -12,11 +12,11 @@ const BLANK_DEPENDENT = {
   gender: '',
   dob: '',
   relationship: '',
-  visaType: '',
-  taxIdType: '',
-  days2025: '',
-  days2024: '',
-  days2023: ''
+  visaType: '', // US Tax Credit Category (CTC $2,000 / ODC $500 / Daycare / Tuition)
+  taxIdType: '', // Dependent SSN / ITIN
+  days2025: '', // Months lived in US with taxpayer (0-12)
+  days2024: '', // Full-time student (YES / NO)
+  days2023: ''  // Provided >50% support (YES / NO)
 };
 
 export default function DependentInfo() {
@@ -70,6 +70,18 @@ export default function DependentInfo() {
     setErrorMessage('');
   };
 
+  const handleSSNChange = (id, rawVal) => {
+    let val = rawVal.replace(/\D/g, '');
+    if (val.length > 9) val = val.substring(0, 9);
+    let formatted = val;
+    if (val.length > 5) {
+      formatted = `${val.substring(0, 3)}-${val.substring(3, 5)}-${val.substring(5)}`;
+    } else if (val.length > 3) {
+      formatted = `${val.substring(0, 3)}-${val.substring(3)}`;
+    }
+    handleFieldChange(id, 'taxIdType', formatted);
+  };
+
   const handleAddDependent = () => {
     const newId = dependents.length > 0 ? Math.max(...dependents.map(d => d.id)) + 1 : 1;
     setDependents(prev => [...prev, { ...BLANK_DEPENDENT, id: newId }]);
@@ -113,7 +125,7 @@ export default function DependentInfo() {
     <div className="tax-form-wrapper">
       <div className="tax-form-card">
         <div className="tax-form-title-row">
-          <h2>Dependent Information</h2>
+          <h2>Dependent Information (US Child Tax Credit &amp; Other Dependents)</h2>
           {savedSuccess && (
             <div className="saved-alert-pill">
               <CheckCircle2 size={15} />
@@ -130,43 +142,44 @@ export default function DependentInfo() {
         )}
 
         {dependents.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '40px 16px' }}>
-            <Users size={38} style={{ color: '#90a4ae', margin: '0 auto 12px' }} />
-            <h4 style={{ fontSize: '16px', color: '#37474f', marginBottom: '6px' }}>
-              No Dependents Added
-            </h4>
-            <p style={{ color: '#78909c', fontSize: '13px', maxWidth: '420px', margin: '0 auto 20px' }}>
-              Click the button below to add details for your spouse/children or qualifying dependents.
+          <div className="empty-dependent-note" style={{ padding: '40px 20px', textAlign: 'center' }}>
+            <Users size={40} style={{ color: '#94a3b8', margin: '0 auto 12px' }} />
+            <h4 style={{ color: '#334155', marginBottom: '8px' }}>No Dependents Claimed Yet</h4>
+            <p style={{ color: '#64748b', fontSize: '14px', maxWidth: '520px', margin: '0 auto 20px', lineHeight: '1.5' }}>
+              Add qualifying children under 17 for the <strong>$2,000 Child Tax Credit (CTC)</strong>, 
+              college students for the <strong>American Opportunity Tax Credit</strong>, or elderly relatives for the <strong>$500 Credit for Other Dependents (ODC)</strong>.
             </p>
             <button
               type="button"
               onClick={handleAddDependent}
               className="btn-save-blue"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             >
-              <Plus size={15} /> Add Dependent
+              <Plus size={16} /> Add First Dependent
             </button>
           </div>
         ) : (
           <form onSubmit={handleSave}>
             {dependents.map((dep, index) => (
-              <div key={dep.id} style={{ marginBottom: '24px', paddingBottom: '20px', borderBottom: '1px solid #eef2f6' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                  <strong style={{ fontSize: '14px', color: '#37474f' }}>
+              <div key={dep.id} className="dependent-block" style={{ background: '#f8fafc', padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', borderBottom: '1px solid #e2e8f0', paddingBottom: '8px' }}>
+                  <h3 style={{ fontSize: '16px', color: '#1e293b', fontWeight: 600 }}>
                     Dependent #{index + 1}
-                  </strong>
+                  </h3>
                   <button
                     type="button"
                     onClick={() => handleRemoveDependent(dep.id)}
-                    style={{ background: 'none', border: 'none', color: '#e53935', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '12px' }}
+                    className="btn-remove-slot"
+                    style={{ background: '#fee2e2', color: '#dc2626', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '13px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                   >
                     <Trash2 size={13} /> Remove
                   </button>
                 </div>
 
-                {/* Row 1: First Name, Middle Name, Last Name matching Clip 9 */}
+                {/* Row 1: First Name, Middle Initial, Last Name */}
                 <div className="form-grid-3">
                   <div className="input-field-group">
-                    <label>First Name</label>
+                    <label>Dependent First Name *</label>
                     <div className="input-with-icon">
                       <User size={15} className="field-icon" />
                       <input
@@ -174,32 +187,34 @@ export default function DependentInfo() {
                         value={dep.firstName}
                         onChange={(e) => handleFieldChange(dep.id, 'firstName', e.target.value)}
                         placeholder="First Name"
+                        required
                       />
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Middle Name</label>
+                    <label>Middle Initial</label>
                     <div className="input-with-icon">
                       <User size={15} className="field-icon" />
                       <input
                         type="text"
                         value={dep.middleName}
                         onChange={(e) => handleFieldChange(dep.id, 'middleName', e.target.value)}
-                        placeholder="Middle Name"
+                        placeholder="Middle Initial"
                       />
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Last Name</label>
+                    <label>Dependent Last Name *</label>
                     <div className="input-with-icon">
                       <User size={15} className="field-icon" />
                       <input
                         type="text"
                         value={dep.lastName}
                         onChange={(e) => handleFieldChange(dep.id, 'lastName', e.target.value)}
-                        placeholder="Name"
+                        placeholder="Last Name"
+                        required
                       />
                     </div>
                   </div>
@@ -234,112 +249,151 @@ export default function DependentInfo() {
                   </div>
 
                   <div className="input-field-group">
-                    <label>Date of Birth</label>
+                    <label>Date of Birth (MM/DD/YYYY) *</label>
                     <div className="input-with-icon">
                       <Calendar size={15} className="field-icon" />
                       <input
                         type="text"
                         value={dep.dob}
                         onChange={(e) => handleFieldChange(dep.id, 'dob', e.target.value)}
-                        placeholder="DD-MM-YYYY"
+                        placeholder="MM/DD/YYYY"
+                        required
                       />
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Relationship</label>
+                    <label>Relationship to Taxpayer *</label>
                     <div className="input-with-icon">
                       <Users size={15} className="field-icon" />
                       <select
                         value={dep.relationship}
                         onChange={(e) => handleFieldChange(dep.id, 'relationship', e.target.value)}
+                        required
                       >
                         <option value="">Select Relationship</option>
                         <option value="Son">Son</option>
                         <option value="Daughter">Daughter</option>
-                        <option value="Father">Father (Senior Citizen)</option>
-                        <option value="Mother">Mother (Senior Citizen)</option>
-                        <option value="Brother">Brother</option>
-                        <option value="Sister">Sister</option>
-                        <option value="Other">Other Dependent</option>
+                        <option value="Stepchild">Stepchild</option>
+                        <option value="Foster Child">Foster Child</option>
+                        <option value="Grandchild">Grandchild</option>
+                        <option value="Brother / Sister">Brother / Sister</option>
+                        <option value="Father">Father</option>
+                        <option value="Mother">Mother</option>
+                        <option value="Other Relative">Other Qualifying Relative</option>
                       </select>
                     </div>
                   </div>
                 </div>
 
-                {/* Row 3: Tax Deduction Category, PAN, Aadhaar */}
+                {/* Row 3: US Tax Credit Eligibility, SSN/ITIN, Months Lived in US */}
                 <div className="form-grid-3">
                   <div className="input-field-group">
-                    <label>Tax Benefit Category</label>
+                    <label>US Tax Credit Classification</label>
                     <div className="input-with-icon">
                       <Info size={15} className="field-icon" />
                       <select
                         value={dep.visaType}
                         onChange={(e) => handleFieldChange(dep.id, 'visaType', e.target.value)}
                       >
-                        <option value="">Select Deduction Type</option>
-                        <option value="Sec 80C Child Tuition">Child Tuition Fees (Sec 80C)</option>
-                        <option value="Sec 80D Parents Medical">Parents Medical Insurance (Sec 80D up to ₹50k)</option>
-                        <option value="Sec 80DD Disability">Differently Abled Dependent (Sec 80DD)</option>
-                        <option value="General Dependent">General Dependent</option>
+                        <option value="">Select Credit Category</option>
+                        <option value="Child Tax Credit ($2,000)">Child Tax Credit (Under 17 - $2,000)</option>
+                        <option value="Credit for Other Dependents ($500)">Credit for Other Dependents (17+ or Parent - $500)</option>
+                        <option value="Child & Dependent Care Credit">Child &amp; Dependent Care Credit (Form 2441 Daycare)</option>
+                        <option value="College Student (1098-T AOTC)">College Student (Form 1098-T Education Credit)</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>PAN (Optional if Minor)</label>
+                    <label>Social Security Number (SSN) / ITIN *</label>
                     <div className="input-with-icon">
-                      <Edit3 size={15} className="field-icon" />
+                      <Info size={15} className="field-icon" />
                       <input
                         type="text"
-                        maxLength={10}
+                        maxLength={11}
                         value={dep.taxIdType}
-                        onChange={(e) => handleFieldChange(dep.id, 'taxIdType', e.target.value.toUpperCase())}
-                        placeholder="e.g. ABCDE1234F"
+                        onChange={(e) => handleSSNChange(dep.id, e.target.value)}
+                        placeholder="XXX-XX-XXXX"
+                        required
                       />
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>Aadhaar Number (12 Digits)</label>
+                    <label>Months Lived in US with You (2024)</label>
                     <div className="input-with-icon">
-                      <Edit3 size={15} className="field-icon" />
-                      <input
-                        type="text"
-                        maxLength={12}
+                      <Calendar size={15} className="field-icon" />
+                      <select
                         value={dep.days2025}
                         onChange={(e) => handleFieldChange(dep.id, 'days2025', e.target.value)}
-                        placeholder="12-digit Aadhaar Number"
-                      />
+                      >
+                        <option value="">Months (0-12)</option>
+                        <option value="12">12 Months (Entire Year)</option>
+                        <option value="11">11 Months</option>
+                        <option value="10">10 Months</option>
+                        <option value="9">9 Months</option>
+                        <option value="8">8 Months</option>
+                        <option value="7">7 Months (&gt; Half Year)</option>
+                        <option value="6">6 Months</option>
+                        <option value="5">5 Months</option>
+                        <option value="Born in 2024">Born in 2024</option>
+                      </select>
                     </div>
                   </div>
                 </div>
 
-                {/* Row 4: Annual Expenditure / Deduction amounts in INR */}
+                {/* Row 4: Student status & Financial Support */}
                 <div className="form-grid-3">
                   <div className="input-field-group">
-                    <label>Annual Medical Insurance Premium Paid (₹)</label>
-                    <div className="input-with-icon">
-                      <Info size={15} className="field-icon" />
-                      <input
-                        type="number"
-                        value={dep.days2024}
-                        onChange={(e) => handleFieldChange(dep.id, 'days2024', e.target.value)}
-                        placeholder="e.g. 25000"
-                      />
+                    <label>Was Dependent a Full-Time Student in 2024?</label>
+                    <div className="radio-group-horizontal">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name={`student_${dep.id}`}
+                          value="YES"
+                          checked={dep.days2024 === 'YES'}
+                          onChange={(e) => handleFieldChange(dep.id, 'days2024', e.target.value)}
+                        />
+                        YES (Under 24)
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name={`student_${dep.id}`}
+                          value="NO"
+                          checked={dep.days2024 === 'NO'}
+                          onChange={(e) => handleFieldChange(dep.id, 'days2024', e.target.value)}
+                        />
+                        NO
+                      </label>
                     </div>
                   </div>
 
                   <div className="input-field-group">
-                    <label>School/College Tuition Fees Paid (₹ - Sec 80C)</label>
-                    <div className="input-with-icon">
-                      <Info size={15} className="field-icon" />
-                      <input
-                        type="number"
-                        value={dep.days2023}
-                        onChange={(e) => handleFieldChange(dep.id, 'days2023', e.target.value)}
-                        placeholder="e.g. 60000"
-                      />
+                    <label>Did You Provide &gt;50% of Financial Support?</label>
+                    <div className="radio-group-horizontal">
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name={`support_${dep.id}`}
+                          value="YES"
+                          checked={dep.days2023 === 'YES'}
+                          onChange={(e) => handleFieldChange(dep.id, 'days2023', e.target.value)}
+                        />
+                        YES (&gt;50% Support)
+                      </label>
+                      <label className="radio-label">
+                        <input
+                          type="radio"
+                          name={`support_${dep.id}`}
+                          value="NO"
+                          checked={dep.days2023 === 'NO'}
+                          onChange={(e) => handleFieldChange(dep.id, 'days2023', e.target.value)}
+                        />
+                        NO
+                      </label>
                     </div>
                   </div>
                 </div>
@@ -351,15 +405,16 @@ export default function DependentInfo() {
                 type="button"
                 onClick={handleAddDependent}
                 className="btn-reset-gray"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
               >
                 <Plus size={14} /> Add Another Dependent
               </button>
             </div>
 
-            {/* Action Buttons matching Clip 9 */}
+            {/* Action Buttons */}
             <div className="form-actions-bar">
               <button type="submit" className="btn-save-blue">
-                Save
+                Save Dependents
               </button>
               <button type="button" onClick={handleReset} className="btn-reset-gray">
                 Reset

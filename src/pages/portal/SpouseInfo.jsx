@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { User, Calendar, Info, HelpCircle, Edit3, CheckCircle2, AlertCircle } from 'lucide-react';
+import { User, Calendar, Info, HelpCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 import './TaxpayerInfo.css';
 
 const BLANK_SPOUSE_STATE = {
@@ -12,8 +12,8 @@ const BLANK_SPOUSE_STATE = {
   gender: '',
   dob: '',
   occupation: '',
-  visaType: '',
-  taxIdType: ''
+  visaType: '', // used for Spouse SSN/ITIN
+  taxIdType: '' // used for Spouse Visa/Residency Status
 };
 
 export default function SpouseInfo() {
@@ -61,6 +61,20 @@ export default function SpouseInfo() {
     setErrorMessage('');
   };
 
+  const handleSSNChange = (e) => {
+    let val = e.target.value.replace(/\D/g, '');
+    if (val.length > 9) val = val.substring(0, 9);
+    let formatted = val;
+    if (val.length > 5) {
+      formatted = `${val.substring(0, 3)}-${val.substring(3, 5)}-${val.substring(5)}`;
+    } else if (val.length > 3) {
+      formatted = `${val.substring(0, 3)}-${val.substring(3)}`;
+    }
+    setFormData(prev => ({ ...prev, visaType: formatted }));
+    setSavedSuccess(false);
+    setErrorMessage('');
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -95,7 +109,7 @@ export default function SpouseInfo() {
     <div className="tax-form-wrapper">
       <div className="tax-form-card">
         <div className="tax-form-title-row">
-          <h2>Spouse Information</h2>
+          <h2>Spouse Information (Form 1040 Joint Filer)</h2>
           {savedSuccess && (
             <div className="saved-alert-pill">
               <CheckCircle2 size={15} />
@@ -111,158 +125,206 @@ export default function SpouseInfo() {
           </div>
         )}
 
-        <form onSubmit={handleSave}>
-          {/* Row 1: First Name, Middle Name, Last Name matching Clip 8 */}
-          <div className="form-grid-3">
-            <div className="input-field-group">
-              <label>First Name</label>
-              <div className="input-with-icon">
-                <User size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="First Name"
-                />
-              </div>
-            </div>
-
-            <div className="input-field-group">
-              <label>Middle Name</label>
-              <div className="input-with-icon">
-                <User size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="middleName"
-                  value={formData.middleName}
-                  onChange={handleChange}
-                  placeholder="Middle Name"
-                />
-              </div>
-            </div>
-
-            <div className="input-field-group">
-              <label>Last Name</label>
-              <div className="input-with-icon">
-                <User size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Last Name"
-                />
-              </div>
-            </div>
+        {/* Radio toggle: Has Spouse */}
+        <div className="toggle-section-bar">
+          <label className="toggle-lead-label">Are you married or filing jointly?</label>
+          <div className="radio-group-horizontal">
+            <label className="radio-label">
+              <input
+                type="radio"
+                name="hasSpouse"
+                value="yes"
+                checked={formData.hasSpouse === 'yes'}
+                onChange={handleChange}
+              />
+              YES (Married Filing Jointly / Separately)
+            </label>
+            <label className="radio-label">
+              <input
+                type="radio"
+                name="hasSpouse"
+                value="no"
+                checked={formData.hasSpouse === 'no'}
+                onChange={handleChange}
+              />
+              NO (Single / Head of Household)
+            </label>
           </div>
+        </div>
 
-          {/* Row 2: Gender, Date of Birth, Occupation */}
-          <div className="form-grid-3">
-            <div className="input-field-group">
-              <label>Gender</label>
-              <div className="radio-group-horizontal">
-                <label className="radio-label">
+        {formData.hasSpouse === 'no' ? (
+          <div className="empty-dependent-note" style={{ padding: '40px 20px', textAlign: 'center' }}>
+            <p style={{ color: '#64748b', fontSize: '15px' }}>
+              You indicated Single or Head of Household status. Spouse details are not required for your Form 1040 return.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSave} className="taxpayer-form-grid" style={{ marginTop: '20px' }}>
+            {/* Row 1: First Name, Middle Initial, Last Name */}
+            <div className="form-grid-3">
+              <div className="input-field-group">
+                <label>Spouse First Name (As on SSN / ITIN Card) *</label>
+                <div className="input-with-icon">
+                  <User size={15} className="field-icon" />
                   <input
-                    type="radio"
-                    name="gender"
-                    value="Male"
-                    checked={formData.gender === 'Male'}
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
                     onChange={handleChange}
+                    placeholder="Spouse First Name"
+                    required
                   />
-                  Male
-                </label>
-                <label className="radio-label">
+                </div>
+              </div>
+
+              <div className="input-field-group">
+                <label>Spouse Middle Initial / Name</label>
+                <div className="input-with-icon">
+                  <User size={15} className="field-icon" />
                   <input
-                    type="radio"
-                    name="gender"
-                    value="Female"
-                    checked={formData.gender === 'Female'}
+                    type="text"
+                    name="middleName"
+                    value={formData.middleName}
                     onChange={handleChange}
+                    placeholder="Middle Initial / Name"
                   />
-                  Female
-                </label>
+                </div>
+              </div>
+
+              <div className="input-field-group">
+                <label>Spouse Last Name (Surname) *</label>
+                <div className="input-with-icon">
+                  <User size={15} className="field-icon" />
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    placeholder="Spouse Last Name"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
-            <div className="input-field-group">
-              <label>Date of Birth</label>
-              <div className="input-with-icon">
-                <Calendar size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="dob"
-                  value={formData.dob}
-                  onChange={handleChange}
-                  placeholder="DD-MM-YYYY"
-                />
+            {/* Row 2: Gender, Date of Birth, Occupation */}
+            <div className="form-grid-3">
+              <div className="input-field-group">
+                <label>Gender</label>
+                <div className="radio-group-horizontal">
+                  <label className="radio-label">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      checked={formData.gender === 'Female'}
+                      onChange={handleChange}
+                    />
+                    Female
+                  </label>
+                  <label className="radio-label">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      checked={formData.gender === 'Male'}
+                      onChange={handleChange}
+                    />
+                    Male
+                  </label>
+                </div>
+              </div>
+
+              <div className="input-field-group">
+                <label>Date of Birth (MM/DD/YYYY) *</label>
+                <div className="input-with-icon">
+                  <Calendar size={15} className="field-icon" />
+                  <input
+                    type="text"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    placeholder="MM/DD/YYYY"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="input-field-group">
+                <label>Spouse Occupation / Employment Status</label>
+                <div className="input-with-icon">
+                  <HelpCircle size={15} className="field-icon" />
+                  <select
+                    name="occupation"
+                    value={formData.occupation}
+                    onChange={handleChange}
+                  >
+                    <option value="">- Select Occupation -</option>
+                    <option value="Salaried Employee (W-2)">Salaried Employee (W-2)</option>
+                    <option value="Self-Employed / Freelancer (1099)">Self-Employed / Freelancer (1099)</option>
+                    <option value="Small Business Owner">Small Business Owner</option>
+                    <option value="Homemaker">Homemaker</option>
+                    <option value="Student">Student</option>
+                    <option value="Retired">Retired</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
             </div>
 
-            <div className="input-field-group">
-              <label>Occupation / Employment Status</label>
-              <div className="input-with-icon">
-                <HelpCircle size={15} className="field-icon" />
-                <select
-                  name="occupation"
-                  value={formData.occupation}
-                  onChange={handleChange}
-                >
-                  <option value="">- Select Occupation -</option>
-                  <option value="Salaried (Private)">Salaried (Private)</option>
-                  <option value="Salaried (Govt/PSU)">Salaried (Govt/PSU)</option>
-                  <option value="Business / Professional">Business / Professional</option>
-                  <option value="Homemaker">Homemaker</option>
-                  <option value="Retired">Retired</option>
-                  <option value="Other">Other</option>
-                </select>
+            {/* Row 3: Spouse SSN/ITIN, Spouse Residency/Visa Status */}
+            <div className="form-grid-3">
+              <div className="input-field-group">
+                <label>Spouse Social Security Number (SSN) / ITIN *</label>
+                <div className="input-with-icon">
+                  <Info size={15} className="field-icon" />
+                  <input
+                    type="text"
+                    name="visaType"
+                    maxLength={11}
+                    value={formData.visaType}
+                    onChange={handleSSNChange}
+                    placeholder="XXX-XX-XXXX"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="input-field-group">
+                <label>Spouse US Residency / Visa Status</label>
+                <div className="input-with-icon">
+                  <Info size={15} className="field-icon" />
+                  <select
+                    name="taxIdType"
+                    value={formData.taxIdType}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Immigration Status</option>
+                    <option value="U.S. Citizen">U.S. Citizen</option>
+                    <option value="Permanent Resident (Green Card)">Permanent Resident (Green Card)</option>
+                    <option value="H-1B Worker">H-1B Worker</option>
+                    <option value="H-4 / H-4 EAD Dependent">H-4 / H-4 EAD Dependent</option>
+                    <option value="L-1 / L-2 Transferee/Dependent">L-1 / L-2 Transferee/Dependent</option>
+                    <option value="F-1 / F-2 Student/Dependent">F-1 / F-2 Student/Dependent</option>
+                    <option value="ITIN Holder (Non-Resident/Dependent)">ITIN Holder (Non-Resident/Dependent)</option>
+                    <option value="Applying for ITIN (Form W-7)">Applying for ITIN (Form W-7)</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Row 3: Spouse PAN, Spouse Aadhaar */}
-          <div className="form-grid-3">
-            <div className="input-field-group">
-              <label>Spouse PAN (Optional if not working)</label>
-              <div className="input-with-icon">
-                <Info size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="visaType"
-                  maxLength={10}
-                  value={formData.visaType}
-                  onChange={(e) => setFormData({ ...formData, visaType: e.target.value.toUpperCase() })}
-                  placeholder="e.g. ABCDE1234F"
-                />
-              </div>
+            {/* Action Buttons */}
+            <div className="form-actions-bar">
+              <button type="submit" className="btn-save-blue">
+                Save Spouse Details
+              </button>
+              <button type="button" onClick={handleReset} className="btn-reset-gray">
+                Reset
+              </button>
             </div>
-
-            <div className="input-field-group">
-              <label>Spouse Aadhaar Number</label>
-              <div className="input-with-icon">
-                <Edit3 size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="taxIdType"
-                  maxLength={12}
-                  value={formData.taxIdType}
-                  onChange={handleChange}
-                  placeholder="12-digit Aadhaar Number"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons matching Clip 8 */}
-          <div className="form-actions-bar">
-            <button type="submit" className="btn-save-blue">
-              Save
-            </button>
-            <button type="button" onClick={handleReset} className="btn-reset-gray">
-              Reset
-            </button>
-          </div>
-        </form>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -1,56 +1,56 @@
 import { Link } from 'react-router-dom';
-import { Calendar, Users, DollarSign, ExternalLink } from 'lucide-react';
+import { Calendar, Users, DollarSign, ExternalLink, ShieldCheck, UserCheck, CheckCircle2 } from 'lucide-react';
 import './About.css';
 
 const whyUs = [
   {
+    icon: <UserCheck size={28} />,
+    title: 'Dedicated Tax Preparer for Every Client',
+    desc: 'Your return is handled by an assigned specialist who takes time to understand your individual career, multi-state moves, and family tax deductions.',
+  },
+  {
+    icon: <ShieldCheck size={28} />,
+    title: 'Separate Reviewer for Quality Assurance',
+    desc: 'Unlike self-service software or solo shops, every single return is reviewed by a second senior tax professional to catch missed deductions before e-filing.',
+  },
+  {
     icon: <Calendar size={28} />,
-    title: 'Open 365 Days a Year',
-    desc: "Our responsibility doesn't end with just ITR filing. We are available year-round to assist with Income Tax Department intimations, AIS discrepancies, and revised returns.",
-  },
-  {
-    icon: <Users size={28} />,
-    title: 'Complimentary Tax Checks',
-    desc: 'Get free Form 26AS review, AIS/TIS data check, Old vs New Tax Regime comparisons, and advance tax estimations as part of our client-first advisory model.',
-  },
-  {
-    icon: <DollarSign size={28} />,
-    title: 'Transparent Indian Pricing',
-    desc: 'Upfront fee structure in Indian Rupees (₹) with no hidden charges. Clear invoices with GST input tax credit for eligible business and consulting clients.',
+    title: 'Year-Round Support Beyond April 15',
+    desc: 'Our relationship does not end with filing. We provide year-round assistance for IRS correspondence, CP2000 inquiries, state tax notices, and quarterly planning.',
   },
 ];
 
 const resources = [
   {
     id: 1,
-    title: 'Check Your Income Tax Refund Status (CPC Bangalore)',
-    category: 'Govt Refund Tracker',
-    link: '/refund-status'
+    title: 'Official IRS "Where\'s My Refund?" Portal',
+    category: 'IRS Federal Refund Tracker',
+    link: 'https://www.irs.gov/refunds'
   },
   {
     id: 2,
-    title: 'Pay Income Tax & Advance Tax Online (Challan 280 / e-Pay Tax)',
-    category: 'Govt e-Pay Tax Portal',
-    link: 'https://eportal.incometax.gov.in/iec/foservices/#/e-pay-tax-prelogin/user-details'
+    title: 'IRS Direct Pay (Federal Tax Payments Without Login)',
+    category: 'IRS Tax Payments',
+    link: 'https://www.irs.gov/payments/direct-pay'
   },
   {
     id: 3,
-    title: 'View & Download Form 26AS / AIS on TRACES',
-    category: 'TRACES TDS Portal',
-    link: 'https://contents.tdscpc.gov.in/'
+    title: 'Get Your Official IRS Tax Transcript Online',
+    category: 'IRS Records & Transcripts',
+    link: 'https://www.irs.gov/individuals/get-transcript'
   },
   {
     id: 4,
-    title: 'GST Portal & Annual Return Filing (CBIC)',
-    category: 'GST Compliance',
-    link: 'https://www.gst.gov.in/'
+    title: 'FinCEN BSA E-Filing System (FBAR Form 114)',
+    category: 'Foreign Bank Account Reporting',
+    link: 'https://bsaefiling.fincen.treas.gov/'
   },
 ];
 
 export default function About() {
   return (
     <div className="clip-about-page">
-      {/* 1. Why Us Section matching Clip 3 */}
+      {/* 1. Why Us Section */}
       <section className="clip-why-section">
         <div className="clip-why-container">
           <div className="clip-why-split">
@@ -60,12 +60,12 @@ export default function About() {
                 <span className="banner-small-why">Why</span>
                 <span className="banner-bold-brand">IRATaxSolutions</span>
                 <p className="banner-subtext">
-                  Witness our Masterful Experience on Tax Strategies and Filing of Individual and Business Tax Returns.
+                  Your Global Tax Partner. Stress Less. File Smarter! Witness our masterful experience in US federal and multi-state tax filing.
                 </p>
               </div>
             </div>
 
-            {/* Right 3 Cards matching Clip 3 */}
+            {/* Right 3 Cards */}
             <div className="clip-why-cards-col">
               {whyUs.map((item, idx) => (
                 <div key={idx} className="clip-why-card">
@@ -82,7 +82,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* 2. Our Proven Track Record Section matching Clip 3 */}
+      {/* 2. Our Proven Track Record Section */}
       <section className="clip-track-record-section">
         <div className="clip-track-container">
           <h2 className="clip-track-heading">Our Proven Track Record</h2>
@@ -90,42 +90,61 @@ export default function About() {
           <div className="clip-track-content-row">
             <div className="clip-track-text">
               <p>
-                IRATaxSolutions is a premier Indian tax advisory firm powered by qualified Chartered Accountants (ICAI members) 
-                and authorized E-Return Intermediaries (ERIs). We deliver end-to-end tax compliance for salaried professionals, 
-                tech workers with global RSUs, freelancers, and businesses under the Income Tax Act, 1961.
+                IRA Tax Solutions provides end-to-end US Individual Tax Preparation (Form 1040) for salaried professionals, tech employees with equity compensation (RSU/ESPP), freelancers, small business owners (Schedule C), and international visa holders across all 50 US states.
               </p>
               <p>
-                With deep specialized domain knowledge in Chapter VI-A deductions, Section 87A tax rebates, Section 115BAC New Tax Regime 
-                optimization, capital gains indexation, and DTAA foreign tax credits (Form 67), we ensure every legal tax exemption is claimed accurately.
+                Our rigorous <strong>two-tier preparation and review model</strong> pairs every taxpayer with a dedicated preparer, followed by an independent senior quality review before transmission to the IRS. This process prevents filing errors, eliminates notice exposure, and ensures all eligible federal and state tax credits are claimed legally and accurately.
               </p>
+              <p>
+                Operating under strict Treasury Circular 230 guidelines and IRS Section 7216 data protection protocols, we safeguard your sensitive financial records with 256-bit encryption and restricted access controls.
+              </p>
+            </div>
+
+            <div className="clip-track-stat-box">
+              <div className="stat-card-row">
+                <div className="stat-number">50</div>
+                <div className="stat-label">US States &amp; DC Covered</div>
+              </div>
+              <div className="stat-card-row">
+                <div className="stat-number">100%</div>
+                <div className="stat-label">IRS Authorized e-File Standards</div>
+              </div>
+              <div className="stat-card-row">
+                <div className="stat-number">2-Tier</div>
+                <div className="stat-label">Preparer &amp; QA Review Process</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Resources Section matching Clip 4 */}
-      <section className="clip-resources-section">
-        <div className="clip-resources-container">
-          <h2 className="clip-resources-heading">Resources</h2>
-          <div className="clip-resources-grid">
+      {/* 3. Official Tax Resources Section */}
+      <section className="clip-resources-section" style={{ background: '#f8fafc', padding: '60px 0' }}>
+        <div className="clip-track-container">
+          <h2 className="clip-track-heading">Helpful US Tax Resources &amp; Government Portals</h2>
+          <div className="clip-track-divider" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginTop: '30px' }}>
             {resources.map((res) => (
-              <div key={res.id} className="clip-resource-box">
-                <div className="resource-visual-header">
-                  <span className="resource-category-tag">{res.category}</span>
+              <a
+                key={res.id}
+                href={res.link}
+                target={res.link.startsWith('http') ? '_blank' : '_self'}
+                rel="noopener noreferrer"
+                style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '20px', textDecoration: 'none', color: '#1e293b', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', transition: 'box-shadow 0.2s' }}
+              >
+                <div>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: '#0284c7', display: 'block', marginBottom: '8px' }}>
+                    {res.category}
+                  </span>
+                  <h4 style={{ fontSize: '15px', fontWeight: 600, margin: '0 0 12px', color: '#0f172a' }}>
+                    {res.title}
+                  </h4>
                 </div>
-                <div className="resource-body">
-                  <h4 className="resource-title">{res.title}</h4>
-                  {res.link.startsWith('http') ? (
-                    <a href={res.link} target="_blank" rel="noopener noreferrer" className="resource-link-btn">
-                      Visit Official Portal <ExternalLink size={12} />
-                    </a>
-                  ) : (
-                    <Link to={res.link} className="resource-link-btn">
-                      Explore Resource →
-                    </Link>
-                  )}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: '#16a34a', fontWeight: 600 }}>
+                  <span>Open Resource</span>
+                  <ExternalLink size={14} />
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { FileText, Clock, AlertCircle, CreditCard, CheckCircle2 } from 'lucide-react';
+import { FileText, Clock, AlertCircle, CreditCard, CheckCircle2, ShieldCheck } from 'lucide-react';
 import './TaxSummary.css';
 
 export default function TaxSummary() {
@@ -36,7 +36,7 @@ export default function TaxSummary() {
     try {
       await api.summary.payFee(token);
       setSummaryData(prev => prev ? { ...prev, fee_paid: 1 } : null);
-      alert('Payment confirmed and recorded in database.');
+      alert('Payment confirmed and recorded.');
     } catch {
       alert('Error recording payment.');
     } finally {
@@ -52,93 +52,93 @@ export default function TaxSummary() {
     <div className="summary-page-container">
       <div className="summary-header">
         <div>
-          <h2>Income Tax Computation &amp; CA Filing Fees</h2>
-          <p>Review the verified computation prepared by your assigned Chartered Accountant under the Income Tax Act, 1961.</p>
+          <h2>Form 1040 Federal &amp; State Tax Computation</h2>
+          <p>Review the comprehensive return computation prepared by your dedicated tax preparer and verified by our QA reviewer.</p>
         </div>
       </div>
 
       {!summaryData ? (
-        /* Clean empty state when no figures have been uploaded or computed yet */
+        /* Empty state when return is in progress */
         <div className="summary-card" style={{ textAlign: 'center', padding: '60px 24px' }}>
           <Clock size={48} style={{ color: 'var(--color-primary)', margin: '0 auto 16px' }} />
           <h3 style={{ fontSize: '20px', color: 'var(--color-navy)', marginBottom: '8px' }}>
-            Awaiting Document Verification &amp; Tax Computation
+            Awaiting Document Verification &amp; Return Preparation
           </h3>
           <p style={{ color: 'var(--color-text-light)', fontSize: '14px', maxWidth: '580px', margin: '0 auto 24px', lineHeight: '1.6' }}>
             No tax calculation figures have been entered for this account yet. 
-            Once you upload your Form 16, Annual Information Statement (AIS), and complete your PAN profile, 
-            your assigned Chartered Accountant will calculate your deductions under the New and Old Tax Regimes and publish the verified computation sheet here.
+            Once you upload your Form W-2s, 1099s, and complete your taxpayer information, 
+            your dedicated tax preparer will calculate your deductions, credits, and state apportionments and publish the verified computation summary here.
           </p>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#f8fafc', padding: '10px 18px', borderRadius: 'var(--radius-full)', border: '1px solid var(--color-border)', fontSize: '13px', color: 'var(--color-charcoal)' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffc107', display: 'inline-block' }} />
-            Status: <strong>Tax Documents Pending / Under CA Review</strong>
+            Status: <strong>Tax Documents Received / Under Preparer &amp; QA Review</strong>
           </div>
         </div>
       ) : (
         <>
-          {/* Render real data from database when available */}
+          {/* Highlight banner with estimated refund */}
           <div className="refund-highlight-box">
             <div className="highlight-column">
-              <span className="label">Estimated ITR Refund / (Payable)</span>
-              <span className="value refund-positive">{summaryData.estimated_refund || '₹0.00'}</span>
+              <span className="label">Estimated Net Federal Refund / (Owed)</span>
+              <span className="value refund-positive">{summaryData.estimated_refund || '$0.00'}</span>
             </div>
             <div className="highlight-column">
-              <span className="label">Applicable Tax Regime</span>
-              <span className="value">{summaryData.status || 'New Regime u/s 115BAC'}</span>
+              <span className="label">Filing Status</span>
+              <span className="value">{summaryData.filing_status || 'Single / Form 1040'}</span>
             </div>
             <div className="highlight-column fee-column">
-              <span className="label">CA Professional Fee</span>
-              <span className="value">{summaryData.preparer_fee || '₹499 + GST'}</span>
+              <span className="label">Tax Preparation Fee</span>
+              <span className="value">{summaryData.preparer_fee || 'Fixed Agreed Fee'}</span>
               {summaryData.fee_paid ? (
                 <span className="paid-tag">
-                  <CheckCircle2 size={14} /> Paid (UPI)
+                  <CheckCircle2 size={14} /> Paid (Credit Card / ACH)
                 </span>
               ) : (
                 <button onClick={handlePayFee} className="btn btn-primary btn-sm" disabled={payingFee}>
-                  <CreditCard size={14} /> Pay Fee (UPI/Cards)
+                  <CreditCard size={14} /> Pay Fee Securely
                 </button>
               )}
             </div>
           </div>
 
           <div className="summary-card">
-            <h3>Indian Income Tax Computation Breakdown ({summaryData.tax_year || 'AY 2025-26'})</h3>
+            <h3>US Federal Tax Computation Breakdown ({summaryData.tax_year || 'Tax Year 2024'})</h3>
             <table className="summary-table">
               <tbody>
                 <tr>
-                  <td>ITR Form Type</td>
-                  <td><strong>{summaryData.filing_status || 'ITR-1 (Sahaj)'}</strong></td>
+                  <td>US Return Type</td>
+                  <td><strong>Form 1040 (U.S. Individual Income Tax Return)</strong></td>
                 </tr>
                 <tr>
-                  <td>Gross Total Income (Salary &amp; Other Sources)</td>
+                  <td>Total Wages, Salaries &amp; 1099 Earnings (Line 1z)</td>
                   <td>{summaryData.total_income || '—'}</td>
                 </tr>
                 <tr>
-                  <td>Standard Deduction u/s 16(ia)</td>
+                  <td>Adjustments to Income (IRA, Student Loan, HSA)</td>
                   <td>{summaryData.adjustments || '—'}</td>
                 </tr>
                 <tr className="subtotal-row">
-                  <td>Gross Taxable Income</td>
+                  <td>Adjusted Gross Income (AGI - Line 11)</td>
                   <td><strong>{summaryData.agi || '—'}</strong></td>
                 </tr>
                 <tr>
-                  <td>Chapter VI-A Deductions (80C, 80D, 80CCD)</td>
-                  <td>{summaryData.deductions || '—'}</td>
+                  <td>Standard Deduction / Itemized Deductions (Schedule A)</td>
+                  <td>{summaryData.deductions || 'Standard Deduction ($14,600 Single / $29,200 MFJ)'}</td>
                 </tr>
                 <tr className="subtotal-row">
-                  <td>Net Taxable Income</td>
+                  <td>Taxable Income (Line 15)</td>
                   <td><strong>{summaryData.taxable_income || '—'}</strong></td>
                 </tr>
                 <tr>
-                  <td>Tax on Net Income &amp; Cess (4%)</td>
+                  <td>Total Federal Tax Liability (After Credits)</td>
                   <td>{summaryData.federal_tax || '—'}</td>
                 </tr>
                 <tr>
-                  <td>TDS / TCS / Advance Tax Credit (Form 26AS)</td>
+                  <td>Federal Income Tax Withheld (W-2 Box 2 &amp; 1099)</td>
                   <td>{summaryData.withheld || '—'}</td>
                 </tr>
                 <tr className="total-highlight-row">
-                  <td>Net Income Tax Refund Due</td>
+                  <td>Net Federal Refund / (Amount You Owe)</td>
                   <td className="refund-positive"><strong>{summaryData.estimated_refund || '—'}</strong></td>
                 </tr>
               </tbody>
@@ -148,9 +148,9 @@ export default function TaxSummary() {
       )}
 
       <div className="summary-disclaimer">
-        <AlertCircle size={18} className="text-warning" />
+        <ShieldCheck size={18} className="text-warning" style={{ color: '#0284c7' }} />
         <p>
-          <strong>Notice:</strong> Tax computations are prepared in compliance with the Income Tax Act, 1961, and verified against your AIS and 26AS data prior to e-filing with the Income Tax Department (CBDT).
+          <strong>IRS Section 7216 Notice:</strong> All tax returns are prepared in strict adherence with Treasury Department Circular 230 and IRS Section 7216 confidentiality rules. Your returns will only be electronically filed with the IRS and state taxing authorities after your written review and Form 8879 authorization.
         </p>
       </div>
     </div>

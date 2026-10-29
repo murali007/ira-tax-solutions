@@ -13,6 +13,7 @@ import Pricing from './pages/public/Pricing';
 import RefundStatus from './pages/public/RefundStatus';
 import Refer from './pages/public/Refer';
 import Contact from './pages/public/Contact';
+import SecurityPrivacy from './pages/public/SecurityPrivacy';
 import Login from './pages/public/Login';
 import Register from './pages/public/Register';
 
@@ -26,8 +27,6 @@ import AddressInfo from './pages/portal/AddressInfo';
 import UploadDocuments from './pages/portal/UploadDocuments';
 import TaxSummary from './pages/portal/TaxSummary';
 import DownloadReturns from './pages/portal/DownloadReturns';
-import RefundPolicy from './pages/portal/RefundPolicy';
-import ServiceAgreement from './pages/portal/ServiceAgreement';
 
 export default function App() {
   return (
@@ -40,6 +39,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/security" element={<SecurityPrivacy />} />
             <Route path="/refund-status" element={<RefundStatus />} />
             <Route path="/refer" element={<Refer />} />
             <Route path="/contact" element={<Contact />} />
@@ -58,8 +58,6 @@ export default function App() {
             <Route path="upload" element={<UploadDocuments />} />
             <Route path="summary" element={<TaxSummary />} />
             <Route path="download" element={<DownloadReturns />} />
-            <Route path="refund-policy" element={<RefundPolicy />} />
-            <Route path="service-agreement" element={<ServiceAgreement />} />
           </Route>
 
           {/* Fallback */}

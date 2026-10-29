@@ -57,15 +57,27 @@ export default function PortalLayout() {
       {/* 1. Portal Brand & Contact Row */}
       <div className="portal-brand-row">
         <div className="portal-brand-inner">
-          {/* Logo */}
-          <Link to="/" className="portal-top-logo">
-            <CheckSquare size={26} className="logo-check-green" />
-            <div className="logo-text-group">
-              <span className="logo-part-dark">IRA</span>
-              <span className="logo-part-green">Tax</span>
-              <span className="logo-part-dark">Solutions</span>
-            </div>
-          </Link>
+          <div className="portal-brand-left-group">
+            {/* Mobile Header Menu Trigger */}
+            <button 
+              type="button"
+              className="portal-mobile-header-btn"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle Portal Sidebar"
+            >
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+
+            {/* Logo */}
+            <Link to="/" className="portal-top-logo">
+              <CheckSquare size={26} className="logo-check-green" />
+              <div className="logo-text-group">
+                <span className="logo-part-dark">IRA</span>
+                <span className="logo-part-green">Tax</span>
+                <span className="logo-part-dark">Solutions</span>
+              </div>
+            </Link>
+          </div>
 
           {/* Center Referral Callout */}
           <Link to="/refer" className="portal-center-referral">
@@ -140,7 +152,7 @@ export default function PortalLayout() {
 
           <div className="green-bar-center">
             <Link to="/contact" className="btn-refer-gold">
-              Book a Free 15-Min Consultation
+              Book Free 15-Min Consultation
             </Link>
             <Link to="/about" className="btn-resources-cyan">
               Resources &amp; Form 1040 Guides
@@ -192,7 +204,7 @@ export default function PortalLayout() {
               <span>Home</span>
             </NavLink>
 
-            {/* Collapsible Personal Information */}
+            {/* Collapsible Personal Information Group */}
             <div className="sidebar-group-wrapper">
               <button 
                 type="button" 
@@ -213,6 +225,7 @@ export default function PortalLayout() {
                     className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
+                    <span className="sublink-dot" />
                     <span>Taxpayer Info</span>
                   </NavLink>
 
@@ -221,6 +234,7 @@ export default function PortalLayout() {
                     className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
+                    <span className="sublink-dot" />
                     <span>Spouse Info</span>
                   </NavLink>
 
@@ -229,6 +243,7 @@ export default function PortalLayout() {
                     className={({ isActive }) => `sublink-item ${isActive ? 'sub-active' : ''}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
+                    <span className="sublink-dot" />
                     <span>Dependent Info</span>
                   </NavLink>
                 </div>
@@ -282,7 +297,7 @@ export default function PortalLayout() {
           </nav>
         </aside>
 
-        {/* Mobile Toggle Button */}
+        {/* Mobile Toggle FAB (Floating Action Button) */}
         <button 
           className="portal-mobile-fab"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

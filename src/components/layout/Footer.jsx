@@ -47,7 +47,7 @@ export default function Footer() {
             <li><Link to="/services">Stocks &amp; Crypto (Schedule D)</Link></li>
             <li><Link to="/services">Multi-State Tax Filings</Link></li>
             <li><Link to="/services">FBAR &amp; FATCA Form 8938</Link></li>
-            <li><Link to="/refer">Refer a Friend &amp; Earn $50</Link></li>
+            <li><Link to="/refer">Refer a Friend &amp; Earn $40</Link></li>
           </ul>
         </div>
 

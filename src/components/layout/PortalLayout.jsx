@@ -84,7 +84,7 @@ export default function PortalLayout() {
             <Users size={22} className="refer-users-icon" />
             <div className="refer-text-col">
               <span className="refer-title">REFER A FRIEND</span>
-              <span className="refer-sub">&amp; Earn $50 Reward</span>
+              <span className="refer-sub">&amp; Earn $40 Reward</span>
             </div>
           </Link>
 

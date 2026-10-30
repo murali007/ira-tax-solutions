@@ -31,15 +31,15 @@ export default function Refer() {
         <div className="refer-hero">
           <div className="hero-content">
             <span className="badge">Partner &amp; Referral Program</span>
-            <h1>Refer a Colleague &amp; Earn $50</h1>
+            <h1>Refer a Colleague &amp; Earn $40</h1>
             <p>
               Share the convenience of professional, accurate US Form 1040 tax preparation with friends, colleagues, and family across all 50 states. 
-              Earn <strong>$50</strong> credited via Zelle, PayPal, or Amazon Gift Card for every colleague who files their US taxes with us!
+              Earn <strong>$40</strong> credited via Zelle, PayPal, or Amazon Gift Card for every colleague who files their US taxes with us!
             </p>
           </div>
           <div className="hero-reward-card">
             <div className="reward-icon" style={{ fontSize: '32px', fontWeight: 800 }}>$</div>
-            <div className="reward-amount">$50</div>
+            <div className="reward-amount">$40</div>
             <div className="reward-label">Per Successful US Tax Return</div>
             <div className="reward-sub">Zelle / PayPal / Gift Card</div>
           </div>
@@ -62,8 +62,8 @@ export default function Refer() {
           <div className="step-card">
             <div className="step-num">03</div>
             <DollarSign className="step-icon" size={24} />
-            <h4>Collect Your $50 Reward</h4>
-            <p>Once your friend's return is finalized and e-filed, your $50 bonus is transferred immediately to your preferred payout account.</p>
+            <h4>Collect Your $40 Reward</h4>
+            <p>Once your friend's return is finalized and e-filed, your $40 bonus is transferred immediately to your preferred payout account.</p>
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export default function Refer() {
             <div className="refer-success" style={{ textAlign: 'center', padding: '40px 20px' }}>
               <CheckCircle2 size={48} className="text-primary" style={{ margin: '0 auto 16px', color: '#16a34a' }} />
               <h3>Referral Received!</h3>
-              <p>Thank you for referring your colleague. We will get in touch with them promptly, and your $50 reward will be processed upon completion.</p>
+              <p>Thank you for referring your colleague. We will get in touch with them promptly, and your $40 reward will be processed upon completion.</p>
               <button 
                 className="btn btn-outline" 
                 style={{ marginTop: '20px' }}
@@ -188,7 +188,7 @@ export default function Refer() {
 
               <div className="form-footer">
                 <button type="submit" className="btn btn-primary btn-lg" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  <Send size={18} /> Submit Referral &amp; Claim $50 Bonus
+                  <Send size={18} /> Submit Referral &amp; Claim $40 Bonus
                 </button>
               </div>
             </form>

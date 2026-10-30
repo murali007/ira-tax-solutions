@@ -88,7 +88,7 @@ export default function RefundStatus() {
             className="btn btn-primary"
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', fontWeight: 600, padding: '12px 22px', borderRadius: '8px' }}
           >
-            Open IRS.gov / Refunds <ExternalLink size={16} />
+            Open IRS Where's My Refund <ExternalLink size={16} />
           </a>
         </div>
 

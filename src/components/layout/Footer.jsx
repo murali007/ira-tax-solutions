@@ -90,7 +90,7 @@ export default function Footer() {
           <div className="footer-bottom-links">
             <Link to="/security">Privacy &amp; Security Policy</Link>
             <Link to="/about">About Our Firm</Link>
-            <a href="https://www.irs.gov/refunds" target="_blank" rel="noopener noreferrer">IRS Where's My Refund</a>
+            <a href="https://sa.www4.irs.gov/wmr/" target="_blank" rel="noopener noreferrer">IRS Where's My Refund</a>
           </div>
         </div>
       </div>

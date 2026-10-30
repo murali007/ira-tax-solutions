@@ -25,7 +25,7 @@ const resources = [
     id: 1,
     title: 'Official IRS "Where\'s My Refund?" Portal',
     category: 'IRS Federal Refund Tracker',
-    link: 'https://www.irs.gov/refunds'
+    link: 'https://sa.www4.irs.gov/wmr/'
   },
   {
     id: 2,

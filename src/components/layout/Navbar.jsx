@@ -112,38 +112,43 @@ export default function Navbar() {
           {/* User Account / Auth Actions */}
           <div className="nav-actions-desktop" ref={dropdownRef}>
             {isAuthenticated ? (
-              <div className="user-dropdown-container">
-                <button
-                  type="button"
-                  className="user-profile-btn"
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  aria-label="User Menu"
-                >
-                  <span className="user-avatar-circle">
-                    {(user?.name || 'T')[0].toUpperCase()}
-                  </span>
-                  <span className="user-name-display">{user?.name}</span>
-                  <span className="caret-arrow">▼</span>
-                </button>
-                {dropdownOpen && (
-                  <div className="user-dropdown-menu">
-                    <div className="dropdown-user-info">
-                      <strong>{user?.name}</strong>
-                      <small>{user?.email}</small>
+              <div className="nav-auth-buttons-group">
+                <Link to="/portal" className="portal-cta-btn">
+                  PORTAL
+                </Link>
+                <div className="user-dropdown-container">
+                  <button
+                    type="button"
+                    className="user-profile-btn"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    aria-label="User Menu"
+                  >
+                    <span className="user-avatar-circle">
+                      {(user?.name || 'T')[0].toUpperCase()}
+                    </span>
+                    <span className="user-name-display">{user?.name}</span>
+                    <span className="caret-arrow">▼</span>
+                  </button>
+                  {dropdownOpen && (
+                    <div className="user-dropdown-menu">
+                      <div className="dropdown-user-info">
+                        <strong>{user?.name}</strong>
+                        <small>{user?.email}</small>
+                      </div>
+                      <hr />
+                      <Link to="/portal" onClick={() => setDropdownOpen(false)}>
+                        Go to Tax Filing Portal
+                      </Link>
+                      <Link to="/security" onClick={() => setDropdownOpen(false)}>
+                        Security &amp; Privacy
+                      </Link>
+                      <hr />
+                      <button onClick={handleLogout} className="logout-btn">
+                        Sign Out
+                      </button>
                     </div>
-                    <hr />
-                    <Link to="/portal" onClick={() => setDropdownOpen(false)}>
-                      Go to Tax Filing Portal
-                    </Link>
-                    <Link to="/security" onClick={() => setDropdownOpen(false)}>
-                      Security &amp; Privacy
-                    </Link>
-                    <hr />
-                    <button onClick={handleLogout} className="logout-btn">
-                      Sign Out
-                    </button>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ) : (
               <div className="nav-auth-buttons-group">
@@ -152,9 +157,6 @@ export default function Navbar() {
                 </Link>
                 <Link to="/register" className="nav-register-btn">
                   Register
-                </Link>
-                <Link to="/portal" className="portal-cta-btn">
-                  PORTAL
                 </Link>
               </div>
             )}
@@ -209,13 +211,10 @@ export default function Navbar() {
                     <Link to="/login" onClick={closeMobile} className="mobile-auth-btn outline">
                       Login
                     </Link>
-                    <Link to="/register" onClick={closeMobile} className="mobile-auth-btn outline">
+                    <Link to="/register" onClick={closeMobile} className="mobile-auth-btn primary">
                       Register
                     </Link>
                   </div>
-                  <Link to="/portal" onClick={closeMobile} className="mobile-auth-btn primary">
-                    Open Client Portal
-                  </Link>
                 </div>
               )}
             </div>

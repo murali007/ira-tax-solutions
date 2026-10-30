@@ -51,7 +51,7 @@ export default function Navbar() {
               <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
             </span>
             <span className="top-item">
-              <span className="flag-icon">🇮🇳</span>
+              <span className="country-code-tag">IN</span>
               <a href="tel:+919014532499">+91 90145 32499</a>
             </span>
             <span className="top-item whatsapp-item">
@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="brand-logo" onClick={closeMobile}>
             <div className="logo-badge">
-              <CheckSquare size={28} className="logo-check-icon" />
+              <CheckSquare size={33} className="logo-check-icon" />
             </div>
             <div className="logo-text-group">
               <span className="logo-title-dark">IRA</span>

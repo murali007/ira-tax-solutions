@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users } from 'lucide-react';
-import poster3Img from '../../assets/posters/poster3-booking.jpg';
+import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users, CheckSquare } from 'lucide-react';
 import './Contact.css';
 
 export default function Contact() {
@@ -33,14 +32,44 @@ export default function Contact() {
         </header>
 
         <div className="contact-booking-grid">
-          {/* Left Column: Authentic Poster 3 Feature */}
+          {/* Left Column: Direct Contact & Highlights */}
           <div className="booking-poster-col">
-            <div className="poster-frame-card">
-              <img 
-                src={poster3Img} 
-                alt="Poster 3 - Let's Make Tax Filing Simple: Book a Free 15-Minute Consultation" 
-                className="poster-img-booking"
-              />
+            <div className="booking-highlight-card">
+              <div className="highlight-card-header">
+                <span className="highlight-tag">Free 15-Min Call</span>
+                <h3>Speak with an Expert</h3>
+                <p>Discuss your tax situation, deductions, and get an upfront price estimate.</p>
+              </div>
+              <ul className="booking-perks-list">
+                <li>
+                  <CheckSquare size={17} className="text-green" />
+                  <div>
+                    <strong>Ask Your Questions</strong>
+                    <span>Get clarity on your tax situation, required forms, and timeline.</span>
+                  </div>
+                </li>
+                <li>
+                  <CheckSquare size={17} className="text-green" />
+                  <div>
+                    <strong>Understand the Process</strong>
+                    <span>Learn how our dedicated preparer and separate reviewer safeguard your return.</span>
+                  </div>
+                </li>
+                <li>
+                  <CheckSquare size={17} className="text-green" />
+                  <div>
+                    <strong>Know Estimated Fee</strong>
+                    <span>Clear, transparent quote with zero hidden charges or surprises.</span>
+                  </div>
+                </li>
+                <li>
+                  <CheckSquare size={17} className="text-green" />
+                  <div>
+                    <strong>No Obligation</strong>
+                    <span>A free consultation designed to help you make an informed decision.</span>
+                  </div>
+                </li>
+              </ul>
             </div>
 
             {/* Direct Contact Block */}
@@ -80,7 +109,7 @@ export default function Contact() {
                   Thank you, <strong>{formData.name}</strong>! Your free 15-minute consultation request has been received for <strong>{formData.preferredDate || 'the upcoming slot'}</strong> ({formData.timeZone}).
                 </p>
                 <p style={{ fontSize: '13.5px', color: '#64748b', marginTop: '8px' }}>
-                  A confirmation invitation has been dispatched to <strong>{formData.email}</strong>. Our US tax preparer looks forward to speaking with you!
+                  A confirmation invitation has been dispatched to <strong>{formData.email}</strong>. Our tax preparer looks forward to speaking with you!
                 </p>
                 <button
                   onClick={() => {
@@ -140,35 +169,36 @@ export default function Contact() {
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Phone Number *</label>
+                    <label>Phone / WhatsApp Number *</label>
                     <input
                       type="tel"
                       required
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+91 90145 32499"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
                   </div>
                   <div className="form-group">
-                    <label>Your Tax Situation / Needs *</label>
+                    <label>Primary Tax Situation *</label>
                     <select
                       value={formData.taxSituation}
                       onChange={(e) => setFormData({ ...formData, taxSituation: e.target.value })}
                     >
                       <option value="W-2 Employee">W-2 Salaried Employee</option>
-                      <option value="1099 / Self-Employed">1099 Freelancer / Self-Employed (Schedule C)</option>
-                      <option value="Family & Dependents">Family &amp; Child Tax Credit Filings</option>
-                      <option value="Investments & Crypto">Stocks, Crypto &amp; Capital Gains (Schedule D)</option>
-                      <option value="Multi-State Return">Multi-State Tax Filings</option>
-                      <option value="FBAR / Expat Tax">International / FBAR (FinCEN 114) &amp; Form 8938</option>
-                      <option value="Other / Notice">IRS Notice / General Question</option>
+                      <option value="1099 Independent Contractor">1099 Contractor / Freelancer (Schedule C)</option>
+                      <option value="W-2 + Stock Options (RSU/ESPP)">W-2 + Stock Options / RSUs / ESPP</option>
+                      <option value="Multi-State Moves">Multi-State Returns (Moved during the year)</option>
+                      <option value="Small Business Owner">Small Business / LLC (Schedule C / E)</option>
+                      <option value="Crypto & Investment Portfolio">Active Crypto / Stock Trader (Schedule D)</option>
+                      <option value="Expat / Foreign Assets">Expat / Foreign Bank Accounts (FBAR/FATCA)</option>
+                      <option value="Other / Notice Assistance">IRS Notice / Other Inquiry</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Preferred Consultation Date</label>
+                    <label>Preferred Date</label>
                     <input
                       type="date"
                       value={formData.preferredDate}
@@ -176,49 +206,46 @@ export default function Contact() {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Your Time Zone *</label>
+                    <label>Preferred Time Window</label>
                     <select
-                      value={formData.timeZone}
-                      onChange={(e) => setFormData({ ...formData, timeZone: e.target.value })}
+                      value={formData.timeSlot}
+                      onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
                     >
-                      <option value="EST (Eastern Time)">EST (Eastern Time - New York/Atlanta)</option>
-                      <option value="CST (Central Time)">CST (Central Time - Chicago/Dallas)</option>
-                      <option value="MST (Mountain Time)">MST (Mountain Time - Denver/Phoenix)</option>
-                      <option value="PST (Pacific Time)">PST (Pacific Time - Los Angeles/Seattle)</option>
-                      <option value="Other / International">Other / Expat Time Zone</option>
+                      <option value="Morning (9:00 AM - 12:00 PM EST)">Morning (9:00 AM – 12:00 PM EST)</option>
+                      <option value="Afternoon (12:00 PM - 4:00 PM EST)">Afternoon (12:00 PM – 4:00 PM EST)</option>
+                      <option value="Evening (4:00 PM - 8:00 PM EST)">Evening (4:00 PM – 8:00 PM EST)</option>
+                      <option value="Flexible / Any Time">Flexible / Any Available Slot</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Preferred Time Slot</label>
+                  <label>Your US Time Zone</label>
                   <select
-                    value={formData.timeSlot}
-                    onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
+                    value={formData.timeZone}
+                    onChange={(e) => setFormData({ ...formData, timeZone: e.target.value })}
                   >
-                    <option value="Morning (9:00 AM - 12:00 PM)">Morning (9:00 AM - 12:00 PM)</option>
-                    <option value="Afternoon (12:00 PM - 4:00 PM)">Afternoon (12:00 PM - 4:00 PM)</option>
-                    <option value="Evening (4:00 PM - 8:00 PM)">Evening (4:00 PM - 8:00 PM)</option>
+                    <option value="EST (Eastern Time)">EST (Eastern Time - US)</option>
+                    <option value="CST (Central Time)">CST (Central Time - US)</option>
+                    <option value="MST (Mountain Time)">MST (Mountain Time - US)</option>
+                    <option value="PST (Pacific Time)">PST (Pacific Time - US)</option>
+                    <option value="IST (India Standard Time)">IST (India Standard Time)</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label>What specific questions would you like to discuss?</label>
+                  <label>Questions or Notes for Your Preparer</label>
                   <textarea
                     rows={3}
-                    placeholder="Briefly describe your tax questions or documents you have..."
+                    placeholder="Briefly describe your tax situation (e.g. number of W-2s, states lived in, foreign accounts, or specific questions)..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
 
-                <button type="submit" className="btn btn-primary w-full booking-submit-btn">
-                  <Calendar size={18} />
-                  Book Your Free 15-Minute Consultation
+                <button type="submit" className="btn-submit-booking">
+                  Confirm 15-Minute Free Consultation <Send size={16} />
                 </button>
-                <p className="no-obligation-note">
-                  🔒 No obligation. Your information is 100% confidential under IRS rules.
-                </p>
               </form>
             )}
           </div>

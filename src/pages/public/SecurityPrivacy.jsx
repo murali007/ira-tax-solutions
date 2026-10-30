@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Shield, Lock, FileCheck, Users, EyeOff, Server, CheckCircle2, ArrowRight } from 'lucide-react';
-import poster2Img from '../../assets/posters/poster2-security.jpg';
 import './SecurityPrivacy.css';
 
 export default function SecurityPrivacy() {
@@ -14,31 +13,17 @@ export default function SecurityPrivacy() {
           </div>
           <h1 className="security-heading">Your Tax Information Deserves Care</h1>
           <p className="security-subtext">
-            Secure. Confidential. Trusted. We follow industry best practices to protect your personal and financial information at every step of your US tax preparation.
+            Secure. Confidential. Trusted. We follow industry best practices to protect your personal and financial information at every step of your tax preparation.
           </p>
         </div>
       </section>
 
-      {/* Main Content with Poster 2 Feature */}
+      {/* Main Content */}
       <section className="security-content-section">
-        <div className="security-content-inner">
-          {/* Left Column: Authentic Poster 2 Graphic */}
-          <div className="security-poster-col">
-            <div className="poster-card-frame">
-              <img 
-                src={poster2Img} 
-                alt="Poster 2 - Your Tax Information Deserves Care: Secure, Confidential, Trusted" 
-                className="poster-img-fluid"
-              />
-            </div>
-            <div className="poster-caption-tag">
-              <span>🔒 <strong>Your Information is in Safe Hands.</strong></span>
-            </div>
-          </div>
-
-          {/* Right Column: Detailed Security Pillars matching Brand Card 2 */}
+        <div className="security-content-inner single-col">
+          {/* Detailed Security Pillars matching Brand Card 2 */}
           <div className="security-details-col">
-            <div className="sec-pill-group">
+            <div className="sec-pill-group grid-layout">
               <div className="sec-feature-box">
                 <div className="sec-icon-box green">
                   <Lock size={22} />

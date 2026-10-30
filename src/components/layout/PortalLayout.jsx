@@ -91,7 +91,7 @@ export default function PortalLayout() {
           {/* Contact Direct Numbers */}
           <div className="portal-top-contact-col">
             <div className="contact-line-item">
-              <span className="flag-circle">🇮🇳</span>
+              <span className="country-code-tag">IN</span>
               <span>+91 90145 32499 <span className="ext-badge" style={{ fontSize: '11px', background: '#e0f2fe', color: '#0369a1', padding: '1px 5px', borderRadius: '4px', fontWeight: 600 }}>Ext: 102</span></span>
             </div>
             <div className="contact-line-item">

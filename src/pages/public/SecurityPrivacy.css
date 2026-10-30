@@ -55,10 +55,28 @@
 .security-content-inner {
   max-width: 1240px;
   margin: 0 auto;
+}
+
+.security-content-inner.single-col {
+  display: block;
+}
+
+.sec-pill-group.grid-layout {
   display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1024px) {
+  .sec-pill-group.grid-layout {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .sec-pill-group.grid-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .security-poster-col {

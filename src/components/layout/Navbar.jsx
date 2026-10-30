@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Mail, CheckSquare } from 'lucide-react';
+import { Mail, CheckSquare, Lock, UserPlus } from 'lucide-react';
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -60,13 +60,23 @@ export default function Navbar() {
             </span>
           </div>
 
-          {isAuthenticated && (
-            <div className="top-auth-items">
+          <div className="top-auth-items">
+            {isAuthenticated ? (
               <span className="welcome-text">
                 👤 Welcome, <strong>{user?.name || 'Taxpayer'}</strong>
               </span>
-            </div>
-          )}
+            ) : (
+              <div className="top-auth-links-group">
+                <Link to="/login" className="top-auth-link">
+                  <Lock size={12} /> Login
+                </Link>
+                <span className="top-divider">|</span>
+                <Link to="/register" className="top-auth-link">
+                  <UserPlus size={12} /> Register
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -76,7 +86,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="brand-logo" onClick={closeMobile}>
             <div className="logo-badge">
-              <CheckSquare size={33} className="logo-check-icon" />
+              <CheckSquare size={34} className="logo-check-icon" />
             </div>
             <div className="logo-text-group">
               <span className="logo-title-dark">IRA</span>
@@ -99,7 +109,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* User Account / Portal CTA */}
+          {/* User Account / Auth Actions */}
           <div className="nav-actions-desktop" ref={dropdownRef}>
             {isAuthenticated ? (
               <div className="user-dropdown-container">
@@ -136,9 +146,17 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link to="/login" className="portal-cta-btn">
-                CLIENT PORTAL
-              </Link>
+              <div className="nav-auth-buttons-group">
+                <Link to="/login" className="nav-login-btn">
+                  Login
+                </Link>
+                <Link to="/register" className="nav-register-btn">
+                  Register
+                </Link>
+                <Link to="/portal" className="portal-cta-btn">
+                  PORTAL
+                </Link>
+              </div>
             )}
           </div>
 
@@ -186,14 +204,19 @@ export default function Navbar() {
                   </button>
                 </>
               ) : (
-                <>
-                  <Link to="/login" onClick={closeMobile} className="mobile-auth-btn primary">
-                    Client Sign In
+                <div className="mobile-guest-auth-actions">
+                  <div className="mobile-auth-row">
+                    <Link to="/login" onClick={closeMobile} className="mobile-auth-btn outline">
+                      Login
+                    </Link>
+                    <Link to="/register" onClick={closeMobile} className="mobile-auth-btn outline">
+                      Register
+                    </Link>
+                  </div>
+                  <Link to="/portal" onClick={closeMobile} className="mobile-auth-btn primary">
+                    Open Client Portal
                   </Link>
-                  <Link to="/register" onClick={closeMobile} className="mobile-auth-btn outline">
-                    Register Account
-                  </Link>
-                </>
+                </div>
               )}
             </div>
           </div>

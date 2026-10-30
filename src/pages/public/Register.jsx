@@ -84,13 +84,13 @@ export default function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="reg-phone">US Phone Number</label>
+            <label htmlFor="reg-phone">Phone Number</label>
             <input
               id="reg-phone"
               type="tel"
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="+1 (901) 453-2499 or (555) 000-0000"
+              placeholder="+91 90145 32499 or Mobile Number"
             />
           </div>
 

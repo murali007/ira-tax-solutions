@@ -50,7 +50,7 @@ export default function Contact() {
                 <Phone size={18} className="text-green" />
                 <div>
                   <strong>Call &amp; WhatsApp:</strong>
-                  <a href="tel:+19014532499">+1 (901) 453-2499</a>
+                  <a href="tel:+919014532499">+91 90145 32499</a>
                 </div>
               </div>
               <div className="direct-item">

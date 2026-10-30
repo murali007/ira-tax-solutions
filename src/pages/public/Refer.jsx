@@ -115,14 +115,14 @@ export default function Refer() {
                     />
                   </div>
                   <div className="form-group">
-                    <label>Your US Phone Number *</label>
+                    <label>Your Phone Number *</label>
                     <input 
                       type="tel" 
                       name="yourPhone" 
                       required 
                       value={formData.yourPhone} 
                       onChange={handleChange}
-                      placeholder="e.g. +1 (901) 453-2499" 
+                      placeholder="e.g. +91 90145 32499" 
                     />
                   </div>
                   <div className="form-group">

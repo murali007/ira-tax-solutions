@@ -64,13 +64,13 @@ export default function Footer() {
             <li>
               <div className="footer-contact-item">
                 <span className="icon">☎</span>
-                <span>+1 (901) 453-2499</span>
+                <a href="tel:+919014532499" style={{ color: 'inherit', textDecoration: 'none' }}>+91 90145 32499</a>
               </div>
             </li>
             <li>
               <div className="footer-contact-item">
                 <span className="icon">💬</span>
-                <span>WhatsApp: +1 90145 32499</span>
+                <a href="https://wa.me/919014532499" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>WhatsApp: +91 90145 32499</a>
               </div>
             </li>
             <li>

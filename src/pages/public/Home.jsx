@@ -283,7 +283,7 @@ export default function Home() {
             </Link>
             <div className="contact-meta-quick">
               <span>✉ info@irataxsolutions.com</span>
-              <span>☎ +1 (901) 453-2499</span>
+              <a href="tel:+919014532499" style={{ color: 'inherit', textDecoration: 'none' }}><span>☎ +91 90145 32499</span></a>
             </div>
           </div>
         </div>

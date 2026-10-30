@@ -88,15 +88,15 @@ export default function PortalLayout() {
             </div>
           </Link>
 
-          {/* Contact Direct Numbers - US Contact from Brand Guide */}
+          {/* Contact Direct Numbers */}
           <div className="portal-top-contact-col">
             <div className="contact-line-item">
-              <span className="flag-circle">🇺🇸</span>
-              <span>+1 (901) 453-2499 <span className="ext-badge" style={{ fontSize: '11px', background: '#e0f2fe', color: '#0369a1', padding: '1px 5px', borderRadius: '4px', fontWeight: 600 }}>Ext: 102</span></span>
+              <span className="flag-circle">🇮🇳</span>
+              <span>+91 90145 32499 <span className="ext-badge" style={{ fontSize: '11px', background: '#e0f2fe', color: '#0369a1', padding: '1px 5px', borderRadius: '4px', fontWeight: 600 }}>Ext: 102</span></span>
             </div>
             <div className="contact-line-item">
-              <span className="flag-circle">🇺🇸</span>
-              <span>+1 (901) 453-2499</span>
+              <span className="flag-circle">💬</span>
+              <a href="https://wa.me/919014532499" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>WhatsApp: +91 90145 32499</a>
             </div>
             <div className="contact-line-item">
               <Mail size={12} className="mail-icon-blue" />
@@ -161,7 +161,7 @@ export default function PortalLayout() {
 
           <div className="green-bar-right">
             <span className="direct-no-text">
-              Direct Helpline : <span className="red-bold-num">+1 (901) 453-2499</span> <span className="ext-badge">Ext: 102</span>
+              Direct Helpline : <span className="red-bold-num">+91 90145 32499</span> <span className="ext-badge">Ext: 102</span>
             </span>
           </div>
         </div>

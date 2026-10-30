@@ -73,10 +73,10 @@ export default function Services() {
 
         {/* Bottom CTA Card */}
         <div style={{ marginTop: '50px', background: 'linear-gradient(135deg, #0d2847 0%, #1e3a8a 100%)', borderRadius: '16px', padding: '40px', color: '#ffffff', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
-          <h2 style={{ fontSize: '26px', marginBottom: '12px', fontWeight: 700 }}>
+          <h2 style={{ fontSize: '26px', marginBottom: '12px', fontWeight: 700, color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
             Ready to File Your Taxes with Confidence?
           </h2>
-          <p style={{ color: '#cbd5e1', maxWidth: '600px', margin: '0 auto 24px', fontSize: '15px', lineHeight: '1.6' }}>
+          <p style={{ color: '#f1f5f9', maxWidth: '600px', margin: '0 auto 24px', fontSize: '15px', lineHeight: '1.6', textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
             Book a free 15-minute consultation with our tax specialists to discuss your situation, required documents, and get a clear upfront quote.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>

@@ -38,7 +38,7 @@ export default function Refer() {
             </p>
           </div>
           <div className="hero-reward-card">
-            <div className="reward-icon" style={{ fontSize: '32px', fontWeight: 800 }}>$</div>
+            <Gift size={36} className="reward-icon" style={{ margin: '0 auto 8px', color: '#16a34a' }} />
             <div className="reward-amount">$40</div>
             <div className="reward-label">Per Successful US Tax Return</div>
             <div className="reward-sub">Zelle / PayPal / Gift Card</div>

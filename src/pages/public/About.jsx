@@ -87,32 +87,32 @@ export default function About() {
         <div className="clip-track-container">
           <h2 className="clip-track-heading">Our Proven Track Record</h2>
           <div className="clip-track-divider" />
-          <div className="clip-track-content-row">
-            <div className="clip-track-text">
-              <p>
-                IRA Tax Solutions provides end-to-end US Individual Tax Preparation (Form 1040) for salaried professionals, tech employees with equity compensation (RSU/ESPP), freelancers, small business owners (Schedule C), and international visa holders across all 50 US states.
-              </p>
-              <p>
-                Our rigorous <strong>two-tier preparation and review model</strong> pairs every taxpayer with a dedicated preparer, followed by an independent senior quality review before transmission to the IRS. This process prevents filing errors, eliminates notice exposure, and ensures all eligible federal and state tax credits are claimed legally and accurately.
-              </p>
-              <p>
-                Operating under strict Treasury Circular 230 guidelines and IRS Section 7216 data protection protocols, we safeguard your sensitive financial records with 256-bit encryption and restricted access controls.
-              </p>
-            </div>
+          <div className="clip-track-text">
+            <p>
+              IRA Tax Solutions provides end-to-end US Individual Tax Preparation (Form 1040) for salaried professionals, tech employees with equity compensation (RSU/ESPP), freelancers, small business owners (Schedule C), and international visa holders across all 50 US states.
+            </p>
+            <p>
+              Our rigorous <strong>two-tier preparation and review model</strong> pairs every taxpayer with a dedicated preparer, followed by an independent senior quality review before transmission to the IRS. This process prevents filing errors, eliminates notice exposure, and ensures all eligible federal and state tax credits are claimed legally and accurately.
+            </p>
+            <p>
+              Operating under strict Treasury Circular 230 guidelines and IRS Section 7216 data protection protocols, we safeguard your sensitive financial records with 256-bit encryption and restricted access controls.
+            </p>
+          </div>
 
-            <div className="clip-track-stat-box">
-              <div className="stat-card-row">
-                <div className="stat-number">50</div>
-                <div className="stat-label">US States &amp; DC Covered</div>
-              </div>
-              <div className="stat-card-row">
-                <div className="stat-number">100%</div>
-                <div className="stat-label">IRS Authorized e-File Standards</div>
-              </div>
-              <div className="stat-card-row">
-                <div className="stat-number">2-Tier</div>
-                <div className="stat-label">Preparer &amp; QA Review Process</div>
-              </div>
+          <div className="clip-track-stat-bar-single-line">
+            <div className="stat-item-inline">
+              <span className="stat-num-badge">50</span>
+              <span className="stat-txt">US States &amp; DC Covered</span>
+            </div>
+            <span className="stat-pipe">|</span>
+            <div className="stat-item-inline">
+              <span className="stat-num-badge">100%</span>
+              <span className="stat-txt">IRS Authorized e-File Standards</span>
+            </div>
+            <span className="stat-pipe">|</span>
+            <div className="stat-item-inline">
+              <span className="stat-num-badge">2-Tier</span>
+              <span className="stat-txt">Preparer &amp; QA Review Process</span>
             </div>
           </div>
         </div>

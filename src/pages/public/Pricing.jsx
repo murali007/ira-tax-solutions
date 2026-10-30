@@ -7,7 +7,7 @@ export default function Pricing() {
     {
       name: 'Basic',
       badge: 'For Simple W-2 Returns',
-      price: '$XX',
+      price: '$X',
       period: 'starting from',
       desc: 'Ideal for single or married professionals with standard W-2 income and standard deductions.',
       features: [
@@ -24,7 +24,7 @@ export default function Pricing() {
     {
       name: 'Standard',
       badge: 'For Most Individuals',
-      price: '$XX',
+      price: '$X',
       period: 'starting from',
       desc: 'Comprehensive filing for salaried employees with 1099 income, deductions, and common credits.',
       features: [

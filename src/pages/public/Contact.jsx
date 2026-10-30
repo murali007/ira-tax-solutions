@@ -28,7 +28,7 @@ export default function Contact() {
           <span className="badge">Schedule Free Consultation</span>
           <h1>Let's Make Tax Filing Simple</h1>
           <p>
-            Have questions about your US taxes? Schedule a free 15-minute call and get your doubts answered by our experienced US tax professionals.
+            Have questions about your taxes? Schedule a free 15-minute call and get your doubts answered by our experienced tax professionals.
           </p>
         </header>
 

@@ -115,7 +115,7 @@ export default function SecurityPrivacy() {
             {/* Quick Action CTA */}
             <div className="security-cta-banner">
               <div>
-                <h4>Ready to File Your US Taxes Securely?</h4>
+                <h4>Ready to File Your Taxes Securely?</h4>
                 <p>Schedule your free 15-minute consultation or access your encrypted client portal.</p>
               </div>
               <div className="cta-action-btns">

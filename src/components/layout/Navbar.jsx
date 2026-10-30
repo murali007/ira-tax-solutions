@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Mail, Phone, Lock, User, CheckSquare } from 'lucide-react';
+import { Mail, CheckSquare } from 'lucide-react';
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -58,28 +58,15 @@ export default function Navbar() {
               <span className="flag-icon">💬</span>
               <a href="https://wa.me/19014532499" target="_blank" rel="noreferrer">WhatsApp Chat</a>
             </span>
-            <span className="top-item highlight-tag">
-              Your Global Tax Partner • Form 1040 Tax Preparation
-            </span>
           </div>
 
-          <div className="top-auth-items">
-            {isAuthenticated ? (
+          {isAuthenticated && (
+            <div className="top-auth-items">
               <span className="welcome-text">
                 👤 Welcome, <strong>{user?.name || 'Taxpayer'}</strong>
               </span>
-            ) : (
-              <>
-                <Link to="/login" className="top-auth-link">
-                  <Lock size={12} /> Login
-                </Link>
-                <span className="top-divider">|</span>
-                <Link to="/register" className="top-auth-link">
-                  <User size={12} /> Register
-                </Link>
-              </>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 

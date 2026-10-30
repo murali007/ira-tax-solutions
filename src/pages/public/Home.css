@@ -101,25 +101,87 @@
   border-color: #94a3b8;
 }
 
-/* Exact Tax Document Collage Graphic with natural diffusion into endings */
-.clip-hero-graphic-col {
-  position: relative;
+/* Hero Feature Highlights Card */
+.hero-features-badge-card {
   flex: 1;
-  max-width: 740px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  pointer-events: none;
+  max-width: 460px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08), 0 3px 10px rgba(15, 23, 42, 0.04);
+  border: 1px solid #cbd5e1;
 }
 
-.exact-hero-tax-img {
-  width: 100%;
-  height: auto;
-  max-height: 400px;
-  object-fit: contain;
-  display: block;
-  mix-blend-mode: multiply;
-  filter: contrast(1.02);
+.hero-badge-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.badge-shield-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #dcfce7;
+  color: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-badge-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 3px;
+}
+
+.hero-badge-header p {
+  font-size: 12.5px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.hero-badge-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-badge-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #334155;
+  font-weight: 500;
+}
+
+.hero-badge-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 16px;
+  text-align: right;
+}
+
+.hero-portal-link {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #16a34a;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.hero-portal-link:hover {
+  color: #15803d;
+  text-decoration: underline;
 }
 
 /* 2. Poster 1 Showcase Section */
@@ -129,32 +191,73 @@
   border-bottom: 1px solid #e2e8f0;
 }
 
-.home-poster-inner {
-  max-width: 1240px;
+.home-poster-inner.single-col-layout {
+  max-width: 1200px;
   margin: 0 auto;
+}
+
+.poster1-bullet-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 50px;
-  align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+  margin-bottom: 36px;
 }
 
-.poster1-card-wrapper {
-  background: #ffffff;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.12), 0 3px 10px rgba(15, 23, 42, 0.06);
+.bullet-row-card {
+  background: #f8fafc;
   border: 1px solid #e2e8f0;
-  transition: transform 0.2s ease;
+  border-radius: 10px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.2s ease;
 }
 
-.poster1-card-wrapper:hover {
-  transform: translateY(-4px);
+.bullet-row-card:hover {
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
 }
 
-.poster1-fluid-img {
-  width: 100%;
-  height: auto;
+.b-icon.teal { background: #ccfbf1; color: #0f766e; }
+
+.bullet-row-card strong {
   display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.bullet-row-card p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.55;
+}
+
+.poster1-cta-row.center-cta {
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (max-width: 992px) {
+  .poster1-bullet-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .poster1-bullet-grid {
+    grid-template-columns: 1fr;
+  }
+  .hero-features-badge-card {
+    max-width: 100%;
+  }
 }
 
 .section-pill {

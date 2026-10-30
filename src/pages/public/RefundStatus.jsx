@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, Search, Info, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
+import { ExternalLink, Search, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import './RefundStatus.css';
 
 const STATE_REFUND_TOOLS = [
@@ -64,7 +64,7 @@ export default function RefundStatus() {
           <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '12px' }}>
             OFFICIAL IRS &amp; STATE REFUND DIRECTORY
           </span>
-          <h1>Track Your US Tax Refund Status</h1>
+          <h1>Track Your Tax Refund Status</h1>
           <p>
             Check your Federal Form 1040 refund status directly with the IRS or view official State Department of Revenue portals.
           </p>
@@ -82,7 +82,7 @@ export default function RefundStatus() {
             </p>
           </div>
           <a
-            href="https://www.irs.gov/refunds"
+            href="https://www.irataxsolutions.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"

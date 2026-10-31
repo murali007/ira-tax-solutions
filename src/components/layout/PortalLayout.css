@@ -118,10 +118,13 @@
 }
 
 .header-company-logo {
-  height: 36px;
-  width: auto;
+  height: 40px;
+  width: 40px;
+  max-height: 40px;
   object-fit: contain;
   display: block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .ext-badge-pill {

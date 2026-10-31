@@ -152,10 +152,13 @@
 }
 
 .header-company-logo {
-  height: 38px;
-  width: auto;
+  height: 42px;
+  width: 42px;
+  max-height: 42px;
   object-fit: contain;
   display: block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .top-auth-items {
@@ -674,9 +677,9 @@
 
 /* Header Company Logo */
 .header-company-logo {
-  height: 38px;
-  width: auto;
-  max-height: 40px;
+  height: 42px;
+  width: 42px;
+  max-height: 42px;
   object-fit: contain;
   display: block;
   flex-shrink: 0;
@@ -684,7 +687,13 @@
 }
 
 .brand-logo:hover .header-company-logo {
-  transform: scale(1.03);
+  height: 42px;
+  width: 42px;
+  max-height: 42px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
 }
 
 .ext-badge-pill {

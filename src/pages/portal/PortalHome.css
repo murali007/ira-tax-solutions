@@ -15,18 +15,18 @@
 
 .welcome-headline-card h1 {
   font-size: 26px;
-  color: #333333;
-  font-weight: 500;
-  letter-spacing: -0.3px;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   margin: 0;
 }
 
 .stages-diagram-container {
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
   padding: 40px 30px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05);
 }
 
 .stages-diagram-inner {
@@ -147,25 +147,25 @@
   line-height: 1.4;
 }
 
-/* Distinct Colors matching Clip 5 */
+/* Distinct Colors matching Clip 5 with modern gradients */
 .stage-item-orange {
-  background-color: #f39c12;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 
 .stage-item-teal {
-  background-color: #009688;
+  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
 }
 
 .stage-item-purple {
-  background-color: #ab47bc;
+  background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
 }
 
 .stage-item-coral {
-  background-color: #e65100;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
 }
 
 .stage-item-slate {
-  background-color: #546e7a;
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
 }
 
 @media (max-width: 768px) {

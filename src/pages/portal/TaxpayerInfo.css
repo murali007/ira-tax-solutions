@@ -1,5 +1,7 @@
 /* ========================================================
    Taxpayer & Household Forms matching Clips 7, 8, 9
+   Emil Kowalski Design Refinement: Spring curves, tactile feedback,
+   diffuse layered shadows, frosted subtle borders, emerald accents.
    ======================================================== */
 
 .tax-form-wrapper {
@@ -9,16 +11,17 @@
 
 .tax-form-card {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 4px;
-  padding: 28px 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 32px 36px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05);
+  transition: box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tax-form-title-row {
-  border-bottom: 1px solid #eef2f6;
-  padding-bottom: 14px;
-  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+  padding-bottom: 16px;
+  margin-bottom: 26px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,8 +29,9 @@
 
 .tax-form-title-row h2 {
   font-size: 22px;
-  color: #37474f;
-  font-weight: 500;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.3px;
   margin: 0;
 }
 
@@ -35,21 +39,34 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: #f0fdf4;
+  color: #15803d;
   font-size: 12px;
   font-weight: 600;
-  padding: 4px 12px;
+  padding: 5px 14px;
   border-radius: 20px;
-  border: 1px solid #c8e6c9;
+  border: 1px solid #bbf7d0;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.12);
+  animation: emilAlertPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes emilAlertPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* 3-Column Grid matching Clip 7, 8, 9 */
 .form-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px 20px;
-  margin-bottom: 16px;
+  gap: 18px 22px;
+  margin-bottom: 18px;
 }
 
 .input-field-group {
@@ -60,8 +77,9 @@
 
 .input-field-group label {
   font-size: 13px;
-  font-weight: 500;
-  color: #37474f;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: -0.1px;
 }
 
 /* Input with Integrated Left Icon matching Clip 7 */
@@ -73,36 +91,51 @@
 
 .field-icon {
   position: absolute;
-  left: 10px;
-  color: #546e7a;
+  left: 12px;
+  color: #64748b;
   pointer-events: none;
+  transition: color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-with-icon:focus-within .field-icon {
+  color: #16a34a;
+  transform: scale(1.08);
 }
 
 .input-with-icon input,
 .input-with-icon select,
 .input-with-icon textarea {
   width: 100%;
-  padding: 8px 10px 8px 34px;
-  border: 1px solid #ced4da;
-  border-radius: 3px;
-  font-size: 13px;
+  padding: 9px 12px 9px 38px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 13.5px;
   font-family: inherit;
-  color: #333333;
+  color: #0f172a;
   background-color: #ffffff;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-with-icon input:hover,
+.input-with-icon select:hover,
+.input-with-icon textarea:hover {
+  border-color: #94a3b8;
 }
 
 .input-with-icon input:focus,
 .input-with-icon select:focus,
 .input-with-icon textarea:focus {
   outline: none;
-  border-color: #337ab7;
-  box-shadow: 0 0 0 2px rgba(51, 122, 183, 0.2);
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+  background-color: #ffffff;
 }
 
 .input-with-icon input::placeholder,
 .input-with-icon textarea::placeholder {
-  color: #9e9e9e;
+  color: #94a3b8;
 }
 
 /* Radio buttons matching Clip 7 */
@@ -110,7 +143,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  min-height: 35px;
+  min-height: 38px;
   flex-wrap: wrap;
   padding: 4px 0;
 }
@@ -118,98 +151,124 @@
 .radio-label {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   font-size: 13px;
-  color: #37474f;
+  color: #334155;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 500;
   white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.radio-label:hover {
+  background-color: #f1f5f9;
 }
 
 .radio-label input[type="radio"] {
-  accent-color: #337ab7;
+  accent-color: #16a34a;
   cursor: pointer;
+  width: 15px;
+  height: 15px;
 }
 
 /* Action Buttons Bar matching Clip 7 */
 .form-actions-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid #f1f5f9;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(15, 23, 42, 0.07);
   flex-wrap: wrap;
 }
 
-/* Classic Blue Save Button (#337ab7) */
+/* Modern Primary Save Button with Emil feedback */
 .btn-save-blue {
-  background-color: #337ab7;
+  background: linear-gradient(180deg, #16a34a 0%, #15803d 100%);
   color: #ffffff;
-  border: 1px solid #2e6da4;
-  padding: 8px 22px;
-  border-radius: 4px;
-  font-size: 13px;
+  border: 1px solid #15803d;
+  padding: 9px 24px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.btn-save-blue:hover {
+  background: linear-gradient(180deg, #15803d 0%, #166534 100%);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.32);
+}
+
+.btn-save-blue:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(22, 163, 74, 0.2);
+}
+
+/* Reset / Secondary Button */
+.btn-reset-gray {
+  background-color: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: background-color 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn-save-blue:hover {
-  background-color: #286090;
-}
-
-/* Gray Reset Button (#ffffff with gray border) */
-.btn-reset-gray {
-  background-color: #ffffff;
-  color: #333333;
-  border: 1px solid #cccccc;
-  padding: 8px 18px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: background-color 0.15s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .btn-reset-gray:hover {
-  background-color: #e6e6e6;
-  border-color: #adadad;
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.btn-reset-gray:active {
+  transform: scale(0.98);
+  background-color: #f1f5f9;
 }
 
 @media (max-width: 1024px) {
   .form-grid-3 {
     grid-template-columns: repeat(2, 1fr);
-    gap: 14px 16px;
+    gap: 16px 18px;
   }
 }
 
 @media (max-width: 680px) {
   .tax-form-card {
-    padding: 20px 16px;
+    padding: 22px 18px;
+    border-radius: 10px;
   }
 
   .tax-form-title-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
   }
 
   .tax-form-title-row h2 {
-    font-size: 18px;
+    font-size: 19px;
   }
 
   .form-grid-3 {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .form-actions-bar {

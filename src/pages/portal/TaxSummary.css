@@ -1,144 +1,190 @@
+/* ========================================================
+   Tax Summary CSS
+   Emil Kowalski Design Refinement: Spring curves, tactile feedback,
+   diffuse layered shadows, frosted subtle borders, emerald accents.
+   ======================================================== */
+
 .summary-page-container {
   max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: 20px;
 }
 
 .summary-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-white);
-  padding: var(--space-6) var(--space-8);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  background: #ffffff;
+  padding: 24px 32px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 4px 16px -4px rgba(15, 23, 42, 0.04);
 }
 
 .summary-header h2 {
-  font-size: var(--font-size-2xl);
-  color: var(--color-navy);
-  margin-bottom: var(--space-1);
+  font-size: 22px;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
 }
 
 .summary-header p {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0;
 }
 
 .demo-pill-badge {
   background: #fef3c7;
   color: #92400e;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  border: 1px solid #fde68a;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.1);
 }
 
 .refund-highlight-box {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  box-shadow: var(--shadow-sm);
+  gap: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 30px 32px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05);
 }
 
 .highlight-column {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
-  padding: 0 var(--space-4);
-  border-right: 1px solid var(--color-border);
+  gap: 6px;
+  padding: 0 16px;
+  border-right: 1px solid rgba(15, 23, 42, 0.07);
+}
+
+.highlight-column:first-child {
+  padding-left: 0;
 }
 
 .highlight-column:last-child {
   border-right: none;
+  padding-right: 0;
 }
 
 .highlight-column .label {
-  font-size: var(--font-size-xs);
+  font-size: 11.5px;
   text-transform: uppercase;
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-charcoal);
+  font-weight: 700;
+  color: #64748b;
   letter-spacing: 0.5px;
 }
 
 .highlight-column .value {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-extrabold);
-  color: var(--color-navy);
+  font-size: 32px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
 }
 
 .highlight-column .value.refund-positive {
-  color: var(--color-primary);
+  color: #16a34a;
 }
 
 .highlight-column .sub {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
+  font-size: 12.5px;
+  color: #64748b;
 }
 
 .fee-column .btn {
-  margin-top: var(--space-2);
+  margin-top: 8px;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fee-column .btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+}
+
+.fee-column .btn:active {
+  transform: scale(0.97);
 }
 
 .paid-tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  color: var(--color-primary);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  margin-top: var(--space-2);
+  gap: 5px;
+  color: #15803d;
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 8px;
+  align-self: flex-start;
 }
 
 .summary-card {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  padding: var(--space-8);
-  box-shadow: var(--shadow-sm);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 30px 32px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05);
 }
 
 .summary-card h3 {
-  font-size: var(--font-size-lg);
-  color: var(--color-navy);
-  margin-bottom: var(--space-4);
+  font-size: 17px;
+  color: #0f172a;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  margin-bottom: 18px;
 }
 
 .summary-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-sm);
+  font-size: 13.5px;
 }
 
 .summary-table th {
   background: #f8fafc;
-  padding: var(--space-3) var(--space-4);
-  font-size: var(--font-size-xs);
+  padding: 11px 16px;
+  font-size: 11.5px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--color-charcoal);
-  border-bottom: 2px solid var(--color-border);
+  color: #475569;
+  border-bottom: 2px solid #e2e8f0;
   text-align: left;
+  font-weight: 600;
 }
 
 .summary-table td {
-  padding: var(--space-3) var(--space-4);
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-charcoal);
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  transition: background-color 0.15s ease;
+}
+
+.summary-table tr:hover td {
+  background-color: #f8fafc;
 }
 
 .summary-table td:last-child {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .summary-table th:last-child {
@@ -147,34 +193,53 @@
 
 .subtotal-row {
   background-color: #f8fafc;
-  font-weight: var(--font-weight-semibold);
+  font-weight: 700;
 }
 
 .total-highlight-row {
-  background-color: rgba(45, 138, 78, 0.08);
-  font-size: var(--font-size-base);
+  background-color: #f0fdf4 !important;
+  font-size: 15px;
+  font-weight: 800;
+  color: #15803d !important;
+}
+
+.total-highlight-row td {
+  border-top: 2px solid #bbf7d0;
+  border-bottom: 2px solid #bbf7d0;
+  color: #15803d;
 }
 
 .summary-disclaimer {
   display: flex;
-  gap: var(--space-3);
-  padding: var(--space-4);
+  gap: 12px;
+  padding: 16px 20px;
   background: #fffbeb;
   border: 1px solid #fde68a;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-xs);
+  border-radius: 10px;
+  font-size: 12.5px;
   color: #92400e;
-  line-height: var(--line-height-relaxed);
+  line-height: 1.6;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.05);
 }
 
 @media (max-width: 900px) {
   .refund-highlight-box {
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: 18px;
+    padding: 22px 20px;
   }
   .highlight-column {
     border-right: none;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: var(--space-4);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+    padding: 0 0 16px 0;
+  }
+  .highlight-column:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }

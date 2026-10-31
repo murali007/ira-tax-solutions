@@ -24,34 +24,91 @@ import './Home.css';
 
 const whoWeHelp = [
   {
-    icon: <Briefcase size={22} className="text-blue" />,
+    icon: <Users size={22} />,
     title: 'W-2 Employees',
-    desc: 'Salaried professionals, tech workers, and corporate employees across all 50 states.'
+    desc: 'Full-service tax preparation for salaried individuals, including W-2 income, with maximum deductions and credits.',
+    image: '/who-w2-employees.jpg',
+    imageAlt: 'W-2 salaried professional working on laptop'
   },
   {
-    icon: <UserCheck size={22} className="text-green" />,
+    icon: <UserCheck size={22} />,
     title: 'Self-Employed & 1099',
-    desc: 'Freelancers, consultants, small business owners, and gig economy workers (Schedule C).'
+    desc: 'Tax filing for freelancers, consultants, gig workers, and business owners with 1099 income (Schedule C).',
+    image: '/who-self-employed.jpg',
+    imageAlt: 'Self-employed 1099 professional and freelancer'
   },
   {
-    icon: <HomeIcon size={22} className="text-purple" />,
+    icon: <HomeIcon size={22} />,
     title: 'Families & Dependents',
-    desc: 'Newly married couples, parents claiming Child Tax Credit ($2,200/child), and changing tax status.'
+    desc: 'Tax filing for individuals and families, including dependents, child tax credits, and education benefits.',
+    image: '/who-families-dependents.jpg',
+    imageAlt: 'Smiling family with child tax deductions'
   },
   {
-    icon: <TrendingUp size={22} className="text-amber" />,
+    icon: <TrendingUp size={22} />,
     title: 'Investors & Crypto',
-    desc: 'Stock options (ESPP/RSU), crypto transactions, dividends, and capital gains (Schedule D / 8949).'
+    desc: 'Tax reporting for investment income, stock transactions (Schedule D), and cryptocurrency gains and losses.',
+    image: '/who-investors-crypto.jpg',
+    imageAlt: 'Stock market chart and cryptocurrency investment tax reporting'
   },
   {
-    icon: <Map size={22} className="text-coral" />,
-    title: 'Multi-State Filings',
-    desc: 'Individuals who moved or worked in multiple states during the tax year (apportionment returns).'
+    icon: <Map size={22} />,
+    title: 'Multi-State Filers',
+    desc: 'Tax preparation for individuals with income or residency in multiple U.S. states.',
+    image: '/who-multistate-filers.jpg',
+    imageAlt: 'US map route markers for multi-state tax filing'
   },
   {
-    icon: <Globe2 size={22} className="text-teal" />,
+    icon: <Globe2 size={22} />,
     title: 'International & Expats',
-    desc: 'Foreign income, FBAR (FinCEN 114), Form 8938 (FATCA), and H-1B / L-1 visa cross-border tax.'
+    desc: 'Tax support for U.S. citizens, Green Card holders, and expats with foreign income, reporting (e.g., FBAR, FATCA, Form 8938).',
+    image: '/who-international-expats.jpg',
+    imageAlt: 'US passport and globe international expat tax compliance'
+  }
+];
+
+const whyChooseUs = [
+  {
+    icon: <UserCheck size={22} />,
+    title: 'Dedicated Tax Preparer for Every Client',
+    desc: 'Your return is handled by an assigned specialist who takes time to understand your individual situation and multi-state tax needs.',
+    image: '/tax-consultation-desk.jpg',
+    imageAlt: 'Dedicated US tax preparer and client consultation'
+  },
+  {
+    icon: <ShieldCheck size={22} />,
+    title: 'Separate Reviewer for Quality Assurance',
+    desc: 'Each return is thoroughly reviewed by a second senior tax specialist before filing to guarantee accuracy and zero missed deductions.',
+    image: '/services-tax-prep.jpg',
+    imageAlt: 'Two-tier QA tax review workstation'
+  },
+  {
+    icon: <FileText size={22} />,
+    title: 'Focused on Form 1040 & Multi-State',
+    desc: 'Comprehensive US individual tax preparation across all 50 states for W-2, 1099, self-employment, stock sales, crypto, and itemized deductions.',
+    image: '/us-tax-partner-hero.jpg',
+    imageAlt: 'Form 1040 certified US tax return preparation'
+  },
+  {
+    icon: <CheckCircle2 size={22} />,
+    title: 'Clear Pricing & Transparent Process',
+    desc: 'Know your exact fee and timeline before we start. Upfront itemized quotes with zero hidden surprises or unexpected add-ons.',
+    image: '/refund-approved.jpg',
+    imageAlt: 'Transparent fee and direct deposit confirmation'
+  },
+  {
+    icon: <Clock size={22} />,
+    title: 'Ongoing Support Year-Round',
+    desc: 'We are here for your questions anytime—not just during the April tax deadline. Year-round IRS notice and quarterly assistance.',
+    image: '/corporate-skyline-bg.jpg',
+    imageAlt: 'Year-round client support in corporate office'
+  },
+  {
+    icon: <Lock size={22} />,
+    title: 'Secure & Confidential Data Vault',
+    desc: 'Bank-grade 256-bit encryption and strict adherence to IRS Section 7216 confidentiality regulations and FTC Safeguards.',
+    image: '/security-data-vault.jpg',
+    imageAlt: 'Bank-grade 256-bit cyber security data vault'
   }
 ];
 
@@ -198,93 +255,77 @@ export default function Home() {
 
       {/* 2. Feature Section: Why Choose IRA Tax Solutions */}
       <section className="home-poster-showcase-section">
-        <div className="home-poster-inner single-col-layout">
-          <div className="poster1-content-col">
-            <div className="section-title-center">
-              <span className="section-pill">Stress Less. File Smarter!</span>
-              <h2>Why Choose IRA Tax Solutions for Your Taxes</h2>
-              <p className="poster1-intro">
-                Whether you are a W-2 professional, an independent 1099 contractor, or have complex multi-state investments, we handle your return with precision and care.
-              </p>
-            </div>
+        <div className="home-reference-container">
+          <div className="reference-section-header">
+            <span className="reference-pill">STRESS LESS. FILE SMARTER!</span>
+            <h2 className="reference-heading">Why Choose IRA Tax Solutions for Your Taxes</h2>
+            <p className="reference-subtitle">
+              Whether you are a W-2 professional, an independent 1099 contractor, or have complex multi-state investments, we handle your return with precision and care.
+            </p>
+          </div>
 
-            <div className="poster1-bullet-grid">
-              <div className="bullet-row-card">
-                <div className="b-icon blue"><UserCheck size={22} /></div>
-                <div>
-                  <strong>Dedicated Tax Preparer for Every Client</strong>
-                  <p>Your return is handled by a dedicated preparer who understands your individual situation.</p>
+          <div className="reference-cards-grid">
+            {whyChooseUs.map((item, idx) => (
+              <div className="reference-split-card" key={idx}>
+                <div className="ref-card-text-col">
+                  <div className="ref-card-icon-bubble">
+                    {item.icon}
+                  </div>
+                  <h3 className="ref-card-title">{item.title}</h3>
+                  <p className="ref-card-desc">{item.desc}</p>
+                </div>
+                <div className="ref-card-image-col">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    className="ref-card-img"
+                  />
+                  <div className="ref-card-img-fade"></div>
                 </div>
               </div>
+            ))}
+          </div>
 
-              <div className="bullet-row-card">
-                <div className="b-icon red"><ShieldCheck size={22} /></div>
-                <div>
-                  <strong>Separate Reviewer for Quality Assurance</strong>
-                  <p>Each return is thoroughly reviewed by a second senior tax specialist before filing.</p>
-                </div>
-              </div>
-
-              <div className="bullet-row-card">
-                <div className="b-icon green"><FileText size={22} /></div>
-                <div>
-                  <strong>Focused on Individual Taxation (Form 1040)</strong>
-                  <p>W-2, 1099, self-employment, stock sales, crypto, itemized deductions, and multi-state returns.</p>
-                </div>
-              </div>
-
-              <div className="bullet-row-card">
-                <div className="b-icon amber"><CheckCircle2 size={22} /></div>
-                <div>
-                  <strong>Clear Pricing &amp; Transparent Process</strong>
-                  <p>Know the fee and timeline before we start. No hidden surprises or unexpected add-ons.</p>
-                </div>
-              </div>
-
-              <div className="bullet-row-card">
-                <div className="b-icon purple"><Clock size={22} /></div>
-                <div>
-                  <strong>Ongoing Support Year-Round</strong>
-                  <p>We are here for your questions anytime—not just during the April tax deadline.</p>
-                </div>
-              </div>
-
-              <div className="bullet-row-card">
-                <div className="b-icon teal"><Lock size={22} /></div>
-                <div>
-                  <strong>Secure &amp; Confidential Data Vault</strong>
-                  <p>Bank-level encryption and strict adherence to IRS Section 7216 privacy standards.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="poster1-cta-row center-cta">
-              <Link to="/contact" className="btn-primary-bold">
-                <Calendar size={17} /> Schedule Free 15-Min Call
-              </Link>
-              <Link to="/security" className="btn-secondary-link">
-                Learn About Our Security &amp; Privacy →
-              </Link>
-            </div>
+          <div className="poster1-cta-row center-cta">
+            <Link to="/contact" className="btn-primary-bold">
+              <Calendar size={17} /> Schedule Free 15-Min Call
+            </Link>
+            <Link to="/security" className="btn-secondary-link">
+              Learn About Our Security &amp; Privacy →
+            </Link>
           </div>
         </div>
       </section>
 
       {/* 3. Who We Help Section */}
       <section className="who-we-help-section">
-        <div className="who-we-help-inner">
-          <div className="section-title-center">
-            <span className="section-pill">Individuals. Families. Professionals.</span>
-            <h2>Who We Help</h2>
-            <p>Individual Tax Preparation for Different Life Situations</p>
+        <div className="home-reference-container">
+          <div className="reference-section-header">
+            <span className="reference-pill">INDIVIDUALS, FAMILIES, AND HOUSEHOLDS</span>
+            <h2 className="reference-heading">Who We Help</h2>
+            <p className="reference-subtitle">
+              Tailored Tax Preparation &amp; Filing for a Wide Range of Taxpayers
+            </p>
           </div>
 
-          <div className="who-grid">
+          <div className="reference-cards-grid">
             {whoWeHelp.map((item, idx) => (
-              <div className="who-card" key={idx}>
-                <div className="who-icon-wrapper">{item.icon}</div>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
+              <div className="reference-split-card" key={idx}>
+                <div className="ref-card-text-col">
+                  <div className="ref-card-icon-bubble">
+                    {item.icon}
+                  </div>
+                  <h3 className="ref-card-title">{item.title}</h3>
+                  <p className="ref-card-desc">{item.desc}</p>
+                </div>
+                <div className="ref-card-image-col">
+                  <img
+                    src={item.image}
+                    alt={item.imageAlt}
+                    className="ref-card-img"
+                  />
+                  <div className="ref-card-img-fade"></div>
+                </div>
               </div>
             ))}
           </div>

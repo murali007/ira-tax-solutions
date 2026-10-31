@@ -133,8 +133,8 @@ export default function Home() {
               </li>
             </ul>
             <div className="hero-badge-footer">
-              <Link to="/portal" className="hero-portal-link">
-                Go to Client Portal →
+              <Link to="/register" className="hero-portal-link">
+                Create Account / Login to File →
               </Link>
             </div>
           </div>

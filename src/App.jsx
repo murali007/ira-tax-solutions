@@ -1,5 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+
+function ProtectedRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) {
+    return <div style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>Checking authorization...</div>;
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+}
 
 // Layouts
 import PublicLayout from './components/layout/PublicLayout';
@@ -48,7 +59,14 @@ export default function App() {
           </Route>
 
           {/* Authenticated Filing Portal Routes */}
-          <Route path="/portal" element={<PortalLayout />}>
+          <Route 
+            path="/portal" 
+            element={
+              <ProtectedRoute>
+                <PortalLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<PortalHome />} />
             <Route path="taxpayer" element={<TaxpayerInfo />} />
             <Route path="spouse" element={<SpouseInfo />} />

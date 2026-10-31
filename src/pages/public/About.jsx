@@ -31,7 +31,7 @@ const resources = [
     id: 2,
     title: 'IRS Direct Pay (Federal Tax Payments Without Login)',
     category: 'IRS Tax Payments',
-    link: 'https://www.irs.gov/payments/direct-pay'
+    link: 'https://directpay.irs.gov/directpay/payment?execution=e1s1'
   },
   {
     id: 3,

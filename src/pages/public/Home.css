@@ -11,24 +11,40 @@
 /* 1. Hero Section matching exact reference */
 .clip-hero-section {
   position: relative;
-  background-color: #edf0f2;
+  background-color: #ffffff;
   background-image: 
     linear-gradient(
-      135deg,
-      rgba(241, 245, 249, 0.95) 0%,
-      rgba(235, 240, 246, 0.91) 45%,
-      rgba(240, 244, 248, 0.86) 100%
+      90deg, 
+      #ffffff 0%, 
+      rgba(255, 255, 255, 0.98) 32%, 
+      rgba(255, 255, 255, 0.86) 48%, 
+      rgba(255, 255, 255, 0.38) 72%, 
+      rgba(255, 255, 255, 0.12) 100%
     ),
-    url('/corporate-skyline-bg.jpg');
-  background-size: cover;
-  background-position: center;
+    url('/us-tax-partner-hero.jpg');
+  background-size: contain;
+  background-position: right 40px center;
   background-repeat: no-repeat;
   border-bottom: 1px solid #e2e8f0;
-  padding: 36px 0 40px;
+  padding: 44px 0 48px;
   overflow: hidden;
 }
 
+.clip-hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  background: radial-gradient(circle at 70% 50%, rgba(254, 240, 138, 0.12) 0%, rgba(219, 234, 254, 0.08) 50%, transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .clip-hero-inner {
+  position: relative;
+  z-index: 2;
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 28px;
@@ -128,12 +144,16 @@
 /* Hero Feature Highlights Card */
 .hero-features-badge-card {
   flex: 1;
-  max-width: 460px;
-  background: #ffffff;
+  max-width: 450px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 16px 36px -4px rgba(15, 23, 42, 0.08);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 16px 36px -4px rgba(15, 23, 42, 0.10);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  position: relative;
+  z-index: 2;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -736,6 +756,19 @@
 }
 
 @media (max-width: 768px) {
+  .clip-hero-section {
+    background-image: 
+      linear-gradient(
+        180deg, 
+        rgba(255, 255, 255, 0.96) 0%, 
+        rgba(255, 255, 255, 0.90) 45%, 
+        rgba(255, 255, 255, 0.95) 100%
+      ),
+      url('/us-tax-partner-hero.jpg');
+    background-position: center 24px;
+    background-size: 340px auto;
+    padding: 32px 0 36px;
+  }
   .clip-hero-inner {
     flex-direction: column;
     text-align: center;

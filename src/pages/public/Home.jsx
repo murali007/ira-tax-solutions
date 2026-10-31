@@ -17,7 +17,8 @@ import {
   Calendar,
   Lock,
   Headphones,
-  Check
+  Check,
+  Zap
 } from 'lucide-react';
 import './Home.css';
 
@@ -86,10 +87,43 @@ export default function Home() {
   const { isAuthenticated } = useAuth();
   return (
     <div className="clip-home-root">
+      {/* Live Broadcast / Early Filing Flash Discount Bar */}
+      <div className="home-broadcast-banner">
+        <div className="broadcast-container">
+          <div className="broadcast-left">
+            <div className="broadcast-live-tag">
+              <span className="live-pulsing-dot"></span>
+              <Zap size={14} className="broadcast-zap-icon" />
+              <span>LIVE FLASH OFFER</span>
+            </div>
+            <div className="broadcast-content">
+              <span className="broadcast-title">EARLY FILE DISCOUNT:</span>
+              <span className="broadcast-offer">
+                Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice!
+              </span>
+              <span className="broadcast-meta">
+                Limited early-bird filing slots available for Tax Season 2025.
+              </span>
+            </div>
+          </div>
+          <div className="broadcast-right">
+            <Link to={isAuthenticated ? "/portal" : "/register"} className="broadcast-cta-button">
+              <span>Claim 10% Off</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* 1. Hero Section */}
       <section className="clip-hero-section">
         <div className="clip-hero-inner">
           <div className="clip-hero-text-col">
+                        <div className="hero-flash-discount-badge">
+              <span className="flash-badge-pulse"></span>
+              <Zap size={15} className="flash-zap" />
+              <span><strong>EARLY BIRD SPECIAL:</strong> Straight Away <strong>10% OFF</strong> on Bill Invoice!</span>
+            </div>
             <span className="clip-eyebrow">YOUR GLOBAL TAX PARTNER</span>
             <h1 className="clip-heading">Your Taxes, Our Expertise.</h1>
             <p className="clip-subtext">
@@ -134,6 +168,10 @@ export default function Home() {
                 <span>256-Bit Bank-Grade Encryption &amp; IRS 7216</span>
               </li>
             </ul>
+                        <div className="hero-discount-ribbon">
+              <Zap size={15} className="ribbon-icon" />
+              <span><strong>10% Early Filing Discount</strong> applied straight to your invoice</span>
+            </div>
             <div className="hero-badge-footer">
               <Link to={isAuthenticated ? "/portal" : "/register"} className="hero-portal-link">
                 {isAuthenticated ? "Go to Tax Filing Portal →" : "Create Account / Login to File →"}

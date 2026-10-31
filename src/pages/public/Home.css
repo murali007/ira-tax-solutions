@@ -699,3 +699,218 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ========================================================
+   LIVE BROADCAST & FLASH DISCOUNT BANNER
+   ======================================================== */
+.home-broadcast-banner {
+  background: linear-gradient(90deg, #07172b 0%, #0d284d 50%, #07172b 100%);
+  border-bottom: 2px solid #ea580c;
+  color: #ffffff;
+  padding: 10px 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.home-broadcast-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: broadcastShimmer 4s infinite linear;
+}
+
+@keyframes broadcastShimmer {
+  0% { left: -50%; }
+  100% { left: 150%; }
+}
+
+.broadcast-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.broadcast-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.broadcast-live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #dc2626;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.6);
+  animation: liveBadgeGlow 2s infinite ease-in-out;
+}
+
+@keyframes liveBadgeGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(220, 38, 38, 0.6); }
+  50% { box-shadow: 0 0 16px rgba(220, 38, 38, 0.95); }
+}
+
+.live-pulsing-dot {
+  width: 7px;
+  height: 7px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(0.9); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.4; }
+}
+
+.broadcast-zap-icon {
+  color: #fef08a;
+}
+
+.broadcast-content {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13.5px;
+  flex-wrap: wrap;
+}
+
+.broadcast-title {
+  color: #f59e0b;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  animation: flashTitlePulse 2.5s infinite ease-in-out;
+}
+
+@keyframes flashTitlePulse {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 2px rgba(245, 158, 11, 0.4)); }
+  50% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.9)); }
+}
+
+.broadcast-offer {
+  color: #ffffff;
+}
+
+.broadcast-offer strong {
+  color: #4ade80;
+  font-weight: 800;
+}
+
+.broadcast-meta {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.broadcast-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #7bb828;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(123, 184, 40, 0.4);
+  white-space: nowrap;
+}
+
+.broadcast-cta-button:hover {
+  background: #6ba522;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(123, 184, 40, 0.6);
+}
+
+/* Hero Flash Discount Badge */
+.hero-flash-discount-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fee2e2 100%);
+  border: 1.5px solid #f59e0b;
+  color: #9a3412;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
+  animation: heroFlashPulse 3s infinite ease-in-out;
+}
+
+@keyframes heroFlashPulse {
+  0%, 100% {
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+    border-color: #f59e0b;
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(234, 88, 12, 0.6);
+    border-color: #ea580c;
+  }
+}
+
+.flash-badge-pulse {
+  width: 8px;
+  height: 8px;
+  background-color: #dc2626;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseDot 1.4s infinite ease-in-out;
+}
+
+.flash-zap {
+  color: #d97706;
+}
+
+/* Feature Card Ribbon */
+.hero-discount-ribbon {
+  background: #effaf0;
+  border: 1px dashed #7bb828;
+  color: #2e6917;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.ribbon-icon {
+  color: #7bb828;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .broadcast-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .broadcast-cta-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

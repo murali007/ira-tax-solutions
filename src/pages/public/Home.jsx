@@ -87,24 +87,40 @@ export default function Home() {
   const { isAuthenticated } = useAuth();
   return (
     <div className="clip-home-root">
-      {/* Live Broadcast / Early Filing Flash Discount Bar */}
+      {/* Live Broadcast / Early Filing Flash Discount Bar with Horizontal Marquee */}
       <div className="home-broadcast-banner">
         <div className="broadcast-container">
-          <div className="broadcast-left">
-            <div className="broadcast-live-tag">
-              <span className="live-pulsing-dot"></span>
-              <Zap size={14} className="broadcast-zap-icon" />
-              <span>EARLY FILE DISCOUNT:</span>
-            </div>
-            <div className="broadcast-content">
-              <span className="broadcast-offer">
-                Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice!
-              </span>
-              <span className="broadcast-meta">
-                Limited early-bird filing slots available for Tax Season 2026.
-              </span>
+          <div className="broadcast-live-tag">
+            <span className="live-pulsing-dot"></span>
+            <Zap size={14} className="broadcast-zap-icon" />
+            <span>EARLY FILE DISCOUNT:</span>
+          </div>
+
+          <div className="broadcast-marquee-container" title="Pause on hover">
+            <div className="broadcast-marquee-track">
+              <div className="marquee-group">
+                <span className="marquee-item">
+                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                </span>
+                <span className="marquee-separator">⚡</span>
+                <span className="marquee-item">
+                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                </span>
+                <span className="marquee-separator">⚡</span>
+              </div>
+              <div className="marquee-group" aria-hidden="true">
+                <span className="marquee-item">
+                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                </span>
+                <span className="marquee-separator">⚡</span>
+                <span className="marquee-item">
+                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                </span>
+                <span className="marquee-separator">⚡</span>
+              </div>
             </div>
           </div>
+
           <div className="broadcast-right">
             <Link to={isAuthenticated ? "/portal" : "/register"} className="broadcast-cta-button">
               <span>Claim 10% Off</span>

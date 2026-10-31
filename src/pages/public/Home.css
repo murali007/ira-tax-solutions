@@ -1058,9 +1058,10 @@
   }
 }
 
+
 /* ========================================================
    Reference Card Layout Matching Exact Reference Image
-   for "Why Choose" and "Who We Help"
+   Human placed as background with words in front
    ======================================================== */
 .home-reference-container {
   max-width: 1240px;
@@ -1117,13 +1118,12 @@
   border: 1px solid #dbeafe;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  overflow: hidden;
   position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 225px;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 220px;
 }
 
 .reference-split-card:hover {
@@ -1132,14 +1132,46 @@
   border-color: #93c5fd;
 }
 
+/* Background Artwork: Human from image placed as background on the right */
+.ref-card-bg-artwork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 52%;
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+
+.reference-split-card:hover .ref-card-bg-artwork {
+  transform: scale(1.03);
+}
+
+/* Soft diffusion gradient from left so text on white card is 100% legible */
+.ref-card-bg-artwork::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 55%;
+  background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0.9) 35%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Text Column showing words present in image in front */
 .ref-card-text-col {
-  flex: 1 1 54%;
-  padding: 26px 20px 24px 26px;
+  position: relative;
+  z-index: 2;
+  max-width: 64%;
+  padding: 26px 20px 26px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  z-index: 2;
-  position: relative;
 }
 
 .ref-card-icon-bubble {
@@ -1177,40 +1209,6 @@
   margin: 0;
 }
 
-.ref-card-image-col {
-  flex: 0 0 46%;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  background-color: #f8fafc;
-}
-
-.ref-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  transition: transform 0.4s ease;
-}
-
-.reference-split-card:hover .ref-card-img {
-  transform: scale(1.03);
-}
-
-.ref-card-img-fade {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to right, #ffffff 0%, rgba(255, 255, 255, 0.85) 30%, transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
 .who-we-help-section {
   padding: 76px 24px;
   background-color: #f4f8fc;
@@ -1222,22 +1220,31 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+  .ref-card-text-col {
+    max-width: 70%;
+  }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 600px) {
   .reference-split-card {
-    flex-direction: column;
     min-height: auto;
+    flex-direction: column;
+    align-items: flex-start;
   }
   .ref-card-text-col {
-    padding: 22px 20px 16px;
+    max-width: 100%;
+    padding: 24px 20px 180px 20px;
   }
-  .ref-card-image-col {
-    height: 170px;
+  .ref-card-bg-artwork {
     width: 100%;
-    flex: none;
+    height: 180px;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: center bottom;
   }
-  .ref-card-img-fade {
+  .ref-card-bg-artwork::before {
     width: 100%;
     height: 50px;
     top: 0;

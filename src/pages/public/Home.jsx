@@ -267,20 +267,18 @@ export default function Home() {
           <div className="reference-cards-grid">
             {whyChooseUs.map((item, idx) => (
               <div className="reference-split-card" key={idx}>
+                <div 
+                  className="ref-card-bg-artwork" 
+                  style={{ backgroundImage: `url(${item.image})` }} 
+                  role="img" 
+                  aria-label={item.imageAlt} 
+                />
                 <div className="ref-card-text-col">
                   <div className="ref-card-icon-bubble">
                     {item.icon}
                   </div>
                   <h3 className="ref-card-title">{item.title}</h3>
                   <p className="ref-card-desc">{item.desc}</p>
-                </div>
-                <div className="ref-card-image-col">
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    className="ref-card-img"
-                  />
-                  <div className="ref-card-img-fade"></div>
                 </div>
               </div>
             ))}
@@ -311,20 +309,18 @@ export default function Home() {
           <div className="reference-cards-grid">
             {whoWeHelp.map((item, idx) => (
               <div className="reference-split-card" key={idx}>
+                <div 
+                  className="ref-card-bg-artwork" 
+                  style={{ backgroundImage: `url(${item.image})` }} 
+                  role="img" 
+                  aria-label={item.imageAlt} 
+                />
                 <div className="ref-card-text-col">
                   <div className="ref-card-icon-bubble">
                     {item.icon}
                   </div>
                   <h3 className="ref-card-title">{item.title}</h3>
                   <p className="ref-card-desc">{item.desc}</p>
-                </div>
-                <div className="ref-card-image-col">
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    className="ref-card-img"
-                  />
-                  <div className="ref-card-img-fade"></div>
                 </div>
               </div>
             ))}

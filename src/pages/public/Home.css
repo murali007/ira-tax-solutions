@@ -70,35 +70,48 @@
   background-color: #16a34a;
   color: #ffffff;
   padding: 12px 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13.5px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   text-decoration: none;
-  transition: background-color 0.15s ease;
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 4px rgba(22, 163, 74, 0.15), 0 6px 14px rgba(22, 163, 74, 0.25);
 }
 
 .clip-btn-green:hover {
   background-color: #15803d;
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 8px rgba(22, 163, 74, 0.2), 0 10px 22px rgba(22, 163, 74, 0.3);
+}
+
+.clip-btn-green:active {
+  transform: scale(0.98) translateY(0);
 }
 
 .clip-btn-outline {
   background-color: #ffffff;
   color: #0f172a;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(15, 23, 42, 0.15);
   padding: 12px 28px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 13.5px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .clip-btn-outline:hover {
   background-color: #f8fafc;
-  border-color: #94a3b8;
+  border-color: rgba(15, 23, 42, 0.3);
+  transform: translateY(-1.5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.clip-btn-outline:active {
+  transform: scale(0.98) translateY(0);
 }
 
 /* Hero Feature Highlights Card */
@@ -106,10 +119,16 @@
   flex: 1;
   max-width: 460px;
   background: #ffffff;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08), 0 3px 10px rgba(15, 23, 42, 0.04);
-  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 16px 36px -4px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-features-badge-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(15, 23, 42, 0.04), 0 20px 42px -4px rgba(15, 23, 42, 0.12);
 }
 
 .hero-badge-header {
@@ -416,9 +435,24 @@
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 
+.who-card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  cursor: default;
+}
+
 .who-card:hover {
-  transform: translateY(-3px);
-  border-color: #0284c7;
+  transform: translateY(-4px);
+  border-color: rgba(2, 132, 199, 0.4);
+  box-shadow: 0 4px 8px -1px rgba(15, 23, 42, 0.04), 0 16px 32px -4px rgba(15, 23, 42, 0.08);
+}
+
+.who-card:active {
+  transform: scale(0.99) translateY(-2px);
 }
 
 .who-icon-wrapper {
@@ -430,6 +464,11 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.who-card:hover .who-icon-wrapper {
+  transform: scale(1.05);
 }
 
 .who-card h3 {
@@ -467,11 +506,19 @@
 
 .step-card {
   background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  border-radius: 12px;
   padding: 24px 18px;
   text-align: center;
   position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-card:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  border-color: rgba(22, 163, 74, 0.35);
+  box-shadow: 0 10px 24px -4px rgba(15, 23, 42, 0.08);
 }
 
 .step-circle {
@@ -486,6 +533,11 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 14px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-card:hover .step-circle {
+  transform: scale(1.08);
 }
 
 .step-card h4 {
@@ -518,9 +570,10 @@
 
 /* 5. Confidence CTA Section */
 .confidence-cta-section {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  background: linear-gradient(135deg, #090d16 0%, #0f172a 45%, #1e3a8a 100%);
   color: #ffffff;
-  padding: 60px 24px;
+  padding: 64px 24px;
+  position: relative;
 }
 
 .confidence-inner {
@@ -577,11 +630,17 @@
   align-items: center;
   gap: 8px;
   box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
-  transition: background 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-confidence-green:hover {
   background: #15803d;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.45);
+}
+
+.btn-confidence-green:active {
+  transform: scale(0.98) translateY(0);
 }
 
 .contact-meta-quick {

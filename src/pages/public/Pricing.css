@@ -42,23 +42,29 @@
 
 .pricing-card {
   background: var(--color-white);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   padding: var(--space-8);
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 .pricing-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px -1px rgba(15, 23, 42, 0.04), 0 20px 36px -4px rgba(15, 23, 42, 0.09);
+  border-color: rgba(45, 138, 78, 0.3);
 }
 
 .pricing-card.popular {
-  border-color: var(--color-primary);
-  box-shadow: 0 10px 25px -5px rgba(45, 138, 78, 0.15);
+  border-color: rgba(45, 138, 78, 0.5);
+  box-shadow: 0 2px 4px rgba(45, 138, 78, 0.08), 0 12px 28px -4px rgba(45, 138, 78, 0.16);
+}
+
+.pricing-card.popular:hover {
+  box-shadow: 0 4px 8px rgba(45, 138, 78, 0.1), 0 22px 40px -4px rgba(45, 138, 78, 0.22);
 }
 
 .popular-badge {
@@ -73,6 +79,7 @@
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(45, 138, 78, 0.3);
 }
 
 .card-top {
@@ -142,8 +149,18 @@
 .card-bottom .btn {
   width: 100%;
   text-align: center;
-  padding: var(--space-3) var(--space-4);
-  font-weight: var(--font-weight-semibold);
+  padding: 12px 20px;
+  font-weight: 700;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-bottom .btn:hover {
+  transform: translateY(-1.5px);
+}
+
+.card-bottom .btn:active {
+  transform: scale(0.98) translateY(0);
 }
 
 .pricing-notes {

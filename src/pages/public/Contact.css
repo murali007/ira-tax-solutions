@@ -273,13 +273,19 @@
   justify-content: center;
   gap: 8px;
   width: 100%;
-  transition: background 0.15s ease;
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   margin-top: 8px;
 }
 
 .booking-submit-btn:hover {
   background: #15803d;
+  transform: translateY(-1.5px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+}
+
+.booking-submit-btn:active {
+  transform: scale(0.985) translateY(0);
 }
 
 .no-obligation-note {

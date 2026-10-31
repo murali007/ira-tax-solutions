@@ -429,13 +429,18 @@
   font-size: 13px;
   font-weight: 500;
   border-left: 3px solid transparent;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
   white-space: nowrap;
 }
 
 .menu-link-item:hover {
   background-color: #1e272c;
   color: #ffffff;
+  transform: translateX(2px);
+}
+
+.menu-link-item:active {
+  transform: scale(0.985);
 }
 
 .menu-link-item.active {
@@ -452,6 +457,11 @@
 .menu-icon {
   color: #90a4ae;
   flex-shrink: 0;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-link-item:hover .menu-icon {
+  transform: scale(1.1);
 }
 
 /* Collapsible Personal Information Group */

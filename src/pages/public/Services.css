@@ -44,30 +44,40 @@
 
 .clip-service-card {
   background: #ffffff;
-  border: 1px solid #e5e9f0;
-  border-radius: 4px;
-  padding: 40px 28px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 12px;
+  padding: 38px 28px;
   text-align: left;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
 }
 
 .clip-service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  border-color: #cbd5e1;
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px -1px rgba(15, 23, 42, 0.04), 0 18px 36px -4px rgba(15, 23, 42, 0.09);
+  border-color: rgba(0, 137, 123, 0.35);
+}
+
+.clip-service-card:active {
+  transform: scale(0.99) translateY(-3px);
 }
 
 .clip-service-icon-bubble {
   width: 58px;
   height: 58px;
-  border-radius: 50%;
+  border-radius: 14px;
   background-color: #e0f2f1;
   color: #00897b;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clip-service-card:hover .clip-service-icon-bubble {
+  transform: scale(1.08);
 }
 
 .clip-service-card-title {

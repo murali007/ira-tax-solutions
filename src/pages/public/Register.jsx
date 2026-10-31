@@ -14,8 +14,12 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  if (isAuthenticated) {
+    return <Navigate to="/portal" replace />;
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

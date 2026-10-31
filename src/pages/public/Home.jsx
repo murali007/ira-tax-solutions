@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { 
   ShieldCheck, 
   UserCheck, 
@@ -82,6 +83,7 @@ const fiveSteps = [
 ];
 
 export default function Home() {
+  const { isAuthenticated } = useAuth();
   return (
     <div className="clip-home-root">
       {/* 1. Hero Section */}
@@ -133,8 +135,8 @@ export default function Home() {
               </li>
             </ul>
             <div className="hero-badge-footer">
-              <Link to="/register" className="hero-portal-link">
-                Create Account / Login to File →
+              <Link to={isAuthenticated ? "/portal" : "/register"} className="hero-portal-link">
+                {isAuthenticated ? "Go to Tax Filing Portal →" : "Create Account / Login to File →"}
               </Link>
             </div>
           </div>

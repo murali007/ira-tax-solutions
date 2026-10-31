@@ -12,6 +12,18 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function GuestRoute({ children }) {
+  const { isAuthenticated, loading } = useAuth();
+  if (loading) {
+    return <div style={{ padding: '60px', textAlign: 'center', color: '#64748b' }}>Checking authorization...</div>;
+  }
+  if (isAuthenticated) {
+    return <Navigate to="/portal" replace />;
+  }
+  return children;
+}
+
+
 // Layouts
 import PublicLayout from './components/layout/PublicLayout';
 import PortalLayout from './components/layout/PortalLayout';
@@ -54,8 +66,8 @@ export default function App() {
             <Route path="/refund-status" element={<RefundStatus />} />
             <Route path="/refer" element={<Refer />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+            <Route path="/register" element={<GuestRoute><Register /></GuestRoute>} />
           </Route>
 
           {/* Authenticated Filing Portal Routes */}

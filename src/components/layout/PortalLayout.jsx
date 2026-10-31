@@ -15,7 +15,13 @@ import {
   Users,
   CheckSquare,
   Mail,
-  ChevronDown
+  ChevronDown,
+  Phone,
+  MessageSquare,
+  ShieldCheck,
+  Calendar,
+  ExternalLink,
+  BookOpen
 } from 'lucide-react';
 import './PortalLayout.css';
 
@@ -43,8 +49,8 @@ export default function PortalLayout() {
     navigate('/');
   };
 
-  const fileNumber = user?.file_no || user?.fileNo || '240005';
-  const status = user?.status || 'Scheduling Pending';
+  const fileNumber = user?.file_no || user?.fileNo || 'IRA-2026-25188';
+  const status = user?.status || 'Profile Created';
   const userName = user?.name ? user.name.toUpperCase() : 'TAXPAYER';
 
   const isPersonalInfoActive = 
@@ -54,8 +60,39 @@ export default function PortalLayout() {
 
   return (
     <div className="portal-container-root">
-      {/* 1. Portal Brand & Contact Row */}
-      <div className="portal-brand-row">
+      {/* 1. Top Black/Navy Bar matching Public Website */}
+      <div className="portal-top-black-bar">
+        <div className="portal-top-black-inner">
+          <div className="portal-top-contact-items">
+            <span className="portal-top-item">
+              <Mail size={13} className="portal-top-icon" />
+              <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
+            </span>
+            <span className="portal-top-item">
+              <span className="country-code-tag">IN</span>
+              <a href="tel:+919014532499">+91 90145 32499</a>
+              <span className="ext-badge-pill">Ext: 102</span>
+            </span>
+            <span className="portal-top-item whatsapp-item">
+              <span className="chat-emoji">💬</span>
+              <a href="https://wa.me/919014532499" target="_blank" rel="noreferrer">WhatsApp Chat</a>
+            </span>
+          </div>
+
+          <div className="portal-top-quick-links">
+            <Link to="/" className="portal-top-nav-link">
+              <ExternalLink size={12} /> Public Website
+            </Link>
+            <span className="portal-top-divider">|</span>
+            <Link to="/contact" className="portal-top-nav-link highlight">
+              <Calendar size={12} /> Book 15-Min Consultation
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* 2. Frosted Brand Navbar matching Public Site */}
+      <header className="portal-brand-row">
         <div className="portal-brand-inner">
           <div className="portal-brand-left-group">
             {/* Mobile Header Menu Trigger */}
@@ -77,43 +114,31 @@ export default function PortalLayout() {
                 <span className="logo-part-dark">Solutions</span>
               </div>
             </Link>
+
+            <span className="portal-brand-badge">Client Portal</span>
           </div>
 
           {/* Center Referral Callout */}
           <Link to="/refer" className="portal-center-referral">
-            <Users size={22} className="refer-users-icon" />
+            <Users size={20} className="refer-users-icon" />
             <div className="refer-text-col">
               <span className="refer-title">REFER A FRIEND</span>
               <span className="refer-sub">&amp; Earn $40 Reward</span>
             </div>
           </Link>
 
-          {/* Contact Direct Numbers */}
-          <div className="portal-top-contact-col">
-            <div className="contact-line-item">
-              <span className="country-code-tag">IN</span>
-              <span>+91 90145 32499 <span className="ext-badge" style={{ fontSize: '11px', background: '#e0f2fe', color: '#0369a1', padding: '1px 5px', borderRadius: '4px', fontWeight: 600 }}>Ext: 102</span></span>
-            </div>
-            <div className="contact-line-item">
-              <span className="flag-circle">💬</span>
-              <a href="https://wa.me/919014532499" target="_blank" rel="noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>WhatsApp: +91 90145 32499</a>
-            </div>
-            <div className="contact-line-item">
-              <Mail size={12} className="mail-icon-blue" />
-              <span>info@irataxsolutions.com</span>
-            </div>
-          </div>
-
-          {/* User Account Dropdown */}
+          {/* User Account Corner */}
           <div className="portal-user-corner" ref={userMenuRef}>
             <button
               type="button"
               className="portal-user-pill-btn"
               onClick={() => setUserMenuOpen(!userMenuOpen)}
             >
-              <User size={15} className="user-icon-green" />
+              <div className="user-avatar-circle">
+                <User size={14} />
+              </div>
               <span className="user-greeting">Hi, {userName}</span>
-              <ChevronDown size={12} className="chevron-icon" />
+              <ChevronDown size={13} className="chevron-icon" />
             </button>
 
             {userMenuOpen && (
@@ -124,10 +149,10 @@ export default function PortalLayout() {
                 </div>
                 <hr />
                 <Link to="/" onClick={() => setUserMenuOpen(false)}>
-                  Public Home
+                  <ExternalLink size={13} /> Public Home
                 </Link>
                 <Link to="/security" onClick={() => setUserMenuOpen(false)}>
-                  Security &amp; Privacy
+                  <ShieldCheck size={13} /> Security &amp; Privacy
                 </Link>
                 <button onClick={handleLogout} className="dropdown-logout-btn">
                   <LogOut size={13} /> Sign Out
@@ -136,54 +161,61 @@ export default function PortalLayout() {
             )}
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* 2. Vibrant Lime-Green Control Bar */}
-      <div className="portal-green-control-bar">
-        <div className="green-bar-inner">
-          <div className="green-bar-left">
-            <span className="file-id-badge">
-              File No: <strong>{fileNumber}</strong>
-            </span>
-            <div className="status-pill-coral">
-              Status : <span>{status}</span>
+      {/* 3. Modern Control Toolbar (Replaced harsh lime bar with Public Navy/Emerald theme) */}
+      <div className="portal-control-toolbar">
+        <div className="control-toolbar-inner">
+          <div className="control-left-meta">
+            <div className="file-badge-pill">
+              <span className="meta-label">File No:</span>
+              <strong className="meta-code">{fileNumber}</strong>
+            </div>
+            <div className="status-badge-chip">
+              <span className="status-dot-pulse" />
+              <span className="status-label">Status:</span>
+              <strong className="status-name">{status}</strong>
             </div>
           </div>
 
-          <div className="green-bar-center">
-            <Link to="/contact" className="btn-refer-gold">
-              Book Free 15-Min Consultation
+          <div className="control-center-actions">
+            <Link to="/contact" className="toolbar-btn-primary">
+              <Calendar size={13} /> Book Free 15-Min Consultation
             </Link>
-            <Link to="/about" className="btn-resources-cyan">
-              Resources &amp; Form 1040 Guides
+            <Link to="/about" className="toolbar-btn-outline">
+              <BookOpen size={13} /> Resources &amp; Guides
             </Link>
           </div>
 
-          <div className="green-bar-right">
-            <span className="direct-no-text">
-              Direct Helpline : <span className="red-bold-num">+91 90145 32499</span> <span className="ext-badge">Ext: 102</span>
-            </span>
+          <div className="control-right-helpline">
+            <span className="helpline-label">Direct Helpline:</span>
+            <a href="tel:+919014532499" className="helpline-number">
+              +91 90145 32499
+            </a>
+            <span className="helpline-ext">Ext: 102</span>
           </div>
         </div>
       </div>
 
-      {/* 3. Announcement Ticker */}
+      {/* 4. Elegant Announcement Ribbon */}
       <div className="portal-ticker-bar">
         <div className="ticker-text-wrapper">
-          <span className="ticker-label">TAX SEASON 2025:</span>
+          <span className="ticker-badge">TAX SEASON 2025</span>
           <span className="ticker-item">
             🇺🇸 Form 1040, W-2, 1099, Multi-State Returns &amp; FBAR e-filing for Tax Year 2024 is now open!
           </span>
+          <span className="ticker-item-dot">•</span>
           <span className="ticker-item">
             🔒 Strict IRS Section 7216 Data Confidentiality &amp; 256-bit Bank-Level Encryption for all client files
           </span>
+          <span className="ticker-item-dot">•</span>
           <span className="ticker-item">
             ⚡ Every return prepared by a dedicated specialist and verified by a separate senior reviewer
           </span>
         </div>
       </div>
 
-      {/* 4. Portal Main Body (Sidebar + Content Workspace) */}
+      {/* 5. Portal Main Body (Sidebar + Content Workspace) */}
       <div className="portal-workspace-body">
         {/* Mobile Sidebar Overlay */}
         <div 
@@ -193,6 +225,7 @@ export default function PortalLayout() {
 
         {/* Left Dark Sidebar */}
         <aside className={`portal-dark-sidebar ${mobileMenuOpen ? 'open' : ''}`}>
+          <div className="sidebar-header-label">PORTAL NAVIGATION</div>
           <nav className="portal-vertical-nav">
             <NavLink 
               to="/portal" 
@@ -201,7 +234,7 @@ export default function PortalLayout() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <Home className="menu-icon" size={17} />
-              <span>Home</span>
+              <span>Dashboard Home</span>
             </NavLink>
 
             {/* Collapsible Personal Information Group */}
@@ -215,7 +248,7 @@ export default function PortalLayout() {
                   <User className="menu-icon" size={17} />
                   <span>Personal Information</span>
                 </div>
-                <span className="toggle-symbol">{personalInfoOpen ? '▲' : '▼'}</span>
+                <ChevronDown size={14} className={`group-chevron ${personalInfoOpen ? 'rotated' : ''}`} />
               </button>
 
               {personalInfoOpen && (
@@ -256,7 +289,7 @@ export default function PortalLayout() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <Clock className="menu-icon" size={17} />
-              <span>Schedule for Tax Notes</span>
+              <span>Schedule &amp; Tax Notes</span>
             </NavLink>
 
             <NavLink 
@@ -295,6 +328,17 @@ export default function PortalLayout() {
               <span>Download Tax Returns</span>
             </NavLink>
           </nav>
+
+          {/* Sidebar Footer Trust Card */}
+          <div className="sidebar-trust-box">
+            <div className="trust-box-icon">
+              <ShieldCheck size={18} />
+            </div>
+            <div className="trust-box-text">
+              <strong>IRS Authorized e-File</strong>
+              <span>256-Bit Bank Encryption</span>
+            </div>
+          </div>
         </aside>
 
         {/* Mobile Toggle FAB (Floating Action Button) */}

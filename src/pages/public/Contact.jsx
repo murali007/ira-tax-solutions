@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users, CheckSquare } from 'lucide-react';
+import IndiaFlag from '../../components/common/IndiaFlag';
 import './Contact.css';
 
 export default function Contact() {
@@ -79,7 +80,7 @@ export default function Contact() {
                 <Phone size={18} className="text-green" />
                 <div>
                   <strong>Call &amp; WhatsApp:</strong>
-                  <a href="tel:+919014532499"><span role="img" aria-label="India">🇮🇳</span> +91 90145 32499</a>
+                  <a href="tel:+919014532499"><IndiaFlag width={18} height={12} /> +91 90145 32499</a>
                 </div>
               </div>
               <div className="direct-item">

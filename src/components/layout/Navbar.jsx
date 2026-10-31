@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { Mail, CheckSquare, Lock, UserPlus } from 'lucide-react';
+import IndiaFlag from '../common/IndiaFlag';
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -51,8 +52,9 @@ export default function Navbar() {
               <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
             </span>
             <span className="top-item">
-              <span className="country-flag-icon" role="img" aria-label="India">🇮🇳</span>
+              <IndiaFlag width={18} height={12} />
               <a href="tel:+919014532499">+91 90145 32499</a>
+              <span className="ext-badge-pill">Ext: 102</span>
             </span>
             <span className="top-item whatsapp-item whatsapp-highlight-pulse">
               <svg className="whatsapp-official-icon" viewBox="0 0 24 24" width="15" height="15" fill="#25D366" aria-hidden="true">

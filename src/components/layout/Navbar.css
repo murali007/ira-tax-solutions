@@ -671,3 +671,29 @@
     font-size: 21px;
   }
 }
+
+/* Header Company Logo */
+.header-company-logo {
+  height: 38px;
+  width: auto;
+  max-height: 40px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.brand-logo:hover .header-company-logo {
+  transform: scale(1.03);
+}
+
+.ext-badge-pill {
+  font-size: 10.5px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-left: 4px;
+  letter-spacing: 0.3px;
+}

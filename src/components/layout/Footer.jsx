@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import IndiaFlag from '../common/IndiaFlag';
 import './Footer.css';
 
 export default function Footer() {
@@ -63,7 +64,7 @@ export default function Footer() {
             </li>
             <li>
               <div className="footer-contact-item">
-                <span className="icon">🇮🇳</span>
+                <span className="icon" style={{ display: 'inline-flex', alignItems: 'center' }}><IndiaFlag width={18} height={12} /></span>
                 <a href="tel:+919014532499" style={{ color: 'inherit', textDecoration: 'none' }}>+91 90145 32499</a>
               </div>
             </li>

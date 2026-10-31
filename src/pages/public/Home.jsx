@@ -34,7 +34,7 @@ const whoWeHelp = [
   {
     icon: <HomeIcon size={22} className="text-purple" />,
     title: 'Families & Dependents',
-    desc: 'Newly married couples, parents claiming Child Tax Credit ($2,000/child), and changing tax status.'
+    desc: 'Newly married couples, parents claiming Child Tax Credit ($2,200/child), and changing tax status.'
   },
   {
     icon: <TrendingUp size={22} className="text-amber" />,

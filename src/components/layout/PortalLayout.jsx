@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   Headphones
 } from 'lucide-react';
+import IndiaFlag from '../common/IndiaFlag';
 import './PortalLayout.css';
 
 export default function PortalLayout() {
@@ -67,7 +68,7 @@ export default function PortalLayout() {
               <a href="mailto:info@irataxsolutions.com">info@irataxsolutions.com</a>
             </span>
             <span className="portal-top-item">
-              <span className="country-flag-icon" role="img" aria-label="India">🇮🇳</span>
+              <IndiaFlag width={18} height={12} />
               <a href="tel:+919014532499">+91 90145 32499</a>
               <span className="ext-badge-pill">Ext: 102</span>
             </span>

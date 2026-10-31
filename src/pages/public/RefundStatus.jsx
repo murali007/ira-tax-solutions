@@ -1,4 +1,4 @@
-import { ExternalLink, ShieldCheck, MapPin } from 'lucide-react';
+import { ExternalLink, ShieldCheck, MapPin, CheckCircle2, Clock, Landmark } from 'lucide-react';
 import './RefundStatus.css';
 
 const STATE_REFUND_TOOLS = [
@@ -20,25 +20,59 @@ export default function RefundStatus() {
   return (
     <div className="refund-page">
       <div className="container">
-        <header className="page-header">
-          <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '12px' }}>
-            OFFICIAL IRS &amp; STATE REFUND DIRECTORY
-          </span>
-          <h1>Track Your Tax Refund Status</h1>
-          <p>
-            Check your Federal Form 1040 refund status directly with the IRS or view official State Department of Revenue portals.
-          </p>
-        </header>
+        {/* Split Header with Refund Approved Graphic on Right */}
+        <div className="refund-header-split">
+          <div className="refund-header-text">
+            <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '14px' }}>
+              OFFICIAL IRS &amp; STATE REFUND DIRECTORY
+            </span>
+            <h1 className="refund-page-title">Track Your Tax Refund Status</h1>
+            <p className="refund-page-desc">
+              Check your Federal Form 1040 refund status directly with the official IRS tracker or access state Department of Revenue portals across all 50 states.
+            </p>
+            <div className="refund-header-highlights">
+              <div className="refund-highlight-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>IRS issues most direct deposit refunds within 21 days</span>
+              </div>
+              <div className="refund-highlight-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Real-time tracking: Return Received → Approved → Sent</span>
+              </div>
+              <div className="refund-highlight-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Direct state tax portals for multi-state filers</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="refund-header-image-col">
+            <div className="refund-device-card">
+              <img
+                src="/refund-approved.jpg"
+                alt="US Tax Refund Direct Deposit Status Approved on Device"
+                className="refund-showcase-img"
+              />
+              <div className="refund-device-tag">
+                <Landmark size={18} style={{ color: '#22c55e' }} />
+                <div>
+                  <strong>Direct Deposit Status: Approved</strong>
+                  <span>Official IRS E-File Direct Tracker</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* IRS Direct Official Callout Card */}
-        <div style={{ background: '#0f172a', borderRadius: '14px', padding: '32px', color: '#ffffff', marginBottom: '36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', boxShadow: '0 4px 20px rgba(15, 23, 42, 0.08)' }}>
+        <div className="irs-official-callout-card">
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
               <ShieldCheck size={26} style={{ color: '#22c55e' }} />
               <h3 style={{ margin: 0, fontSize: '22px', color: '#ffffff', fontWeight: 700 }}>Official IRS "Where's My Refund?" Portal</h3>
             </div>
-            <p style={{ margin: 0, color: '#94a3b8', fontSize: '14.5px', maxWidth: '680px', lineHeight: '1.6' }}>
-              The IRS issues most refunds within 21 calendar days of e-file transmission. You can verify your exact refund issue date online through the official IRS system using your SSN/ITIN, filing status, and exact whole-dollar refund amount.
+            <p style={{ margin: 0, color: '#cbd5e1', fontSize: '14.5px', maxWidth: '680px', lineHeight: '1.6' }}>
+              The IRS updates refund status once daily, usually overnight. You will need your Social Security Number (SSN) or ITIN, your filing status (Single, Married Filing Jointly, etc.), and the exact whole-dollar refund amount shown on your Form 1040.
             </p>
           </div>
           <a
@@ -46,21 +80,21 @@ export default function RefundStatus() {
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', fontWeight: 700, padding: '14px 26px', borderRadius: '8px', fontSize: '14px', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', fontWeight: 700, padding: '14px 26px', borderRadius: '8px', fontSize: '14.5px', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)' }}
           >
             Open Official IRS Tool <ExternalLink size={16} />
           </a>
         </div>
 
         {/* State Refund Lookup Directory */}
-        <div className="state-directory-card" style={{ background: '#ffffff', border: '1px solid rgba(15, 23, 42, 0.08)', borderRadius: '14px', padding: '32px', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05)' }}>
+        <div className="state-directory-card" style={{ background: '#ffffff', border: '1px solid rgba(15, 23, 42, 0.08)', borderRadius: '16px', padding: '34px', boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
             <MapPin size={22} style={{ color: '#0284c7' }} />
             <h3 style={{ fontSize: '20px', color: '#0f172a', fontWeight: 700, margin: 0 }}>
               State Department of Revenue Refund Portals
             </h3>
           </div>
-          <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px', lineHeight: '1.5' }}>
+          <p style={{ color: '#64748b', fontSize: '14.5px', marginBottom: '26px', lineHeight: '1.5' }}>
             If you filed a state tax return, state refunds are computed and issued independently by your state's Department of Revenue. Select your state below to track your state refund directly on official government servers:
           </p>
 

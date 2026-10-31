@@ -1,20 +1,53 @@
 import { Link } from 'react-router-dom';
-import { Shield, Lock, FileCheck, Users, EyeOff, Server, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Shield, Lock, FileCheck, Users, EyeOff, Server, CheckCircle2, ArrowRight, ShieldCheck, Key } from 'lucide-react';
 import './SecurityPrivacy.css';
 
 export default function SecurityPrivacy() {
   return (
     <div className="security-page-root">
-      {/* Header Banner */}
+      {/* Header Banner - Split Hero with Bank-Grade Cyber Vault Graphic on the Right */}
       <section className="security-hero-banner">
-        <div className="security-hero-inner">
-          <div className="security-hero-badge">
-            <Shield size={16} /> 256-Bit Bank-Grade Security &amp; IRS Section 7216 Compliance
+        <div className="security-hero-inner-split">
+          <div className="security-hero-text-col">
+            <div className="security-hero-badge">
+              <Shield size={16} /> 256-Bit Bank-Grade Security &amp; IRS Section 7216 Compliance
+            </div>
+            <h1 className="security-heading">Your Tax Information Deserves Complete Protection</h1>
+            <p className="security-subtext">
+              Secure. Confidential. Trusted. We follow industry best practices and federal statutory mandates to protect your personal identity and financial documents at every step of your US tax preparation.
+            </p>
+            <div className="security-hero-points">
+              <div className="sec-point-item">
+                <ShieldCheck size={18} style={{ color: '#38bdf8' }} />
+                <span>256-Bit SSL/TLS 1.3 In-Transit &amp; AES-256 At-Rest Encryption</span>
+              </div>
+              <div className="sec-point-item">
+                <ShieldCheck size={18} style={{ color: '#38bdf8' }} />
+                <span>IRS Internal Revenue Code Section 7216 Statutory Privacy</span>
+              </div>
+              <div className="sec-point-item">
+                <ShieldCheck size={18} style={{ color: '#38bdf8' }} />
+                <span>Zero Third-Party Data Sharing or Advertiser Access</span>
+              </div>
+            </div>
           </div>
-          <h1 className="security-heading">Your Tax Information Deserves Care</h1>
-          <p className="security-subtext">
-            Secure. Confidential. Trusted. We follow industry best practices to protect your personal and financial information at every step of your tax preparation.
-          </p>
+
+          <div className="security-hero-visual-col">
+            <div className="security-vault-card">
+              <img
+                src="/security-data-vault.jpg"
+                alt="256-Bit Bank-Grade Holographic Security Cyber Shield and Vault"
+                className="security-vault-img"
+              />
+              <div className="security-vault-tag">
+                <Lock size={18} style={{ color: '#38bdf8' }} />
+                <div>
+                  <strong>IRS Section 7216 Compliant Vault</strong>
+                  <span>256-Bit Bank-Grade Encrypted Cloud Storage</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -98,19 +131,16 @@ export default function SecurityPrivacy() {
             </div>
 
             {/* Quick Action CTA */}
-            <div className="security-cta-banner">
+            <div className="sec-action-banner" style={{ marginTop: '48px', background: '#0f172a', borderRadius: '16px', padding: '36px', color: '#ffffff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', border: '1px solid rgba(56, 189, 248, 0.2)' }}>
               <div>
-                <h4>Ready to File Your Taxes Securely?</h4>
-                <p>Schedule your free 15-minute consultation or access your encrypted client portal.</p>
+                <h3 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: 700, color: '#ffffff' }}>Have Questions About Our Privacy Standards?</h3>
+                <p style={{ margin: 0, color: '#94a3b8', fontSize: '14.5px', maxWidth: '600px' }}>
+                  Our team is happy to walk you through our data protection measures, client non-disclosure protocols, and filing security.
+                </p>
               </div>
-              <div className="cta-action-btns">
-                <Link to="/contact" className="btn-sec-green">
-                  Book Free Consultation <ArrowRight size={16} />
-                </Link>
-                <Link to="/portal" className="btn-sec-outline">
-                  Client Portal
-                </Link>
-              </div>
+              <Link to="/contact" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#22c55e', color: '#ffffff', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, textDecoration: 'none', fontSize: '14.5px' }}>
+                Contact Security Officer <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>

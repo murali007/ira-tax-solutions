@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Gift, Users, DollarSign, Send, CheckCircle2 } from 'lucide-react';
+import { Gift, Users, DollarSign, Send, CheckCircle2, Award, ArrowRight } from 'lucide-react';
 import './Refer.css';
 
 export default function Refer() {
@@ -27,21 +27,46 @@ export default function Refer() {
   return (
     <div className="refer-page">
       <div className="container">
-        {/* Banner Section */}
+        {/* Banner Section - Split Layout with Referral Image on Right */}
         <div className="refer-hero">
           <div className="hero-content">
             <span className="badge">Partner &amp; Referral Program</span>
             <h1>Refer a Colleague &amp; Earn $20</h1>
             <p>
-              Share the convenience of professional, accurate US Form 1040 tax preparation with friends, colleagues, and family across all 50 states. 
+              Share the convenience of professional, accurate US Form 1040 tax preparation with colleagues, friends, and family across all 50 states. 
               Earn <strong>$20</strong> for every colleague who files their US taxes with us!
             </p>
+            <div className="refer-hero-benefits">
+              <div className="refer-benefit-point">
+                <CheckCircle2 size={18} style={{ color: '#22c55e' }} />
+                <span>Unlimited referrals — earn $20 for every completed return</span>
+              </div>
+              <div className="refer-benefit-point">
+                <CheckCircle2 size={18} style={{ color: '#22c55e' }} />
+                <span>Prompt digital payouts via Direct Bank Transfer or Zelle</span>
+              </div>
+              <div className="refer-benefit-point">
+                <CheckCircle2 size={18} style={{ color: '#22c55e' }} />
+                <span>Your referred colleagues receive an initial free consultation</span>
+              </div>
+            </div>
           </div>
-          <div className="hero-reward-card">
-            <Gift size={36} className="reward-icon" style={{ margin: '0 auto 8px', color: '#16a34a' }} />
-            <div className="reward-amount">$20</div>
-            <div className="reward-label">Per Successful US Tax Return</div>
-            <div className="reward-sub">Per Successful Referral</div>
+
+          <div className="refer-hero-visual-col">
+            <div className="refer-visual-card">
+              <img
+                src="/referral-friends.jpg"
+                alt="Two friendly professional colleagues celebrating referral reward"
+                className="refer-colleagues-img"
+              />
+              <div className="refer-floating-reward-badge">
+                <Gift size={24} style={{ color: '#22c55e' }} />
+                <div>
+                  <div className="reward-badge-amount">$20 Reward</div>
+                  <div className="reward-badge-sub">Per Successful Referral</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -99,8 +124,8 @@ export default function Refer() {
                       name="yourName" 
                       required 
                       value={formData.yourName} 
-                      onChange={handleChange}
-                      placeholder="e.g. Murali Krishna" 
+                      onChange={handleChange} 
+                      placeholder="e.g. John Doe"
                     />
                   </div>
                   <div className="form-group">
@@ -110,30 +135,31 @@ export default function Refer() {
                       name="yourEmail" 
                       required 
                       value={formData.yourEmail} 
-                      onChange={handleChange}
-                      placeholder="e.g. yourname@example.com" 
+                      onChange={handleChange} 
+                      placeholder="john@example.com"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Your Phone Number *</label>
+                    <label>Your Phone / WhatsApp Number *</label>
                     <input 
                       type="tel" 
                       name="yourPhone" 
                       required 
                       value={formData.yourPhone} 
-                      onChange={handleChange}
-                      placeholder="e.g. +91 90145 32499" 
+                      onChange={handleChange} 
+                      placeholder="+1 (555) 000-0000"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Preferred Reward Payout Method</label>
-                    <select
-                      name="payoutPreference"
-                      value={formData.payoutPreference}
+                    <label>Reward Payout Preference</label>
+                    <select 
+                      name="payoutPreference" 
+                      value={formData.payoutPreference} 
                       onChange={handleChange}
                     >
                       <option value="Direct Bank Transfer">Direct Bank Transfer</option>
-                      <option value="PayPal Transfer">PayPal Account</option>
+                      <option value="Zelle">Zelle (US Bank Account)</option>
+                      <option value="PayPal">PayPal</option>
                       <option value="Amazon e-Gift Card">Amazon e-Gift Card</option>
                     </select>
                   </div>
@@ -142,53 +168,53 @@ export default function Refer() {
                 <div className="split-col">
                   <h4>Colleague / Friend Being Referred</h4>
                   <div className="form-group">
-                    <label>Friend's Full Name *</label>
+                    <label>Their Full Name *</label>
                     <input 
                       type="text" 
                       name="friendName" 
                       required 
                       value={formData.friendName} 
-                      onChange={handleChange}
-                      placeholder="e.g. Alex Johnson" 
+                      onChange={handleChange} 
+                      placeholder="e.g. Jane Smith"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Friend's Email Address *</label>
+                    <label>Their Email Address *</label>
                     <input 
                       type="email" 
                       name="friendEmail" 
                       required 
                       value={formData.friendEmail} 
-                      onChange={handleChange}
-                      placeholder="e.g. alex@company.com" 
+                      onChange={handleChange} 
+                      placeholder="jane@company.com"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Friend's Phone Number</label>
+                    <label>Their Phone Number</label>
                     <input 
                       type="tel" 
                       name="friendPhone" 
                       value={formData.friendPhone} 
-                      onChange={handleChange}
-                      placeholder="e.g. +1 (555) 123-4567" 
+                      onChange={handleChange} 
+                      placeholder="+1 (555) 123-4567"
                     />
                   </div>
                   <div className="form-group">
-                    <label>Tax Situation Notes (Optional)</label>
+                    <label>Additional Notes / Filing Situation</label>
                     <textarea 
                       name="notes" 
                       rows={3} 
                       value={formData.notes} 
-                      onChange={handleChange}
-                      placeholder="e.g. Relocated from CA to TX, has W-2 and stock options..." 
+                      onChange={handleChange} 
+                      placeholder="e.g. W-2 employee with multi-state moves, tech stock options, or visa status..."
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="form-footer">
-                <button type="submit" className="btn btn-primary btn-lg" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  <Send size={18} /> Submit Referral &amp; Claim $20 Reward
+              <div className="form-actions" style={{ marginTop: '24px', textAlign: 'center' }}>
+                <button type="submit" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: '15px', fontWeight: 700, background: '#22c55e', color: '#ffffff', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                  <Send size={16} /> Submit Referral &amp; Register Reward
                 </button>
               </div>
             </form>

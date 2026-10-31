@@ -1,233 +1,154 @@
 .refund-page {
-  padding: var(--space-12) 0;
-  background-color: var(--color-bg);
+  padding: 50px 0 80px;
+  background-color: #fbfcfd;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.page-header {
-  text-align: center;
-  max-width: 680px;
-  margin: 0 auto var(--space-12);
+.refund-page .container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.page-header .badge {
-  display: inline-block;
-  background-color: rgba(45, 138, 78, 0.1);
-  color: var(--color-primary);
-  padding: 4px 14px;
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  margin-bottom: var(--space-3);
-  text-transform: uppercase;
-}
-
-.page-header h1 {
-  font-size: var(--font-size-3xl);
-  color: var(--color-navy);
-  margin-bottom: var(--space-4);
-}
-
-.page-header p {
-  color: var(--color-text-light);
-  font-size: var(--font-size-lg);
-}
-
-.refund-layout {
+/* Split Header */
+.refund-header-split {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: var(--space-8);
-  align-items: start;
-}
-
-.tracker-card {
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
-  box-shadow: var(--shadow-sm);
-}
-
-.tracker-card h3 {
-  font-size: var(--font-size-xl);
-  color: var(--color-navy);
-  margin-bottom: var(--space-2);
-}
-
-.tracker-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  margin-bottom: var(--space-6);
-}
-
-.tracker-form .form-group {
-  margin-bottom: var(--space-4);
-}
-
-.tracker-form label {
-  display: block;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-charcoal);
-  margin-bottom: var(--space-2);
-}
-
-.tracker-form input,
-.tracker-form select {
-  width: 100%;
-  padding: var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
-  font-family: inherit;
-  transition: border-color var(--transition-fast);
-}
-
-.tracker-form input:focus,
-.tracker-form select:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(45, 138, 78, 0.15);
-}
-
-.search-result-box {
-  margin-top: var(--space-6);
-  padding: var(--space-4);
-  background-color: var(--color-bg);
-  border-radius: var(--radius-md);
-  border-left: 4px solid var(--color-primary);
-}
-
-.error-alert {
-  display: flex;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
   align-items: center;
-  gap: var(--space-2);
-  color: var(--color-danger);
-  font-size: var(--font-size-sm);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  padding: 44px 40px;
+  margin-bottom: 36px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
 }
 
-.status-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-3);
+.refund-header-text {
+  text-align: left;
 }
 
-.status-header h4 {
-  color: var(--color-navy);
-  font-size: var(--font-size-base);
+.refund-page-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 16px;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
 }
 
-.status-timeline {
-  display: flex;
-  margin: var(--space-4) 0;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  text-align: center;
+.refund-page-desc {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 24px;
 }
 
-.timeline-step {
-  flex: 1;
-  padding: var(--space-2);
-  background: var(--color-border);
-  color: var(--color-text-muted);
-}
-
-.timeline-step.completed {
-  background: rgba(45, 138, 78, 0.2);
-  color: var(--color-primary);
-}
-
-.timeline-step.active {
-  background: var(--color-primary);
-  color: var(--color-white);
-}
-
-.result-detail {
-  font-size: var(--font-size-sm);
-  color: var(--color-charcoal);
-  margin-bottom: var(--space-1);
-}
-
-.demo-notice {
-  display: block;
-  font-size: var(--font-size-xs);
-  color: var(--color-text-muted);
-  margin-top: var(--space-3);
-}
-
-.official-links-container {
+.refund-header-highlights {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: 12px;
 }
 
-.info-box {
+.refund-highlight-item {
   display: flex;
-  gap: var(--space-3);
-  background: rgba(49, 130, 206, 0.08);
-  border: 1px solid rgba(49, 130, 206, 0.2);
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  color: #1e293b;
+  font-weight: 500;
 }
 
-.info-icon {
-  color: var(--color-info);
-  flex-shrink: 0;
+/* Device Showcase Image on Right */
+.refund-header-image-col {
+  display: flex;
+  justify-content: center;
 }
 
-.info-box h4 {
-  font-size: var(--font-size-base);
-  color: var(--color-navy);
-  margin-bottom: var(--space-1);
+.refund-device-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(15, 23, 42, 0.08);
+  background: #0f172a;
 }
 
-.info-box p {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
+.refund-showcase-img {
+  width: 100%;
+  height: 310px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-.links-grid {
-  display: grid;
-  gap: var(--space-4);
+.refund-device-card:hover .refund-showcase-img {
+  transform: scale(1.02);
 }
 
-.agency-link-card {
+.refund-device-tag {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+}
+
+.refund-device-tag strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.refund-device-tag span {
+  display: block;
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+/* IRS Official Callout Card */
+.irs-official-callout-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  padding: 34px 36px;
+  color: #ffffff;
+  margin-bottom: 36px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-4) var(--space-6);
-  text-decoration: none;
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  flex-wrap: wrap;
+  gap: 24px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.agency-link-card:hover {
-  border-color: var(--color-primary);
-  transform: translateX(4px);
+.state-refund-link:hover {
+  background-color: #ffffff !important;
+  border-color: #0284c7 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);
 }
 
-.agency-link-card h4 {
-  font-size: var(--font-size-base);
-  color: var(--color-navy);
-  margin-bottom: 2px;
-}
-
-.agency-link-card p {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-light);
-}
-
-.link-icon {
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-}
-
-@media (max-width: 900px) {
-  .refund-layout {
+@media (max-width: 992px) {
+  .refund-header-split {
     grid-template-columns: 1fr;
+    padding: 30px 24px;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .refund-page-title {
+    font-size: 28px;
   }
 }

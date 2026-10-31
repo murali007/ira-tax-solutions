@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users, CheckSquare } from 'lucide-react';
+import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users, CheckSquare, ShieldCheck } from 'lucide-react';
 import IndiaFlag from '../../components/common/IndiaFlag';
 import './Contact.css';
 
@@ -24,18 +24,60 @@ export default function Contact() {
   return (
     <div className="contact-page">
       <div className="container">
-        <header className="page-header">
-          <span className="badge">Schedule Free Consultation</span>
-          <h1>Let's Make Tax Filing Simple</h1>
-          <p>
-            Have questions about your taxes? Schedule a free 15-minute call and get your doubts answered by our experienced tax professionals.
-          </p>
-        </header>
+        {/* Split Header with Consultation Desk Visual on the Right */}
+        <div className="contact-header-split">
+          <div className="contact-header-text">
+            <span className="badge">Schedule Free Consultation</span>
+            <h1 className="contact-page-title">Let's Make Tax Filing Simple</h1>
+            <p className="contact-page-desc">
+              Have questions about your US taxes? Schedule a free 15-minute video or phone call with our experienced tax specialists to get your doubts answered.
+            </p>
+            <div className="contact-header-perks">
+              <div className="contact-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>100% Free 15-Minute No-Obligation Consultation</span>
+              </div>
+              <div className="contact-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>W-2s, 1099s, RSU/ESPP, Multi-State &amp; Expat Guidance</span>
+              </div>
+              <div className="contact-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Upfront transparent fee estimate before any commitment</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="contact-header-image-col">
+            <div className="contact-image-card">
+              <img
+                src="/tax-consultation-desk.jpg"
+                alt="US Tax Consultation Desk with Client and Tax Preparer"
+                className="contact-showcase-img"
+              />
+              <div className="contact-image-tag">
+                <ShieldCheck size={18} style={{ color: '#22c55e' }} />
+                <div>
+                  <strong>1-on-1 Confidential Tax Consultation Desk</strong>
+                  <span>Experienced US Tax Preparers &amp; Reviewers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="contact-booking-grid">
           {/* Left Column: Direct Contact & Highlights */}
           <div className="booking-poster-col">
             <div className="booking-highlight-card">
+              <div className="booking-card-top-img-wrap">
+                <img
+                  src="/tax-consultation-desk.jpg"
+                  alt="US Tax Consultation Session"
+                  className="booking-card-top-img"
+                />
+              </div>
+
               <div className="highlight-card-header">
                 <span className="highlight-tag">Free 15-Min Call</span>
                 <h3>Speak with an Expert</h3>

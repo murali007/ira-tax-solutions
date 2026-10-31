@@ -5,7 +5,9 @@ import {
   TrendingUp,
   Globe,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  CheckCircle2,
+  ShieldCheck
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import './Services.css';
@@ -47,16 +49,57 @@ export default function Services() {
   return (
     <div className="clip-services-page">
       <div className="clip-services-container">
-        {/* Header */}
-        <header className="clip-services-header">
-          <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '12px' }}>
-            YOUR GLOBAL TAX PARTNER
-          </span>
-          <h1 className="clip-services-title">Our US Tax Preparation Services</h1>
-          <p className="clip-services-subtitle">
-            Professional, accurate, and personalized Form 1040 tax preparation. Every return is handled by a dedicated preparer and verified by a separate experienced reviewer.
-          </p>
-        </header>
+        {/* Split Hero Section with Visual Showcase on the Right */}
+        <div className="services-split-hero">
+          <div className="services-hero-content">
+            <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '14px' }}>
+              YOUR GLOBAL TAX PARTNER
+            </span>
+            <h1 className="clip-services-title">Our US Tax Preparation Services</h1>
+            <p className="clip-services-subtitle">
+              Professional, accurate, and personalized Form 1040 tax preparation. Every return is handled by a dedicated preparer and verified by a separate experienced reviewer before transmission to the IRS.
+            </p>
+            <div className="services-hero-perks">
+              <div className="hero-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a', flexShrink: 0 }} />
+                <span>Two-Tier Quality Assurance (Preparer + Senior QA)</span>
+              </div>
+              <div className="hero-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a', flexShrink: 0 }} />
+                <span>IRS Authorized e-File Across All 50 US States</span>
+              </div>
+              <div className="hero-perk-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a', flexShrink: 0 }} />
+                <span>100% Accuracy Guarantee &amp; Year-Round Audit Assistance</span>
+              </div>
+            </div>
+            <div className="services-hero-actions">
+              <Link to="/contact" className="clip-btn-green" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14.5px' }}>
+                Book Free Consultation <ArrowRight size={16} />
+              </Link>
+              <Link to="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#ffffff', color: '#0f172a', border: '1px solid #cbd5e1', padding: '12px 22px', borderRadius: '8px', fontWeight: 600, fontSize: '14.5px' }}>
+                View Transparent Fees
+              </Link>
+            </div>
+          </div>
+
+          <div className="services-hero-image-col">
+            <div className="services-image-frame">
+              <img
+                src="/services-tax-prep.jpg"
+                alt="US Tax Preparation Dual-Monitor Workstation with Form 1040"
+                className="services-showcase-img"
+              />
+              <div className="services-image-tag">
+                <ShieldCheck size={18} style={{ color: '#22c55e' }} />
+                <div>
+                  <strong>IRS Authorized e-File Workstation</strong>
+                  <span>Form 1040 Certified &amp; Two-Tier QA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* 3x2 Grid */}
         <div className="clip-services-grid">
@@ -71,21 +114,23 @@ export default function Services() {
           ))}
         </div>
 
-        {/* Bottom CTA Card */}
-        <div style={{ marginTop: '50px', background: 'linear-gradient(135deg, #0d2847 0%, #1e3a8a 100%)', borderRadius: '16px', padding: '40px', color: '#ffffff', textAlign: 'center', boxShadow: '0 10px 25px rgba(0,0,0,0.1)' }}>
-          <h2 style={{ fontSize: '26px', marginBottom: '12px', fontWeight: 700, color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-            Ready to File Your Taxes with Confidence?
-          </h2>
-          <p style={{ color: '#f1f5f9', maxWidth: '600px', margin: '0 auto 24px', fontSize: '15px', lineHeight: '1.6', textShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>
-            Book a free 15-minute consultation with our tax specialists to discuss your situation, required documents, and get a clear upfront quote.
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link to="/contact" className="clip-btn-green" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', padding: '12px 28px', borderRadius: '8px', fontWeight: 600 }}>
-              Book Free 15-Min Consultation <ArrowRight size={16} />
-            </Link>
-            <Link to="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: 'rgba(255,255,255,0.1)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.3)', padding: '12px 28px', borderRadius: '8px', fontWeight: 600 }}>
-              View Transparent Pricing
-            </Link>
+        {/* Bottom CTA Card with Diffused Background */}
+        <div className="services-bottom-cta-banner">
+          <div className="cta-overlay-content">
+            <h2 style={{ fontSize: '26px', marginBottom: '12px', fontWeight: 700, color: '#ffffff', textShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
+              Ready to File Your Taxes with Confidence?
+            </h2>
+            <p style={{ color: '#f1f5f9', maxWidth: '620px', margin: '0 auto 24px', fontSize: '15px', lineHeight: '1.6', textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}>
+              Book a free 15-minute consultation with our tax specialists to discuss your situation, required documents, and get a clear upfront quote.
+            </p>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+              <Link to="/contact" className="clip-btn-green" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: '#22c55e', color: '#ffffff', padding: '12px 28px', borderRadius: '8px', fontWeight: 600 }}>
+                Book Free 15-Min Consultation <ArrowRight size={16} />
+              </Link>
+              <Link to="/pricing" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', background: 'rgba(255,255,255,0.15)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.35)', padding: '12px 28px', borderRadius: '8px', fontWeight: 600, backdropFilter: 'blur(4px)' }}>
+                View Transparent Pricing
+              </Link>
+            </div>
           </div>
         </div>
       </div>

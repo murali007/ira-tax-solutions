@@ -1,52 +1,144 @@
 /* ========================================================
-   Our Core Services CSS matching Clip 2
+   Our Core Services CSS matching Clip 2 + Visual Showcase
    ======================================================== */
 
 .clip-services-page {
-  padding: 60px 0 80px;
+  padding: 50px 0 80px;
   background-color: #fbfcfd;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .clip-services-container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.clip-services-header {
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto 50px;
+/* Split Hero Section */
+.services-split-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 60px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  padding: 44px 40px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04);
+}
+
+.services-hero-content {
+  text-align: left;
 }
 
 .clip-services-title {
-  font-size: 34px;
+  font-size: 36px;
   font-weight: 800;
-  color: #1e252b;
-  margin: 0 0 14px;
-  letter-spacing: -0.5px;
+  color: #0f172a;
+  margin: 0 0 16px;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
 }
 
 .clip-services-subtitle {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #555555;
-  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 24px;
+}
+
+.services-hero-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.hero-perk-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.services-hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Right Side Image Showcase */
+.services-hero-image-col {
+  display: flex;
+  justify-content: center;
+}
+
+.services-image-frame {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.08);
+  background: #0f172a;
+}
+
+.services-showcase-img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.services-image-frame:hover .services-showcase-img {
+  transform: scale(1.02);
+}
+
+.services-image-tag {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+}
+
+.services-image-tag strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.services-image-tag span {
+  display: block;
+  font-size: 11.5px;
+  color: #94a3b8;
 }
 
 /* 3x2 Grid matching Clip 2 */
 .clip-services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 28px;
 }
 
 .clip-service-card {
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 12px;
-  padding: 38px 28px;
+  border-radius: 14px;
+  padding: 34px 26px;
   text-align: left;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
   transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
@@ -59,13 +151,9 @@
   border-color: rgba(0, 137, 123, 0.35);
 }
 
-.clip-service-card:active {
-  transform: scale(0.99) translateY(-3px);
-}
-
 .clip-service-icon-bubble {
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
   background-color: #e0f2f1;
   color: #00897b;
@@ -88,13 +176,37 @@
 }
 
 .clip-service-card-desc {
-  font-size: 13px;
+  font-size: 13.5px;
   line-height: 1.65;
   color: #64748b;
   margin: 0;
 }
 
+/* Bottom CTA Banner with Diffused Image */
+.services-bottom-cta-banner {
+  margin-top: 60px;
+  background: linear-gradient(135deg, rgba(13, 40, 71, 0.92) 0%, rgba(30, 58, 138, 0.88) 100%), url('/services-tax-prep.jpg') center/cover no-repeat;
+  border-radius: 18px;
+  padding: 48px 30px;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-overlay-content {
+  position: relative;
+  z-index: 2;
+}
+
 @media (max-width: 992px) {
+  .services-split-hero {
+    grid-template-columns: 1fr;
+    padding: 30px 24px;
+    gap: 30px;
+  }
   .clip-services-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -103,5 +215,8 @@
 @media (max-width: 640px) {
   .clip-services-grid {
     grid-template-columns: 1fr;
+  }
+  .clip-services-title {
+    font-size: 28px;
   }
 }

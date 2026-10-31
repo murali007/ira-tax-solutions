@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { ShieldCheck, CheckCircle2, Clock, Calendar, ArrowRight, HelpCircle } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Clock, Calendar, ArrowRight, HelpCircle, FileSpreadsheet } from 'lucide-react';
 import './Pricing.css';
 
 export default function Pricing() {
@@ -77,18 +77,51 @@ export default function Pricing() {
   return (
     <div className="pricing-page">
       <div className="pricing-container">
-        {/* Header Section */}
-        <header className="pricing-header">
-          <span className="pricing-badge">
-            CLEAR PRICING • NO HIDDEN CHARGES
-          </span>
-          <h1 className="pricing-main-title">
-            US Individual &amp; Corporate Tax Filing Services
-          </h1>
-          <p className="pricing-subtitle">
-            Transparent, itemized pricing for Federal, State, and Corporate tax filing. Know your exact fee before we begin with zero surprise add-ons.
-          </p>
-        </header>
+        {/* Split Header Section with Tax Desk Visual on Right */}
+        <div className="pricing-split-header">
+          <div className="pricing-header-text">
+            <span className="pricing-badge">
+              CLEAR PRICING • NO HIDDEN CHARGES
+            </span>
+            <h1 className="pricing-main-title">
+              US Individual &amp; Corporate Tax Filing Services
+            </h1>
+            <p className="pricing-subtitle">
+              Transparent, itemized pricing for Federal, State, and Corporate tax filing. Know your exact fee before we begin with zero surprise add-ons.
+            </p>
+            <div className="pricing-header-checks">
+              <div className="pricing-check-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Upfront fee confirmation during your initial consultation</span>
+              </div>
+              <div className="pricing-check-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Zero hidden charges, surprise fees, or filing surcharges</span>
+              </div>
+              <div className="pricing-check-item">
+                <CheckCircle2 size={18} style={{ color: '#16a34a' }} />
+                <span>Dedicated preparer + second senior reviewer on every return</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pricing-header-image-col">
+            <div className="pricing-image-card">
+              <img
+                src="/tax-consultation-desk.jpg"
+                alt="1-on-1 US Tax Consultation Desk with Transparent Fee Review"
+                className="pricing-showcase-img"
+              />
+              <div className="pricing-image-tag">
+                <ShieldCheck size={18} style={{ color: '#22c55e' }} />
+                <div>
+                  <strong>Clear &amp; Upfront Price Quote</strong>
+                  <span>Confirmed Before Preparation Begins</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Pricing Table Card */}
         <div className="pricing-table-card">
@@ -161,7 +194,7 @@ export default function Pricing() {
           </div>
         </div>
 
-        {/* Action Callout */}
+        {/* Action Callout with Diffused Corporate Skyline Background */}
         <div className="pricing-cta-card">
           <div className="cta-content">
             <h3>Ready to File Your US Tax Return?</h3>

@@ -94,15 +94,14 @@ export default function Home() {
             <div className="broadcast-live-tag">
               <span className="live-pulsing-dot"></span>
               <Zap size={14} className="broadcast-zap-icon" />
-              <span>LIVE FLASH OFFER</span>
+              <span>EARLY FILE DISCOUNT:</span>
             </div>
             <div className="broadcast-content">
-              <span className="broadcast-title">EARLY FILE DISCOUNT:</span>
               <span className="broadcast-offer">
                 Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice!
               </span>
               <span className="broadcast-meta">
-                Limited early-bird filing slots available for Tax Season 2025.
+                Limited early-bird filing slots available for Tax Season 2026.
               </span>
             </div>
           </div>
@@ -122,7 +121,7 @@ export default function Home() {
                         <div className="hero-flash-discount-badge">
               <span className="flash-badge-pulse"></span>
               <Zap size={15} className="flash-zap" />
-              <span><strong>EARLY BIRD SPECIAL:</strong> Straight Away <strong>10% OFF</strong> on Bill Invoice!</span>
+              <span><strong>EARLY FILE DISCOUNT:</strong> Straight Away <strong>10% OFF</strong> on Your Total Bill / Invoice!</span>
             </div>
             <span className="clip-eyebrow">YOUR GLOBAL TAX PARTNER</span>
             <h1 className="clip-heading">Your Taxes, Our Expertise.</h1>

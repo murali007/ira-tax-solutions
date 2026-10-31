@@ -99,7 +99,7 @@ export default function ScheduleTaxNotes() {
               <div className="input-with-icon">
                 <Calendar size={15} className="field-icon" />
                 <select value={taxYear} onChange={(e) => setTaxYear(e.target.value)}>
-                  <option value="Tax Year 2024 (Current Filing)">Tax Year 2024 (Filing Season 2025 - Current)</option>
+                  <option value="Tax Year 2024 (Current Filing)">Tax Year 2024 (Filing Season 2026 - Current)</option>
                   <option value="Tax Year 2023 (Prior Year)">Tax Year 2023 (Prior Year Return)</option>
                   <option value="Tax Year 2022 (Prior Year)">Tax Year 2022 (Prior Year Return)</option>
                   <option value="Form 1040-X (Amended Return)">Form 1040-X (Amended US Return)</option>

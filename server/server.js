@@ -241,7 +241,7 @@ app.post('/api/schedule', requireAuth, (req, res) => {
       preferred_time=excluded.preferred_time, notes=excluded.notes, updated_at=CURRENT_TIMESTAMP
   `);
 
-  stmt.run(req.user.id, taxYear || '2025', preferredDate || '', preferredTime || '', notes || '');
+  stmt.run(req.user.id, taxYear || '2026', preferredDate || '', preferredTime || '', notes || '');
   res.json({ success: true, message: 'Schedule notes saved to database.' });
 });
 

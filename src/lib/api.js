@@ -284,7 +284,7 @@ export const api = {
         const userId = parseInt(token, 10);
         const row = {
           user_id: userId,
-          tax_year: data.taxYear || 'AY 2025-26',
+          tax_year: data.taxYear || 'AY 2026-27',
           preferred_date: data.preferredDate || '',
           preferred_time: data.preferredTime || '',
           notes: data.notes || '',

@@ -118,7 +118,7 @@ export default function PortalHome() {
                 <ShieldCheck size={28} />
               </div>
               <div>
-                <h3>Tax Season 2025 Ready</h3>
+                <h3>Tax Season 2026 Ready</h3>
                 <p>Tax Year 2024 Form 1040 Filing</p>
               </div>
             </div>

@@ -1,117 +1,179 @@
 import { Link } from 'react-router-dom';
-import { Check, ShieldCheck, Info, ArrowRight } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { ShieldCheck, CheckCircle2, Clock, Calendar, ArrowRight, HelpCircle } from 'lucide-react';
 import './Pricing.css';
 
 export default function Pricing() {
-  const tiers = [
+  const { isAuthenticated } = useAuth();
+
+  const servicesData = [
     {
-      name: 'Basic',
-      badge: 'For Simple W-2 Returns',
-      price: '$X',
-      period: 'starting from',
-      desc: 'Ideal for single or married professionals with standard W-2 income and standard deductions.',
-      features: [
-        'W-2 wage and salary income reporting',
-        'Standard deduction optimization ($14,600 / $29,200)',
-        'Basic tax credits (EITC, Standard Child Credit)',
-        'Direct IRS & Single State electronic e-filing',
-        'Dedicated preparer & separate QA review',
-        'Year-round support for IRS inquiries'
-      ],
-      popular: false,
-      cta: 'Book Consultation & File'
+      service: 'Federal Tax Return',
+      fee: '$40',
+      description: '$50 if both taxpayer and spouse have taxable income'
     },
     {
-      name: 'Standard',
-      badge: 'For Most Individuals',
-      price: '$X',
-      period: 'starting from',
-      desc: 'Comprehensive filing for salaried employees with 1099 income, deductions, and common credits.',
-      features: [
-        'W-2 + Form 1099 income (Interest, Dividends, Misc)',
-        'Itemized vs. standard deduction comparison',
-        'Child Tax Credit, Dependent Care & Education Credits',
-        'Single State Tax Return filing included',
-        'Dedicated preparer & separate QA review',
-        'Plain-English video/call draft walkthrough'
-      ],
-      popular: true,
-      cta: 'Book Consultation & File'
+      service: 'State/Local Tax Return',
+      fee: '$30',
+      description: 'Each'
     },
     {
-      name: 'Complex',
-      badge: 'For Investors & Self-Employed',
-      price: 'Custom Quote',
-      period: 'tailored to return',
-      desc: 'Tailored for independent consultants, small business owners, active investors, and multi-state movers.',
-      features: [
-        'Schedule C / Schedule E (Sole prop / Rental properties)',
-        'Stock sales, ESPP, RSUs & Crypto (Schedule D / 8949)',
-        'Multi-state returns for relocations & remote work',
-        'International accounts (FBAR FinCEN 114 & Form 8938)',
-        'Quarterly estimated tax payment calculations',
-        'Priority Senior Reviewer & CPA consultation'
-      ],
-      popular: false,
-      cta: 'Get a Custom Quote'
+      service: 'ITIN Application',
+      fee: '$50',
+      description: 'Each'
+    },
+    {
+      service: 'Schedule A (Itemized Deductions)',
+      fee: '$70*',
+      description: ''
+    },
+    {
+      service: 'Education Credit (Form 8863)',
+      fee: '$15',
+      description: ''
+    },
+    {
+      service: 'Moving Expenses',
+      fee: '$15',
+      description: ''
+    },
+    {
+      service: 'Child And Dependent Care Credit (Form 2441)',
+      fee: '$20',
+      description: ''
+    },
+    {
+      service: 'Foreign Tax Credit (Form 1116)',
+      fee: '$15',
+      description: ''
+    },
+    {
+      service: 'FATCA',
+      fee: '$30',
+      description: 'Each'
+    },
+    {
+      service: 'Schedule C/Schedule E',
+      fee: 'Starts From $50',
+      description: ''
+    },
+    {
+      service: 'Stock Transactions (Schedule D)',
+      fee: '$20',
+      description: '$40 for ESPP'
+    },
+    {
+      service: 'Partnership/S corp/C corp Tax Filing',
+      fee: '$500',
+      description: ''
+    },
+    {
+      service: '2553 S Corp Election',
+      fee: '$150',
+      description: ''
     }
   ];
 
   return (
     <div className="pricing-page">
-      <div className="container">
+      <div className="pricing-container">
+        {/* Header Section */}
         <header className="pricing-header">
-          <span className="badge" style={{ background: '#e0f2fe', color: '#0369a1', padding: '6px 14px', borderRadius: '100px', fontSize: '13px', fontWeight: 600, display: 'inline-block', marginBottom: '12px' }}>
-            CLEAR PRICING. NO SURPRISES.
+          <span className="pricing-badge">
+            CLEAR PRICING • NO HIDDEN CHARGES
           </span>
-          <h1>Simple &amp; Transparent US Tax Pricing</h1>
-          <p>
-            Know the fee before we start. The exact fee depends on the complexity of your return — we'll discuss the pricing transparently during your free consultation.
+          <h1 className="pricing-main-title">
+            US Individual &amp; Corporate Tax Filing Services
+          </h1>
+          <p className="pricing-subtitle">
+            Transparent, itemized pricing for Federal, State, and Corporate tax filing. Know your exact fee before we begin with zero surprise add-ons.
           </p>
         </header>
 
-        <div className="pricing-grid">
-          {tiers.map((tier, idx) => (
-            <div key={idx} className={`pricing-card ${tier.popular ? 'popular' : ''}`}>
-              {tier.popular && <span className="popular-badge">Most Popular</span>}
-              <div className="card-top">
-                <h3>{tier.name}</h3>
-                <span style={{ fontSize: '12px', fontWeight: 600, color: '#0284c7', display: 'block', marginBottom: '8px' }}>
-                  {tier.badge}
-                </span>
-                <p className="card-desc">{tier.desc}</p>
-                <div className="price-tag">
-                  <span className="amount">{tier.price}</span>
-                  <span className="period" style={{ marginLeft: '6px' }}>/ {tier.period}</span>
-                </div>
-              </div>
-
-              <ul className="features-list">
-                {tier.features.map((feat, fIdx) => (
-                  <li key={fIdx}>
-                    <Check className="check-icon" size={16} />
-                    <span>{feat}</span>
-                  </li>
+        {/* Pricing Table Card */}
+        <div className="pricing-table-card">
+          <div className="table-header-bar">
+            <h2>US Individual &amp; Corporate Tax Filing Services</h2>
+          </div>
+          
+          <div className="pricing-table-responsive">
+            <table className="pricing-data-table">
+              <thead>
+                <tr>
+                  <th className="col-service">Service</th>
+                  <th className="col-fee">Fee</th>
+                  <th className="col-desc">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {servicesData.map((row, index) => (
+                  <tr key={index} className={index % 2 === 1 ? 'row-alt' : ''}>
+                    <td className="cell-service">
+                      <strong>{row.service}</strong>
+                    </td>
+                    <td className="cell-fee">
+                      <span className="fee-amount">{row.fee}</span>
+                    </td>
+                    <td className="cell-desc">
+                      {row.description ? (
+                        <span className="desc-text">{row.description}</span>
+                      ) : (
+                        <span className="desc-empty">—</span>
+                      )}
+                    </td>
+                  </tr>
                 ))}
-              </ul>
+              </tbody>
+            </table>
+          </div>
 
-              <div className="card-bottom">
-                <Link to="/contact" className={`btn ${tier.popular ? 'btn-primary' : 'btn-outline'}`} style={{ width: '100%', textAlign: 'center' }}>
-                  {tier.cta}
-                </Link>
-              </div>
-            </div>
-          ))}
+          <div className="pricing-table-footer">
+            <p className="footnote-text">
+              * Schedule A fee applies when itemized deductions exceed the standard deduction.
+            </p>
+          </div>
         </div>
 
-        {/* Pricing notice callout matching Brand Card 6 */}
-        <div style={{ marginTop: '40px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '24px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <Info size={24} style={{ color: '#0284c7', flexShrink: 0 }} />
-          <div>
-            <strong style={{ color: '#1e293b', fontSize: '15px' }}>Transparent Fee Guarantee:</strong>
-            <p style={{ color: '#64748b', fontSize: '14px', margin: '4px 0 0', lineHeight: '1.5' }}>
-              The exact fee depends on the complexity of your return (e.g. number of W-2s, states, stock trades, or rental units). We will review your documents and provide a confirmed, fixed price during your free 15-minute consultation before any filing work begins.
-            </p>
+        {/* Trust & Guarantee Cards */}
+        <div className="pricing-trust-grid">
+          <div className="trust-card">
+            <ShieldCheck size={26} className="trust-icon" />
+            <div>
+              <h4>No Surprise Charges</h4>
+              <p>We review your tax documents during your initial consultation and confirm your final itemized fee upfront before filing.</p>
+            </div>
+          </div>
+
+          <div className="trust-card">
+            <CheckCircle2 size={26} className="trust-icon" />
+            <div>
+              <h4>Two-Tier Quality Review</h4>
+              <p>Every return is prepared by a dedicated tax professional and independently checked by a second senior specialist.</p>
+            </div>
+          </div>
+
+          <div className="trust-card">
+            <Clock size={26} className="trust-icon" />
+            <div>
+              <h4>Fast Turnaround &amp; E-Filing</h4>
+              <p>Once you approve your computations, your return is e-filed directly with the IRS and relevant state departments.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Callout */}
+        <div className="pricing-cta-card">
+          <div className="cta-content">
+            <h3>Ready to File Your US Tax Return?</h3>
+            <p>Book a free 15-minute consultation to review your tax documents or create an account to start your filing.</p>
+          </div>
+          <div className="cta-buttons">
+            <Link to="/contact" className="btn-pricing-primary">
+              <Calendar size={16} /> Book Free 15-Min Consultation
+            </Link>
+            <Link to={isAuthenticated ? "/portal" : "/register"} className="btn-pricing-secondary">
+              {isAuthenticated ? "Go to Tax Filing Portal →" : "Create Account / Login to File →"}
+            </Link>
           </div>
         </div>
       </div>

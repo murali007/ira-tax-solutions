@@ -192,7 +192,7 @@ export default function UploadDocuments() {
                   <option value="Form 1095-A (Health Insurance Marketplace)">Form 1095-A (Health Insurance Marketplace / ACA 1095-C)</option>
                   <option value="Schedule K-1 (Partnership / S-Corp / Estate)">Schedule K-1 (Form 1065 / 1120-S Partnership &amp; S-Corp)</option>
                   <option value="Form 1099-R (IRA / 401k / Pension Distribution)">Form 1099-R (IRA / 401(k) / Pension Distributions)</option>
-                  <option value="Foreign Bank Accounts (FBAR FinCEN 114)">Foreign Bank Accounts &amp; Assets (FBAR FinCEN 114 / FATCA)</option>
+                  <option value="Schedule C / Business Expense Receipts">Schedule C / Small Business &amp; Freelance Expenses</option>
                   <option value="Driver's License / State ID Copy">Driver's License / State ID Copy (IRS e-File Security Check)</option>
                   <option value="Prior Year Form 1040 Tax Return">Prior Year Form 1040 Federal &amp; State Returns</option>
                   <option value="Other Tax Document / Receipts">Other Tax Document / Business Expense Receipts</option>

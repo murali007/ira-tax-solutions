@@ -468,7 +468,7 @@ export default function TaxpayerInfo() {
                   <option value="W-2 + Stock / Crypto Investments">W-2 + Stock Options (RSU/ESPP) &amp; Crypto</option>
                   <option value="Self-Employed / 1099 (Schedule C)">Self-Employed / 1099 Contractor (Schedule C)</option>
                   <option value="Multi-State Moves &amp; Returns">Multi-State Tax Returns (Lived/Worked in 2+ States)</option>
-                  <option value="Expat / Foreign Accounts (FBAR/FATCA)">Foreign Assets &amp; Bank Accounts (FBAR / Form 8938)</option>
+                  <option value="Itemized Deductions (Schedule A)">Itemized Deductions &amp; Mortgage Interest (Schedule A)</option>
                   <option value="Rental Real Estate (Schedule E)">Rental Real Estate Properties (Schedule E)</option>
                 </select>
               </div>

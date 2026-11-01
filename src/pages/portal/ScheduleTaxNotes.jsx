@@ -160,7 +160,7 @@ export default function ScheduleTaxNotes() {
                 rows={5}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Example: I moved from California to Texas in June 2024, switched jobs with two W-2s, exercised ESPP/RSU shares, and have a high-yield savings account (1099-INT) plus an Indian bank account for FBAR reporting."
+                placeholder="Example: I moved from California to Texas in June 2024, switched jobs with two W-2s, exercised ESPP/RSU shares, and have mortgage interest on Form 1098."
                 style={{ width: '100%', padding: '10px 10px 10px 36px', border: '1px solid #cbd5e1', borderRadius: '6px', fontSize: '13px', lineHeight: '1.5' }}
               />
             </div>

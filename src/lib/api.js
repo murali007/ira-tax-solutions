@@ -139,7 +139,7 @@ export const api = {
           email: formData.email || '',
           street_address: formData.streetAddress || '',
           city: formData.city || '',
-          country: formData.country || 'India',
+          country: formData.country || 'United States',
           state: formData.state || '',
           zip_code: formData.zipCode || '',
           updated_at: new Date().toISOString()
@@ -521,7 +521,7 @@ export const api = {
         const userId = parseInt(token, 10);
         const { error } = await supabase
           .from('tax_summaries')
-          .update({ fee_paid: 1, status: 'Fee Paid via UPI / In Queue for E-Filing' })
+          .update({ fee_paid: 1, status: 'Fee Paid / In Queue for E-Filing' })
           .eq('user_id', userId);
 
         if (error) throw new Error(error.message);

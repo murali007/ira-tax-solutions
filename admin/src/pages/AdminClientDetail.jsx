@@ -426,14 +426,6 @@ export default function AdminClientDetail() {
             </button>
             <button 
               type="button" 
-              className={`dossier-tab-btn ${activeTab === 'fbar' ? 'active' : ''}`}
-              onClick={() => setActiveTab('fbar')}
-            >
-              <Globe size={15} />
-              <span>FBAR / Assets</span>
-            </button>
-            <button 
-              type="button" 
               className={`dossier-tab-btn ${activeTab === 'schedule' ? 'active' : ''}`}
               onClick={() => setActiveTab('schedule')}
             >
@@ -803,7 +795,7 @@ export default function AdminClientDetail() {
                         onChange={(e) => setSummaryForm({ ...summaryForm, fee_paid: parseInt(e.target.value, 10) })}
                       >
                         <option value={0}>Unpaid (Awaiting Payment)</option>
-                        <option value={1}>Paid (ACH / Credit Card / UPI)</option>
+                        <option value={1}>Paid (Credit Card / ACH Direct Debit / Wire)</option>
                       </select>
                     </div>
                   </div>
@@ -845,7 +837,7 @@ export default function AdminClientDetail() {
                         <option value="Form 1040-NR - Nonresident Alien Return">Form 1040-NR - Nonresident Alien Return</option>
                         <option value="California Form 540 State Return">California Form 540 State Return</option>
                         <option value="New York State IT-201 Resident Return">New York State IT-201 Resident Return</option>
-                        <option value="FBAR FinCEN Form 114 Submission Report">FBAR FinCEN Form 114 Submission Report</option>
+                        <option value="Schedule C / Self-Employment Return">Schedule C / Self-Employment Return</option>
                         <option value="Official IRS e-File Submission & Acceptance Receipt">Official IRS e-File Submission &amp; Acceptance Receipt</option>
                       </select>
                     </div>
@@ -920,56 +912,7 @@ export default function AdminClientDetail() {
               </div>
             )}
 
-            {/* 7. ⭐ FBAR & INDIAN FOREIGN ASSETS TAB (NEW) */}
-            {activeTab === 'fbar' && (
-              <div className="dossier-section">
-                <div className="dossier-section-head">
-                  <h3>FBAR (FinCEN 114) &amp; Indian Foreign Asset Compliance</h3>
-                  <span className="head-badge">Expat Tax Compliance</span>
-                </div>
-
-                <div className="fbar-guidance-card">
-                  <h4>US Treasury Department FBAR Filing Rules</h4>
-                  <p>
-                    Any US tax resident (H-1B, L-1, Green Card, Citizen) with an aggregate balance exceeding <strong>$10,000 USD</strong> in foreign accounts (NRE, NRO, Fixed Deposits, PPF, Indian Mutual Funds) at ANY time during 2025 is legally required to file <strong>FinCEN Form 114</strong> by April 15 (auto-extended to October 15).
-                  </p>
-                </div>
-
-                <div className="audit-field-grid">
-                  <div className="audit-field">
-                    <span className="field-label">Indian Bank Accounts Declared</span>
-                    <span className="field-value font-highlight">NRE / NRO Savings &amp; Fixed Deposits</span>
-                  </div>
-                  <div className="audit-field">
-                    <span className="field-label">FBAR Threshold Exceeded ($10,000+)</span>
-                    <span className="field-value font-highlight" style={{ color: '#facc15' }}>Requires Verification</span>
-                  </div>
-                  <div className="audit-field full-span">
-                    <span className="field-label">Preparer FBAR Action Checklist</span>
-                    <div className="fbar-checklist">
-                      <label className="checklist-item">
-                        <input type="checkbox" defaultChecked />
-                        <span>Confirm peak calendar year balances for all SBI, HDFC, ICICI, and Axis accounts</span>
-                      </label>
-                      <label className="checklist-item">
-                        <input type="checkbox" defaultChecked />
-                        <span>Verify USD to INR foreign exchange conversion using Treasury 2025 Year-End Rate</span>
-                      </label>
-                      <label className="checklist-item">
-                        <input type="checkbox" />
-                        <span>Determine FATCA Form 8938 threshold ($50k Single / $100k MFJ year-end)</span>
-                      </label>
-                      <label className="checklist-item">
-                        <input type="checkbox" />
-                        <span>Draft FinCEN Form 114 via BSA E-Filing System</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* 8. Schedule Notes Tab */}
+            {/* 7. Schedule Notes Tab */}
             {activeTab === 'schedule' && (
               <div className="dossier-section">
                 <div className="dossier-section-head">

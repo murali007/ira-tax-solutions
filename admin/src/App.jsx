@@ -21,9 +21,12 @@ function ProtectedAdminRoute({ children }) {
 }
 
 export default function App() {
+  const isSubdomain = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
+  const basename = isSubdomain ? '' : '/admin';
+
   return (
     <AdminAuthProvider>
-      <Router>
+      <Router basename={basename}>
         <Routes>
           <Route path="/login" element={<AdminLogin />} />
           

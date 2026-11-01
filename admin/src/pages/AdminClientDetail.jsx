@@ -871,20 +871,76 @@ export default function AdminClientDetail() {
             </div>
 
             <div className="preview-viewer-body">
-              {previewDoc.file_name?.match(/\.(jpg|jpeg|png)$/i) ? (
-                <div className="preview-image-scroll">
-                  <img 
-                    src={`${API_BASE}/api/admin/documents/${previewDoc.id}/view`} 
-                    alt={previewDoc.file_name} 
-                    className="preview-full-image" 
+              {previewDoc.file_url ? (
+                previewDoc.file_name?.match(/\.(jpg|jpeg|png)$/i) ? (
+                  <div className="preview-image-scroll">
+                    <img 
+                      src={previewDoc.file_url} 
+                      alt={previewDoc.file_name} 
+                      className="preview-full-image" 
+                    />
+                  </div>
+                ) : (
+                  <iframe 
+                    src={previewDoc.file_url} 
+                    title={previewDoc.file_name} 
+                    className="preview-pdf-iframe" 
                   />
-                </div>
+                )
+              ) : API_BASE ? (
+                previewDoc.file_name?.match(/\.(jpg|jpeg|png)$/i) ? (
+                  <div className="preview-image-scroll">
+                    <img 
+                      src={`${API_BASE}/api/admin/documents/${previewDoc.id}/view`} 
+                      alt={previewDoc.file_name} 
+                      className="preview-full-image" 
+                    />
+                  </div>
+                ) : (
+                  <iframe 
+                    src={`${API_BASE}/api/admin/documents/${previewDoc.id}/view`} 
+                    title={previewDoc.file_name} 
+                    className="preview-pdf-iframe" 
+                  />
+                )
               ) : (
-                <iframe 
-                  src={`${API_BASE}/api/admin/documents/${previewDoc.id}/view`} 
-                  title={previewDoc.file_name} 
-                  className="preview-pdf-iframe" 
-                />
+                <div style={{ padding: '3rem 2rem', textAlign: 'center', color: '#cbd5e1' }}>
+                  <div style={{ maxWidth: '480px', margin: '0 auto', background: '#0f172a', padding: '2rem', borderRadius: '12px', border: '1px solid #334155', boxShadow: '0 10px 25px rgba(0,0,0,0.5)' }}>
+                    <div style={{ width: '56px', height: '56px', borderRadius: '12px', background: 'rgba(2, 132, 199, 0.15)', color: '#38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto' }}>
+                      <FileText size={28} />
+                    </div>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#f8fafc', marginBottom: '0.5rem' }}>{previewDoc.doc_type}</h3>
+                    <p style={{ fontSize: '0.9rem', color: '#94a3b8', marginBottom: '1.5rem' }}>IRS Filing Document Audit View</p>
+                    <div style={{ textAlign: 'left', background: '#1e293b', padding: '1rem', borderRadius: '8px', fontSize: '0.85rem', lineHeight: '1.6', border: '1px solid #334155' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #334155', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ color: '#94a3b8' }}>Original File:</span>
+                        <strong style={{ color: '#f8fafc' }}>{previewDoc.file_name}</strong>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #334155', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ color: '#94a3b8' }}>File Size:</span>
+                        <strong style={{ color: '#f8fafc' }}>{previewDoc.file_size}</strong>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #334155', paddingBottom: '0.5rem', marginBottom: '0.5rem' }}>
+                        <span style={{ color: '#94a3b8' }}>Audit Status:</span>
+                        <strong style={{ color: previewDoc.validation_status === 'approved' ? '#4ade80' : previewDoc.validation_status === 'rejected' ? '#f87171' : '#facc15' }}>
+                          {previewDoc.status || 'Pending Verification'}
+                        </strong>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span style={{ color: '#94a3b8' }}>Verified By:</span>
+                        <strong style={{ color: '#f8fafc' }}>{previewDoc.verified_by || 'Awaiting Officer Review'}</strong>
+                      </div>
+                    </div>
+                    {previewDoc.rejection_reason && (
+                      <div style={{ marginTop: '1rem', padding: '0.75rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '6px', textAlign: 'left', fontSize: '0.85rem', color: '#fca5a5' }}>
+                        <strong>Rejection Reason:</strong> {previewDoc.rejection_reason}
+                      </div>
+                    )}
+                    <p style={{ marginTop: '1.25rem', fontSize: '0.8rem', color: '#64748b' }}>
+                      To approve or reject this document, use the action buttons in the top header bar above.
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
           </div>

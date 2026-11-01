@@ -23,7 +23,6 @@ function GuestRoute({ children }) {
   return children;
 }
 
-
 // Layouts
 import PublicLayout from './components/layout/PublicLayout';
 import PortalLayout from './components/layout/PortalLayout';
@@ -51,7 +50,18 @@ import UploadDocuments from './pages/portal/UploadDocuments';
 import TaxSummary from './pages/portal/TaxSummary';
 import DownloadReturns from './pages/portal/DownloadReturns';
 
+// Admin Portal Integration
+import AdminApp from '../admin/src/App';
+
 export default function App() {
+  const isAdminHost = typeof window !== 'undefined' && window.location.hostname.startsWith('admin.');
+  const isAdminPath = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin');
+
+  // If accessed from admin subdomain (admin.irataxsolutions.com) or /admin path, mount Admin Desk
+  if (isAdminHost || isAdminPath) {
+    return <AdminApp />;
+  }
+
   return (
     <AuthProvider>
       <Router>

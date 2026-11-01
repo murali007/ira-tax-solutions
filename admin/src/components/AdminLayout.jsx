@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { 
@@ -13,6 +14,10 @@ export default function AdminLayout() {
   const { adminUser, logout } = useAdminAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    document.title = 'IRA Tax Solutions — Admin & Preparer Portal';
+  }, []);
 
   const handleLogout = () => {
     logout();

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '../context/AdminAuthContext';
 import { ShieldCheck, Lock, AlertCircle, ArrowRight } from 'lucide-react';
@@ -11,6 +11,10 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const { login } = useAdminAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'IRA Tax Solutions — Admin & Preparer Portal';
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

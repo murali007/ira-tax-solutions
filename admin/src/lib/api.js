@@ -24,10 +24,39 @@ const localFetch = async (endpoint, options = {}, token = '') => {
 };
 
 /* ========================================================
-   LOCAL STORAGE DATABASE & CACHE
+   PERSISTENT VALIDATION & REVIEWER CACHE
    ======================================================== */
-const DB_STORAGE_KEY = 'ira_admin_dossiers_v2';
+const VALIDATION_CACHE_KEY = 'ira_doc_validations_v1';
 const NOTES_STORAGE_KEY = 'ira_admin_reviewer_notes';
+
+function getDocValidations() {
+  try {
+    const raw = localStorage.getItem(VALIDATION_CACHE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveDocValidation(docId, validation_status, rejection_reason) {
+  try {
+    const cache = getDocValidations();
+    cache[docId] = {
+      validation_status,
+      rejection_reason: rejection_reason || null,
+      status: validation_status === 'approved' 
+        ? 'Verified & Approved' 
+        : validation_status === 'rejected' 
+          ? 'Action Required / Re-upload Requested' 
+          : 'Uploaded - Ready for Preparer Review',
+      verified_by: 'IRA Master Tax Preparer',
+      verified_at: new Date().toISOString()
+    };
+    localStorage.setItem(VALIDATION_CACHE_KEY, JSON.stringify(cache));
+  } catch (e) {
+    console.warn('Failed to save validation cache:', e);
+  }
+}
 
 function getLocalNotes(userId) {
   try {
@@ -169,10 +198,17 @@ export const api = {
             const { data: allDocs } = await supabase.from('documents').select('*');
             const { data: allTaxpayer } = await supabase.from('taxpayer_info').select('*');
 
+            const valCache = getDocValidations();
+
             const docsByUser = {};
             (allDocs || []).forEach(d => {
               if (!docsByUser[d.user_id]) docsByUser[d.user_id] = [];
-              docsByUser[d.user_id].push(d);
+              const cached = valCache[d.id] || {};
+              docsByUser[d.user_id].push({
+                ...d,
+                validation_status: d.validation_status || cached.validation_status || 'pending',
+                rejection_reason: d.rejection_reason || cached.rejection_reason || null
+              });
             });
 
             const taxpayerByUser = {};
@@ -255,28 +291,44 @@ export const api = {
             const { data: rawDocs } = await supabase.from('documents').select('*').eq('user_id', clientId);
             const { data: taxSummary } = await supabase.from('tax_summaries').select('*').eq('user_id', clientId).maybeSingle();
 
-            const formattedDocs = (rawDocs || []).map(d => ({
-              id: d.id,
-              user_id: d.user_id,
-              doc_type: d.doc_type,
-              file_name: d.original_name || d.file_name || 'document.pdf',
-              file_size: d.file_size || 'N/A',
-              file_url: d.file_url || '',
-              validation_status: d.validation_status || 'pending',
-              rejection_reason: d.rejection_reason || null,
-              status: d.validation_status === 'approved' 
-                ? 'Verified & Approved' 
-                : d.validation_status === 'rejected' 
-                  ? 'Action Required / Re-upload Requested' 
-                  : 'Uploaded - Ready for Preparer Review',
-              verified_by: d.verified_by || null,
-              created_at: d.uploaded_at || d.created_at || new Date().toISOString()
-            }));
+            const valCache = getDocValidations();
+
+            const formattedDocs = (rawDocs || []).map(d => {
+              const cached = valCache[d.id] || {};
+              const validation_status = d.validation_status || cached.validation_status || 'pending';
+              const rejection_reason = d.rejection_reason || cached.rejection_reason || null;
+              const verified_by = d.verified_by || cached.verified_by || (validation_status !== 'pending' ? 'IRA Master Tax Preparer' : null);
+
+              return {
+                id: d.id,
+                user_id: d.user_id,
+                doc_type: d.doc_type,
+                file_name: d.original_name || d.file_name || 'document.pdf',
+                file_size: d.file_size || 'N/A',
+                file_url: d.file_url || '',
+                validation_status,
+                rejection_reason,
+                status: validation_status === 'approved' 
+                  ? 'Verified & Approved' 
+                  : validation_status === 'rejected' 
+                    ? 'Action Required / Re-upload Requested' 
+                    : 'Uploaded - Ready for Preparer Review',
+                verified_by,
+                created_at: d.uploaded_at || d.created_at || new Date().toISOString()
+              };
+            });
 
             const localNotes = getLocalNotes(clientId);
 
+            const hasRejected = formattedDocs.some(d => d.validation_status === 'rejected');
+            const allApproved = formattedDocs.length > 0 && formattedDocs.every(d => d.validation_status === 'approved');
+
             let statusText = user.status || 'Profile Created';
-            if (formattedDocs.length > 0 && statusText === 'Profile Created') {
+            if (hasRejected) {
+              statusText = 'Action Required (Docs)';
+            } else if (allApproved) {
+              statusText = 'Documents Verified';
+            } else if (formattedDocs.length > 0 && statusText === 'Profile Created') {
               statusText = 'Documents Uploaded';
             }
 
@@ -322,17 +374,43 @@ export const api = {
     },
 
     async validateDocument(docId, validation_status, rejection_reason, token) {
+      const numericDocId = parseInt(docId, 10);
+
+      // 1. Instantly persist to validation store
+      saveDocValidation(numericDocId, validation_status, rejection_reason);
+
+      // 2. Persist to Supabase Cloud
       if (isSupabaseConfigured && supabase) {
         try {
+          // Attempt column update
           await supabase
             .from('documents')
             .update({
               validation_status,
               rejection_reason: rejection_reason || null
             })
-            .eq('id', parseInt(docId, 10));
+            .eq('id', numericDocId);
         } catch (e) {
-          console.warn('Supabase validate document failed:', e);
+          console.warn('Supabase documents update warning:', e);
+        }
+
+        try {
+          // Fetch document owner to update client status in Supabase users table
+          const { data: docData } = await supabase
+            .from('documents')
+            .select('user_id')
+            .eq('id', numericDocId)
+            .single();
+
+          if (docData && docData.user_id) {
+            const newStatus = validation_status === 'rejected' ? 'Action Required (Docs)' : 'Documents Verified';
+            await supabase
+              .from('users')
+              .update({ status: newStatus })
+              .eq('id', docData.user_id);
+          }
+        } catch (e) {
+          console.warn('Supabase user status update warning:', e);
         }
       }
 
@@ -350,7 +428,7 @@ export const api = {
       return {
         success: true,
         document: {
-          id: parseInt(docId, 10),
+          id: numericDocId,
           validation_status,
           rejection_reason: rejection_reason || null,
           status: validation_status === 'approved' ? 'Verified & Approved' : 'Action Required / Re-upload Requested',

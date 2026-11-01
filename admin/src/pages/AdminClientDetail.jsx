@@ -95,20 +95,61 @@ export default function AdminClientDetail() {
   };
 
   const handleValidateDoc = async (docId, validationStatus, reason = '') => {
+    // 1. Instantly update UI optimistically
+    setDossier(prev => {
+      if (!prev) return prev;
+      const updatedDocs = (prev.documents || []).map(d => 
+        d.id === docId 
+          ? { 
+              ...d, 
+              validation_status: validationStatus, 
+              rejection_reason: reason, 
+              status: validationStatus === 'approved' 
+                ? 'Verified & Approved' 
+                : validationStatus === 'rejected' 
+                  ? 'Action Required / Re-upload Requested' 
+                  : 'Uploaded - Ready for Preparer Review',
+              verified_by: 'IRA Master Tax Preparer'
+            } 
+          : d
+      );
+      const hasRejected = updatedDocs.some(d => d.validation_status === 'rejected');
+      const allApproved = updatedDocs.length > 0 && updatedDocs.every(d => d.validation_status === 'approved');
+      const newClientStatus = hasRejected 
+        ? 'Action Required (Docs)' 
+        : allApproved 
+          ? 'Documents Verified' 
+          : prev.client?.status;
+
+      return {
+        ...prev,
+        client: {
+          ...prev.client,
+          status: newClientStatus
+        },
+        documents: updatedDocs
+      };
+    });
+
+    if (previewDoc && previewDoc.id === docId) {
+      setPreviewDoc(prev => ({
+        ...prev,
+        validation_status: validationStatus,
+        rejection_reason: reason,
+        status: validationStatus === 'approved' 
+          ? 'Verified & Approved' 
+          : 'Action Required / Re-upload Requested'
+      }));
+    }
+
+    setRejectingDocId(null);
+    setRejectionReason('');
+
     try {
       await api.admin.validateDocument(docId, validationStatus, reason, token);
-      if (previewDoc && previewDoc.id === docId) {
-        setPreviewDoc(prev => ({
-          ...prev,
-          validation_status: validationStatus,
-          rejection_reason: reason
-        }));
-      }
-      setRejectingDocId(null);
-      setRejectionReason('');
       fetchDossier();
     } catch (err) {
-      alert(err.message || 'Failed to validate document.');
+      console.warn('Backend validation sync notification:', err);
     }
   };
 

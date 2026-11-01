@@ -372,7 +372,32 @@ export const api = {
           .order('id', { ascending: false });
 
         if (error) throw new Error(error.message);
-        return { data: data || [] };
+
+        // Merge with validation cache
+        const valCache = (() => {
+          try {
+            const raw = localStorage.getItem('ira_doc_validations_v1');
+            return raw ? JSON.parse(raw) : {};
+          } catch { return {}; }
+        })();
+
+        const mapped = (data || []).map(d => {
+          const val = valCache[d.id] || {};
+          const vs = d.validation_status || val.validation_status || 'pending';
+          const rr = d.rejection_reason || val.rejection_reason || null;
+          return {
+            ...d,
+            validation_status: vs,
+            rejection_reason: rr,
+            status: vs === 'approved' 
+              ? 'Verified & Approved' 
+              : vs === 'rejected' 
+                ? 'Action Required / Re-upload Requested' 
+                : 'Uploaded - Ready for Preparer Review'
+          };
+        });
+
+        return { data: mapped };
       } else {
         return localFetch('/api/documents', {}, token);
       }

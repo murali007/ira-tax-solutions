@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:admin": "npm run dev --prefix admin",
     "server": "node server/server.js",
     "start": "node server/server.js",
     "build": "vite build",
+    "build:admin": "npm run build --prefix admin",
     "preview": "vite preview"
   },
   "dependencies": {

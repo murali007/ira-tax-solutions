@@ -1,7 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { Plus, Trash2, FileText, CheckCircle2, AlertCircle, Download, ShieldCheck } from 'lucide-react';
+import { 
+  Plus, 
+  Trash2, 
+  FileText, 
+  CheckCircle2, 
+  AlertCircle, 
+  AlertTriangle,
+  Clock,
+  Download, 
+  ShieldCheck 
+} from 'lucide-react';
 import './UploadDocuments.css';
 
 export default function UploadDocuments() {
@@ -100,8 +110,38 @@ export default function UploadDocuments() {
     if (doc.file_url) {
       window.open(doc.file_url, '_blank');
     } else {
-      alert(`Downloading ${doc.filename || doc.document_type}`);
+      window.open(`/api/documents/download/${doc.id}`, '_blank');
     }
+  };
+
+  const renderStatusBadge = (doc) => {
+    const valStatus = doc.validation_status || 'pending';
+    if (valStatus === 'approved') {
+      return (
+        <span className="status-pill doc-approved" title={`Verified by ${doc.verified_by || 'Tax Preparer'}`}>
+          <CheckCircle2 size={13} /> Verified &amp; Approved
+        </span>
+      );
+    }
+    if (valStatus === 'rejected') {
+      return (
+        <div className="doc-rejection-box">
+          <span className="status-pill doc-rejected">
+            <AlertTriangle size={13} /> Re-upload Required
+          </span>
+          {doc.rejection_reason && (
+            <div className="doc-rejection-note">
+              <strong>Preparer Note:</strong> {doc.rejection_reason}
+            </div>
+          )}
+        </div>
+      );
+    }
+    return (
+      <span className="status-pill doc-pending">
+        <Clock size={13} /> {doc.status || 'Awaiting Preparer Review'}
+      </span>
+    );
   };
 
   return (
@@ -230,7 +270,7 @@ export default function UploadDocuments() {
                     <th>File Name</th>
                     <th>Upload Date</th>
                     <th>Size</th>
-                    <th>Status</th>
+                    <th>Validation Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -238,17 +278,15 @@ export default function UploadDocuments() {
                   {uploadedList.map((doc) => (
                     <tr key={doc.id}>
                       <td>
-                        <strong>{doc.document_type}</strong>
+                        <strong>{doc.document_type || doc.doc_type}</strong>
                       </td>
                       <td>
-                        <span className="file-name-cell">{doc.filename || 'tax-document.pdf'}</span>
+                        <span className="file-name-cell">{doc.filename || doc.file_name || 'tax-document.pdf'}</span>
                       </td>
                       <td>{doc.created_at ? new Date(doc.created_at).toLocaleDateString() : 'Today'}</td>
                       <td>{doc.file_size || '—'}</td>
                       <td>
-                        <span className="status-pill verified">
-                          {doc.status || 'Received / In Review'}
-                        </span>
+                        {renderStatusBadge(doc)}
                       </td>
                       <td>
                         <div style={{ display: 'flex', gap: '8px' }}>
@@ -256,18 +294,20 @@ export default function UploadDocuments() {
                             type="button"
                             onClick={() => handleDownloadFile(doc)}
                             className="btn-link-action"
-                            title="Download document"
+                            title="Download or preview document"
                           >
-                            <Download size={14} /> View
+                            <Download size={14} /> Download
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => handleDeleteUploaded(doc.id)}
-                            className="btn-link-action delete-color"
-                            title="Delete file"
-                          >
-                            <Trash2 size={14} />
-                          </button>
+                          {doc.validation_status !== 'approved' && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteUploaded(doc.id)}
+                              className="btn-link-action delete-color"
+                              title="Delete file"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          )}
                         </div>
                       </td>
                     </tr>

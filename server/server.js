@@ -47,7 +47,6 @@ const getUserIdFromHeader = (req) => {
   if (!authHeader) return null;
   const token = authHeader.replace(/^Bearer\s+/i, '');
   if (!token) return null;
-  // Token is simply user_id or encoded string in this session model
   const userId = parseInt(token, 10);
   return isNaN(userId) ? null : userId;
 };
@@ -57,9 +56,22 @@ const requireAuth = (req, res, next) => {
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized. Please login.' });
   }
-  const user = db.prepare('SELECT id, email, name, phone, file_no, status FROM users WHERE id = ?').get(userId);
+  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(userId);
   if (!user) {
     return res.status(401).json({ error: 'User session not found.' });
+  }
+  req.user = user;
+  next();
+};
+
+const requireAdmin = (req, res, next) => {
+  const userId = getUserIdFromHeader(req);
+  if (!userId) {
+    return res.status(401).json({ error: 'Unauthorized. Please login.' });
+  }
+  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(userId);
+  if (!user || user.role !== 'admin') {
+    return res.status(403).json({ error: 'Forbidden. Administrator access required.' });
   }
   req.user = user;
   next();
@@ -84,11 +96,11 @@ app.post('/api/auth/register', (req, res) => {
   const fileNo = `IRA-${currentYear}-${randNum}`;
 
   const info = db.prepare(`
-    INSERT INTO users (name, email, phone, password, file_no, status)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO users (name, email, phone, password, file_no, status, role)
+    VALUES (?, ?, ?, ?, ?, ?, 'client')
   `).run(name.trim(), email.toLowerCase().trim(), phone || '', password, fileNo, 'Profile Created');
 
-  const newUser = db.prepare('SELECT id, email, name, phone, file_no, status FROM users WHERE id = ?').get(info.lastInsertRowid);
+  const newUser = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(info.lastInsertRowid);
   res.json({ success: true, user: newUser, token: String(newUser.id) });
 });
 
@@ -98,7 +110,7 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(400).json({ error: 'Email and password are required.' });
   }
 
-  const user = db.prepare('SELECT id, email, name, phone, file_no, status, password FROM users WHERE email = ?').get(email.toLowerCase().trim());
+  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role, password FROM users WHERE email = ?').get(email.toLowerCase().trim());
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid email or password.' });
   }
@@ -197,7 +209,6 @@ app.post('/api/dependents', requireAuth, (req, res) => {
     return res.status(400).json({ error: 'Expected array of dependents.' });
   }
 
-  // Replace all dependents for this user in transaction
   const insertStmt = db.prepare(`
     INSERT INTO dependents (
       user_id, first_name, middle_name, last_name, gender, dob, relationship,
@@ -297,8 +308,8 @@ app.post('/api/documents/upload', requireAuth, upload.array('files', 10), (req, 
 
   const docTypes = Array.isArray(req.body.docTypes) ? req.body.docTypes : [req.body.docTypes || 'Tax Supporting Document'];
   const insertStmt = db.prepare(`
-    INSERT INTO documents (user_id, doc_type, file_name, stored_name, file_size, status)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO documents (user_id, doc_type, file_name, stored_name, file_size, status, validation_status)
+    VALUES (?, ?, ?, ?, ?, ?, 'pending')
   `);
 
   const inserted = [];
@@ -320,9 +331,13 @@ app.post('/api/documents/upload', requireAuth, upload.array('files', 10), (req, 
         file_name: file.originalname,
         file_size: sizeStr,
         status: 'Uploaded - Ready for Preparer Review',
+        validation_status: 'pending',
         created_at: new Date().toISOString()
       });
     });
+
+    // Update user status to Documents Uploaded
+    db.prepare("UPDATE users SET status = 'Documents Uploaded' WHERE id = ? AND status != 'Documents Verified'").run(req.user.id);
   });
 
   tx();
@@ -335,7 +350,6 @@ app.delete('/api/documents/:id', requireAuth, (req, res) => {
     return res.status(404).json({ error: 'Document not found.' });
   }
 
-  // Delete file from disk
   const filePath = path.join(uploadsDir, doc.stored_name);
   if (fs.existsSync(filePath)) {
     try {
@@ -350,7 +364,13 @@ app.delete('/api/documents/:id', requireAuth, (req, res) => {
 });
 
 app.get('/api/documents/download/:id', requireAuth, (req, res) => {
-  const doc = db.prepare('SELECT * FROM documents WHERE id = ? AND user_id = ?').get(req.params.id, req.user.id);
+  let doc;
+  if (req.user.role === 'admin') {
+    doc = db.prepare('SELECT * FROM documents WHERE id = ?').get(req.params.id);
+  } else {
+    doc = db.prepare('SELECT * FROM documents WHERE id = ? AND user_id = ?').get(req.params.id, req.user.id);
+  }
+
   if (!doc) {
     return res.status(404).json({ error: 'Document not found.' });
   }
@@ -364,7 +384,221 @@ app.get('/api/documents/download/:id', requireAuth, (req, res) => {
 });
 
 /* ========================================================
-   TAX SUMMARY & RETURNS ROUTES
+   ADMIN ROUTES (Client queue, Dossier 360, Document Validation)
+   ======================================================== */
+
+// 1. List all clients with filing statistics & doc counts
+app.get('/api/admin/clients', requireAdmin, (req, res) => {
+  const clients = db.prepare(`
+    SELECT 
+      u.id, u.name, u.email, u.phone, u.file_no, u.status, u.role, u.created_at,
+      ti.filing_status, ti.employer, ti.ssn_itin,
+      (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id) AS total_docs,
+      (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id AND d.validation_status = 'approved') AS approved_docs,
+      (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id AND (d.validation_status = 'pending' OR d.validation_status IS NULL)) AS pending_docs,
+      (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id AND d.validation_status = 'rejected') AS rejected_docs
+    FROM users u
+    LEFT JOIN taxpayer_info ti ON ti.user_id = u.id
+    WHERE u.role = 'client'
+    ORDER BY u.created_at DESC
+  `).all();
+
+  res.json({ success: true, data: clients });
+});
+
+// 2. Full 360° Client Dossier
+app.get('/api/admin/clients/:id', requireAdmin, (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  const clientUser = db.prepare('SELECT id, name, email, phone, file_no, status, role, created_at FROM users WHERE id = ?').get(clientId);
+  
+  if (!clientUser) {
+    return res.status(404).json({ error: 'Client not found.' });
+  }
+
+  const taxpayer = db.prepare('SELECT * FROM taxpayer_info WHERE user_id = ?').get(clientId) || null;
+  const spouse = db.prepare('SELECT * FROM spouse_info WHERE user_id = ?').get(clientId) || null;
+  const dependents = db.prepare('SELECT * FROM dependents WHERE user_id = ? ORDER BY id ASC').all(clientId);
+  const address = db.prepare('SELECT * FROM address_history WHERE user_id = ?').get(clientId) || null;
+  const schedule = db.prepare('SELECT * FROM schedule_notes WHERE user_id = ?').get(clientId) || null;
+  const documents = db.prepare('SELECT * FROM documents WHERE user_id = ? ORDER BY created_at DESC').all(clientId);
+  const taxSummary = db.prepare('SELECT * FROM tax_summaries WHERE user_id = ? ORDER BY id DESC LIMIT 1').get(clientId) || null;
+  const taxReturns = db.prepare('SELECT * FROM tax_returns WHERE user_id = ? ORDER BY id ASC').all(clientId);
+  const reviewerNotes = db.prepare('SELECT * FROM reviewer_notes WHERE user_id = ? ORDER BY created_at DESC').all(clientId);
+
+  res.json({
+    success: true,
+    data: {
+      client: clientUser,
+      taxpayer,
+      spouse,
+      dependents,
+      address,
+      schedule,
+      documents,
+      taxSummary,
+      taxReturns,
+      reviewerNotes
+    }
+  });
+});
+
+// 3. Document validation / rejection
+app.patch('/api/admin/documents/:docId/validate', requireAdmin, (req, res) => {
+  const docId = parseInt(req.params.docId, 10);
+  const { validation_status, rejection_reason } = req.body;
+
+  if (!['approved', 'rejected', 'pending'].includes(validation_status)) {
+    return res.status(400).json({ error: 'Invalid validation status. Must be approved, rejected, or pending.' });
+  }
+
+  const doc = db.prepare('SELECT * FROM documents WHERE id = ?').get(docId);
+  if (!doc) {
+    return res.status(404).json({ error: 'Document not found.' });
+  }
+
+  let statusText = 'Uploaded - Ready for Preparer Review';
+  if (validation_status === 'approved') {
+    statusText = 'Verified & Approved';
+  } else if (validation_status === 'rejected') {
+    statusText = 'Action Required / Re-upload Requested';
+  }
+
+  db.prepare(`
+    UPDATE documents SET
+      validation_status = ?,
+      rejection_reason = ?,
+      status = ?,
+      verified_by = ?,
+      verified_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `).run(
+    validation_status,
+    rejection_reason || null,
+    statusText,
+    req.user.name,
+    docId
+  );
+
+  // Auto-check if all docs are approved for the client to suggest status update
+  const clientDocs = db.prepare('SELECT validation_status FROM documents WHERE user_id = ?').all(doc.user_id);
+  const allApproved = clientDocs.length > 0 && clientDocs.every(d => d.validation_status === 'approved');
+  const hasRejected = clientDocs.some(d => d.validation_status === 'rejected');
+
+  if (hasRejected) {
+    db.prepare("UPDATE users SET status = 'Action Required (Docs)' WHERE id = ?").run(doc.user_id);
+  } else if (allApproved) {
+    db.prepare("UPDATE users SET status = 'Documents Verified' WHERE id = ?").run(doc.user_id);
+  }
+
+  const updatedDoc = db.prepare('SELECT * FROM documents WHERE id = ?').get(docId);
+  res.json({ success: true, document: updatedDoc });
+});
+
+// 4. In-browser inline view for previewer modal (PDF / Image)
+app.get('/api/admin/documents/:docId/view', requireAdmin, (req, res) => {
+  const docId = parseInt(req.params.docId, 10);
+  const doc = db.prepare('SELECT * FROM documents WHERE id = ?').get(docId);
+
+  if (!doc) {
+    return res.status(404).send('Document not found');
+  }
+
+  const filePath = path.join(uploadsDir, doc.stored_name);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).send('Document file missing from server storage');
+  }
+
+  const ext = path.extname(doc.file_name).toLowerCase();
+  let contentType = 'application/octet-stream';
+  if (ext === '.pdf') contentType = 'application/pdf';
+  else if (ext === '.png') contentType = 'image/png';
+  else if (ext === '.jpg' || ext === '.jpeg') contentType = 'image/jpeg';
+
+  res.setHeader('Content-Type', contentType);
+  res.setHeader('Content-Disposition', `inline; filename="${doc.file_name}"`);
+  const readStream = fs.createReadStream(filePath);
+  readStream.pipe(res);
+});
+
+// 5. Update client filing status
+app.patch('/api/admin/clients/:id/status', requireAdmin, (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ error: 'Status is required.' });
+  }
+
+  db.prepare('UPDATE users SET status = ? WHERE id = ?').run(status, clientId);
+
+  // Add automatic internal audit note
+  db.prepare(`
+    INSERT INTO reviewer_notes (user_id, admin_name, note, note_type)
+    VALUES (?, ?, ?, 'status_change')
+  `).run(clientId, req.user.name, `Filing status changed to: ${status}`);
+
+  res.json({ success: true, status });
+});
+
+// 6. Reviewer notes
+app.get('/api/admin/clients/:id/notes', requireAdmin, (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  const notes = db.prepare('SELECT * FROM reviewer_notes WHERE user_id = ? ORDER BY created_at DESC').all(clientId);
+  res.json({ success: true, data: notes });
+});
+
+app.post('/api/admin/clients/:id/notes', requireAdmin, (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  const { note, note_type } = req.body;
+
+  if (!note || !note.trim()) {
+    return res.status(400).json({ error: 'Note content cannot be empty.' });
+  }
+
+  const result = db.prepare(`
+    INSERT INTO reviewer_notes (user_id, admin_name, note, note_type)
+    VALUES (?, ?, ?, ?)
+  `).run(clientId, req.user.name, note.trim(), note_type || 'general');
+
+  const newNote = db.prepare('SELECT * FROM reviewer_notes WHERE id = ?').get(result.lastInsertRowid);
+  res.json({ success: true, data: newNote });
+});
+
+// 7. Preparer draft tax summary creation / update
+app.post('/api/admin/clients/:id/tax-summary', requireAdmin, (req, res) => {
+  const clientId = parseInt(req.params.id, 10);
+  const d = req.body;
+
+  const stmt = db.prepare(`
+    INSERT INTO tax_summaries (
+      user_id, tax_year, filing_status, total_income, adjustments, agi,
+      deductions, taxable_income, federal_tax, withheld, estimated_refund,
+      state_breakdown_json, preparer_fee, status, updated_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+  `);
+
+  stmt.run(
+    clientId,
+    d.tax_year || '2026',
+    d.filing_status || 'Single',
+    d.total_income || '$0',
+    d.adjustments || '$0',
+    d.agi || '$0',
+    d.deductions || '$14,600',
+    d.taxable_income || '$0',
+    d.federal_tax || '$0',
+    d.withheld || '$0',
+    d.estimated_refund || '$0',
+    d.state_breakdown_json || '[]',
+    d.preparer_fee || '$149',
+    d.status || 'Ready for Client Review'
+  );
+
+  res.json({ success: true, message: 'Tax summary updated for client.' });
+});
+
+/* ========================================================
+   TAX SUMMARY & RETURNS ROUTES (CLIENT FACING)
    ======================================================== */
 app.get('/api/tax-summary', requireAuth, (req, res) => {
   const summary = db.prepare('SELECT * FROM tax_summaries WHERE user_id = ? ORDER BY id DESC LIMIT 1').get(req.user.id);

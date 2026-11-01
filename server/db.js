@@ -28,6 +28,7 @@ db.exec(`
     phone TEXT,
     file_no TEXT UNIQUE NOT NULL,
     status TEXT DEFAULT 'New File',
+    role TEXT DEFAULT 'client',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -127,6 +128,20 @@ db.exec(`
     stored_name TEXT NOT NULL,
     file_size TEXT NOT NULL,
     status TEXT DEFAULT 'Uploaded - Awaiting Review',
+    validation_status TEXT DEFAULT 'pending',
+    rejection_reason TEXT,
+    verified_by TEXT,
+    verified_at DATETIME,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+  );
+
+  CREATE TABLE IF NOT EXISTS reviewer_notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    admin_name TEXT NOT NULL,
+    note TEXT NOT NULL,
+    note_type TEXT DEFAULT 'general',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   );
@@ -166,6 +181,46 @@ db.exec(`
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   );
 `);
+
+// Safe incremental migrations for existing databases
+const safeAddColumn = (table, columnDef) => {
+  try {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${columnDef}`);
+  } catch (e) {
+    // Column already exists or error ignored
+  }
+};
+
+safeAddColumn('users', "role TEXT DEFAULT 'client'");
+safeAddColumn('documents', "validation_status TEXT DEFAULT 'pending'");
+safeAddColumn('documents', "rejection_reason TEXT");
+safeAddColumn('documents', "verified_by TEXT");
+safeAddColumn('documents', "verified_at DATETIME");
+
+// Seed default administrator user if not present
+const seedAdmin = () => {
+  const adminEmail = 'admin@irataxsolutions.com';
+  const existing = db.prepare('SELECT id, role FROM users WHERE email = ?').get(adminEmail);
+  if (!existing) {
+    db.prepare(`
+      INSERT INTO users (email, password, name, phone, file_no, status, role)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      adminEmail,
+      'admin123',
+      'Tax Reviewer Admin',
+      '+1 (800) 555-0199',
+      'IRA-ADMIN-001',
+      'Active Preparer',
+      'admin'
+    );
+    console.log('Seeded default admin user: admin@irataxsolutions.com / admin123');
+  } else if (existing.role !== 'admin') {
+    db.prepare("UPDATE users SET role = 'admin' WHERE id = ?").run(existing.id);
+  }
+};
+
+seedAdmin();
 
 export default db;
 export { uploadsDir };

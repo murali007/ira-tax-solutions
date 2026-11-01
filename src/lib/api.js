@@ -24,15 +24,33 @@ const localFetch = async (endpoint, options = {}, token = '') => {
   return data;
 };
 
+// Cryptographic Password Hashing (SHA-256 via Web Crypto)
+const hashPassword = async (plainText) => {
+  if (!plainText) return '';
+  if (typeof window === 'undefined' || !window.crypto || !window.crypto.subtle) {
+    return plainText;
+  }
+  try {
+    const enc = new TextEncoder();
+    const buf = await window.crypto.subtle.digest('SHA-256', enc.encode(plainText));
+    const arr = Array.from(new Uint8Array(buf));
+    return arr.map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch {
+    return plainText;
+  }
+};
+
 export const api = {
   // 1. AUTHENTICATION
   auth: {
     async register(name, email, password, phone = '') {
       if (isSupabaseConfigured) {
-        // Generate unique Indian File ID
+        // Generate unique US Tax Filing Client ID
         const currentYear = new Date().getFullYear();
         const randNum = Math.floor(10000 + Math.random() * 90000);
         const fileNo = `IRA-${currentYear}-${randNum}`;
+
+        const hashedPassword = await hashPassword(password);
 
         const { data, error } = await supabase
           .from('users')
@@ -40,7 +58,7 @@ export const api = {
             {
               name: name.trim(),
               email: email.toLowerCase().trim(),
-              password: password,
+              password: hashedPassword,
               phone: phone.trim(),
               file_no: fileNo,
               status: 'Profile Created'
@@ -61,14 +79,34 @@ export const api = {
 
     async login(email, password) {
       if (isSupabaseConfigured) {
+        const cleanEmail = email.toLowerCase().trim();
         const { data, error } = await supabase
           .from('users')
           .select('id, email, name, phone, file_no, status, password')
-          .eq('email', email.toLowerCase().trim())
+          .eq('email', cleanEmail)
           .single();
 
-        if (error || !data || data.password !== password) {
+        if (error || !data) {
           throw new Error('Invalid email or password.');
+        }
+
+        const hashedPassword = await hashPassword(password);
+        const isMatch = (data.password === hashedPassword) || (data.password === password);
+
+        if (!isMatch) {
+          throw new Error('Invalid email or password.');
+        }
+
+        // Auto-upgrade legacy plaintext password to secure SHA-256 hash
+        if (data.password === password && hashedPassword !== password) {
+          try {
+            await supabase
+              .from('users')
+              .update({ password: hashedPassword })
+              .eq('id', data.id);
+          } catch (e) {
+            console.warn('Password upgrade note:', e);
+          }
         }
 
         const { password: _, ...userSafe } = data;

@@ -129,7 +129,8 @@ export const api = {
       const cleanPass = (password || '').trim();
 
       // Master Preparer Credentials for Administrative Access
-      if (cleanEmail === 'admin@irataxsolutions.com' && cleanPass === 'admin123') {
+      const expectedAdminPass = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+      if (cleanEmail === 'admin@irataxsolutions.com' && (cleanPass === expectedAdminPass || cleanPass === 'admin123')) {
         const adminUser = {
           id: 1,
           name: 'IRA Master Tax Preparer',

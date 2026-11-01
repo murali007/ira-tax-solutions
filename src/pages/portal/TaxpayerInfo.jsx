@@ -12,7 +12,9 @@ import {
   Edit3,
   FileText,
   CheckCircle2,
-  AlertCircle
+  AlertCircle,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import './TaxpayerInfo.css';
 
@@ -67,6 +69,7 @@ export default function TaxpayerInfo() {
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(true);
+  const [showSsn, setShowSsn] = useState(false);
 
   useEffect(() => {
     const fetchTaxpayer = async () => {
@@ -262,17 +265,37 @@ export default function TaxpayerInfo() {
 
             <div className="input-field-group">
               <label>Social Security Number (SSN) / ITIN *</label>
-              <div className="input-with-icon">
+              <div className="input-with-icon" style={{ position: 'relative' }}>
                 <Info size={15} className="field-icon" />
                 <input
-                  type="text"
+                  type={showSsn ? "text" : "password"}
                   name="ssnItin"
                   maxLength={11}
                   value={formData.ssnItin}
                   onChange={handleSSNChange}
                   placeholder="XXX-XX-XXXX"
+                  style={{ paddingRight: '36px' }}
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowSsn(!showSsn)}
+                  style={{ 
+                    position: 'absolute', 
+                    right: '10px', 
+                    top: '50%', 
+                    transform: 'translateY(-50%)', 
+                    background: 'none', 
+                    border: 'none', 
+                    color: '#64748b', 
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  title={showSsn ? "Hide SSN" : "Show SSN"}
+                >
+                  {showSsn ? <EyeOff size={15} /> : <Eye size={15} />}
+                </button>
               </div>
             </div>
 

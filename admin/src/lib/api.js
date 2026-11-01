@@ -24,10 +24,12 @@ const localFetch = async (endpoint, options = {}, token = '') => {
 };
 
 /* ========================================================
-   PERSISTENT VALIDATION & REVIEWER CACHE
+   PERSISTENT VALIDATION, NOTES & SUMMARY STORAGE
    ======================================================== */
 const VALIDATION_CACHE_KEY = 'ira_doc_validations_v1';
 const NOTES_STORAGE_KEY = 'ira_admin_reviewer_notes';
+const SUMMARY_STORAGE_KEY = 'ira_admin_tax_summaries';
+const RETURNS_STORAGE_KEY = 'ira_admin_tax_returns';
 
 function getDocValidations() {
   try {
@@ -76,6 +78,44 @@ function saveLocalNote(userId, note) {
   } catch (e) {
     console.warn('LocalStorage save failed:', e);
     return [note];
+  }
+}
+
+function getLocalSummary(userId) {
+  try {
+    const raw = localStorage.getItem(`${SUMMARY_STORAGE_KEY}_${userId}`);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveLocalSummary(userId, summaryData) {
+  try {
+    localStorage.setItem(`${SUMMARY_STORAGE_KEY}_${userId}`, JSON.stringify(summaryData));
+  } catch (e) {
+    console.warn('LocalStorage summary save failed:', e);
+  }
+}
+
+function getLocalReturns(userId) {
+  try {
+    const raw = localStorage.getItem(`${RETURNS_STORAGE_KEY}_${userId}`);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveLocalReturn(userId, returnItem) {
+  try {
+    const current = getLocalReturns(userId);
+    const updated = [returnItem, ...current];
+    localStorage.setItem(`${RETURNS_STORAGE_KEY}_${userId}`, JSON.stringify(updated));
+    return updated;
+  } catch (e) {
+    console.warn('LocalStorage return save failed:', e);
+    return [returnItem];
   }
 }
 
@@ -289,7 +329,8 @@ export const api = {
             const { data: address } = await supabase.from('address_history').select('*').eq('user_id', clientId).maybeSingle();
             const { data: schedule } = await supabase.from('schedule_notes').select('*').eq('user_id', clientId).maybeSingle();
             const { data: rawDocs } = await supabase.from('documents').select('*').eq('user_id', clientId);
-            const { data: taxSummary } = await supabase.from('tax_summaries').select('*').eq('user_id', clientId).maybeSingle();
+            const { data: taxSummaryDb } = await supabase.from('tax_summaries').select('*').eq('user_id', clientId).maybeSingle();
+            const { data: taxReturnsDb } = await supabase.from('tax_returns').select('*').eq('user_id', clientId).order('id', { ascending: false });
 
             const valCache = getDocValidations();
 
@@ -319,6 +360,11 @@ export const api = {
             });
 
             const localNotes = getLocalNotes(clientId);
+            const localSummary = getLocalSummary(clientId);
+            const localReturns = getLocalReturns(clientId);
+
+            const combinedSummary = taxSummaryDb || localSummary || null;
+            const combinedReturns = (taxReturnsDb && taxReturnsDb.length > 0) ? taxReturnsDb : localReturns;
 
             const hasRejected = formattedDocs.some(d => d.validation_status === 'rejected');
             const allApproved = formattedDocs.length > 0 && formattedDocs.every(d => d.validation_status === 'approved');
@@ -326,7 +372,7 @@ export const api = {
             let statusText = user.status || 'Profile Created';
             if (hasRejected) {
               statusText = 'Action Required (Docs)';
-            } else if (allApproved) {
+            } else if (allApproved && statusText === 'Documents Uploaded') {
               statusText = 'Documents Verified';
             } else if (formattedDocs.length > 0 && statusText === 'Profile Created') {
               statusText = 'Documents Uploaded';
@@ -351,8 +397,8 @@ export const api = {
                 address: address || null,
                 schedule: schedule || null,
                 documents: formattedDocs,
-                taxSummary: taxSummary || null,
-                taxReturns: [],
+                taxSummary: combinedSummary,
+                taxReturns: combinedReturns,
                 reviewerNotes: localNotes
               }
             };
@@ -382,7 +428,6 @@ export const api = {
       // 2. Persist to Supabase Cloud
       if (isSupabaseConfigured && supabase) {
         try {
-          // Attempt column update
           await supabase
             .from('documents')
             .update({
@@ -395,7 +440,6 @@ export const api = {
         }
 
         try {
-          // Fetch document owner to update client status in Supabase users table
           const { data: docData } = await supabase
             .from('documents')
             .select('user_id')
@@ -470,7 +514,7 @@ export const api = {
       const newNote = {
         id: Date.now(),
         user_id: clientId,
-        author_name: 'IRA Master Tax Preparer',
+        admin_name: 'Master Tax Admin',
         note,
         note_type: note_type || 'general',
         created_at: new Date().toISOString()
@@ -499,12 +543,19 @@ export const api = {
 
     async saveTaxSummary(id, summaryData, token) {
       const clientId = parseInt(id, 10);
+      saveLocalSummary(clientId, summaryData);
 
       if (isSupabaseConfigured && supabase) {
         try {
           await supabase
             .from('tax_summaries')
-            .upsert([{ user_id: clientId, ...summaryData }], { onConflict: 'user_id' });
+            .upsert([{ user_id: clientId, ...summaryData, updated_at: new Date().toISOString() }], { onConflict: 'user_id' });
+
+          // Progress client status
+          await supabase
+            .from('users')
+            .update({ status: 'Ready for Client Review' })
+            .eq('id', clientId);
         } catch (e) {
           console.warn('Supabase save summary failed:', e);
         }
@@ -522,6 +573,43 @@ export const api = {
       }
 
       return { success: true };
+    },
+
+    async uploadTaxReturn(id, returnData, token) {
+      const clientId = parseInt(id, 10);
+      const newReturn = {
+        id: Date.now(),
+        user_id: clientId,
+        form_title: returnData.form_title || 'Form 1040 - US Individual Income Tax Return',
+        return_type: returnData.return_type || 'Federal 1040',
+        tax_year: returnData.tax_year || '2025',
+        status: returnData.status || 'Ready for Download',
+        file_url: returnData.file_url || '',
+        file_size: returnData.file_size || '350 KB',
+        uploaded_at: new Date().toISOString()
+      };
+
+      saveLocalReturn(clientId, newReturn);
+
+      if (isSupabaseConfigured && supabase) {
+        try {
+          await supabase
+            .from('tax_returns')
+            .insert([{
+              user_id: clientId,
+              form_title: newReturn.form_title,
+              return_type: newReturn.return_type,
+              tax_year: newReturn.tax_year,
+              status: newReturn.status,
+              file_url: newReturn.file_url,
+              file_size: newReturn.file_size
+            }]);
+        } catch (e) {
+          console.warn('Supabase insert tax return failed:', e);
+        }
+      }
+
+      return { success: true, data: newReturn };
     }
   }
 };

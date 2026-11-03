@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
 import { 
@@ -16,7 +17,10 @@ import {
   X,
   Check,
   RefreshCw,
-  HelpCircle
+  HelpCircle,
+  Upload,
+  Sparkles,
+  Info
 } from 'lucide-react';
 import './PaymentFee.css';
 
@@ -93,6 +97,7 @@ export default function PaymentFee() {
   const clientPhone = user?.phone || 'On file';
 
   const isPaid = paymentSuccess || invoice?.fee_paid;
+  const hasDocs = invoice?.has_documents || false;
 
   if (loading) {
     return (
@@ -155,7 +160,7 @@ export default function PaymentFee() {
           <div className="entity-col date-col">
             <span className="col-label">Invoice Details:</span>
             <span className="entity-detail">Tax Year: <strong>2025 (Current Filing Season)</strong></span>
-            <span className="entity-detail">Terms: <strong>Due Prior to IRS Transmission</strong></span>
+            <span className="entity-detail">Fee Type: <strong>{hasDocs ? 'Final E-Filing Transmission' : 'Flat Fee / Upfront Retainer'}</strong></span>
             <span className="entity-detail">Currency: <strong>USD ($)</strong></span>
           </div>
         </div>
@@ -200,59 +205,133 @@ export default function PaymentFee() {
           </table>
         </div>
 
-        {/* Payment Status or Wise Checkout Action */}
+        {/* Payment Status or Hybrid Actions */}
         {isPaid ? (
-          <div className="payment-cleared-banner">
-            <div className="cleared-icon-wrap">
-              <CheckCircle2 size={32} />
-            </div>
-            <div className="cleared-content">
-              <h4>Fee Successfully Cleared — $70.00 USD via Wise</h4>
-              <p>
-                Your tax preparation fee has been verified and recorded. Your return has passed all quality review gates and is now queued for direct electronic filing with the IRS and state tax department.
-              </p>
-              <div className="cleared-txn-details">
-                <span>Transaction Ref: <strong>{receiptTxnId}</strong></span>
-                <span>Payment Method: <strong>Wise US ACH Direct Debit</strong></span>
-                <span>Status: <strong style={{ color: '#16a34a' }}>Cleared &amp; Authorized</strong></span>
+          <div className="payment-cleared-section">
+            <div className="payment-cleared-banner">
+              <div className="cleared-icon-wrap">
+                <CheckCircle2 size={32} />
+              </div>
+              <div className="cleared-content">
+                <h4>Fee Successfully Cleared — $70.00 USD via Wise</h4>
+                <p>
+                  Your tax preparation fee has been verified and recorded. Zero balance remaining.
+                </p>
+                <div className="cleared-txn-details">
+                  <span>Transaction Ref: <strong>{receiptTxnId}</strong></span>
+                  <span>Payment Method: <strong>Wise US ACH Direct Debit</strong></span>
+                  <span>Status: <strong style={{ color: '#16a34a' }}>Cleared &amp; Authorized</strong></span>
+                </div>
+              </div>
+
+              <div className="cleared-actions">
+                <button 
+                  type="button" 
+                  onClick={() => window.print()} 
+                  className="btn-print-receipt"
+                >
+                  <Printer size={15} />
+                  <span>Print Official Receipt</span>
+                </button>
               </div>
             </div>
 
-            <div className="cleared-actions">
-              <button 
-                type="button" 
-                onClick={() => window.print()} 
-                className="btn-print-receipt"
-              >
-                <Printer size={15} />
-                <span>Print Official Receipt</span>
-              </button>
-            </div>
+            {/* If user paid upfront but hasn't uploaded docs yet, guide them directly to Upload */}
+            {!hasDocs && (
+              <div className="upfront-retainer-alert">
+                <div className="retainer-alert-left">
+                  <Sparkles size={20} className="sparkle-gold" />
+                  <div>
+                    <strong>Priority Intake Activated: Next Step is Uploading Documents</strong>
+                    <p>
+                      Your $70 preparation fee is fully settled upfront. Please upload your Form W-2s, 1099s, and photo ID so your dedicated tax preparer can draft your return immediately.
+                    </p>
+                  </div>
+                </div>
+                <Link to="/portal/upload" className="btn-alert-upload">
+                  <Upload size={15} />
+                  <span>Upload Tax Documents Now</span>
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
-          <div className="payment-action-box">
-            <div className="action-box-left">
-              <div className="wise-badge-row">
-                <span className="wise-pill">WISE PAY</span>
-                <span className="sandbox-indicator">SANDBOX TEST ENVIRONMENT ACTIVE</span>
-              </div>
-              <h4>Complete $70.00 Fee Payment to Transmit Return</h4>
-              <p>
-                Pay securely using your US Bank Account (ACH Direct Debit) or Debit/Credit Card via Wise. 
-                Zero international wire fees.
-              </p>
-            </div>
+          /* UNPAID: SMART HYBRID FLOW (NEW USER VS READY USER) */
+          <div className="payment-action-wrapper">
+            {!hasDocs ? (
+              /* New User Without Documents: Hybrid Dual Choice */
+              <div className="hybrid-intake-box">
+                <div className="hybrid-header">
+                  <span className="hybrid-pill">FLEXIBLE FILING OPTIONS</span>
+                  <h4>You haven't uploaded tax documents yet. Choose your preferred path:</h4>
+                </div>
 
-            <div className="action-box-right">
-              <button 
-                type="button" 
-                onClick={() => setShowWiseModal(true)} 
-                className="btn-pay-wise"
-              >
-                <CreditCard size={17} />
-                <span>Pay $70.00 with Wise (Test Mode)</span>
-              </button>
-            </div>
+                <div className="hybrid-choice-grid">
+                  {/* Choice 1: Standard CPA Flow (Recommended) */}
+                  <div className="hybrid-choice-card standard-card">
+                    <div className="choice-badge badge-recommended">
+                      <Check size={12} /> RECOMMENDED
+                    </div>
+                    <h5>1. Upload Documents First (Pay Later)</h5>
+                    <p>
+                      Upload your W-2s, 1099s, and deduction forms first. Your dedicated CPA will review them and calculate your draft refund/tax before finalizing fees.
+                    </p>
+                    <div className="card-btn-wrap">
+                      <Link to="/portal/upload" className="btn-choice-upload">
+                        <Upload size={15} />
+                        <span>Upload Tax Documents First</span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Choice 2: Fast-Track Retainer (Pay Upfront) */}
+                  <div className="hybrid-choice-card fasttrack-card">
+                    <div className="choice-badge badge-fasttrack">
+                      <Sparkles size={12} /> FAST-TRACK
+                    </div>
+                    <h5>2. Pay $70 Retainer Now via Wise</h5>
+                    <p>
+                      Lock in your filing slot upfront. Paying your $70 fee now moves your file to our top-tier priority queue with immediate CPA assignment.
+                    </p>
+                    <div className="card-btn-wrap">
+                      <button 
+                        type="button" 
+                        onClick={() => setShowWiseModal(true)} 
+                        className="btn-pay-wise btn-choice-pay"
+                      >
+                        <CreditCard size={15} />
+                        <span>Pay $70 Upfront via Wise</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              /* User Already Has Documents: Direct E-File Authorization */
+              <div className="payment-action-box">
+                <div className="action-box-left">
+                  <div className="wise-badge-row">
+                    <span className="wise-pill">WISE PAY</span>
+                    <span className="sandbox-indicator">SANDBOX TEST ENVIRONMENT ACTIVE</span>
+                  </div>
+                  <h4>Complete $70.00 Fee Payment to Transmit Return</h4>
+                  <p>
+                    Your documents are on file. Pay securely using your US Bank Account (ACH Direct Debit) or Card via Wise to authorize electronic filing with the IRS.
+                  </p>
+                </div>
+
+                <div className="action-box-right">
+                  <button 
+                    type="button" 
+                    onClick={() => setShowWiseModal(true)} 
+                    className="btn-pay-wise"
+                  >
+                    <CreditCard size={17} />
+                    <span>Pay $70.00 with Wise (Test Mode)</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -406,7 +485,7 @@ export default function PaymentFee() {
 
               <div className="wise-modal-footnote">
                 <HelpCircle size={13} />
-                <span>Test Mode: No real funds will be charged. Updates Supabase database live and marks return as fee cleared.</span>
+                <span>Test Mode: No real funds charged. Updates database live and synchronizes with IRS filing queue.</span>
               </div>
             </div>
           </div>

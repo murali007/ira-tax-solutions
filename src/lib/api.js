@@ -570,7 +570,7 @@ export const api = {
     }
   },
 
-  // 9.5 WISE PAYMENT & PREPARATION FEE ($70)
+  // 9.5 WISE PAYMENT & PREPARATION FEE ($70) - HYBRID INTAKE & E-FILE
   payment: {
     async getInvoice(token) {
       if (isSupabaseConfigured) {
@@ -583,6 +583,16 @@ export const api = {
 
         if (error) console.warn('Supabase invoice lookup:', error.message);
 
+        // Check if user has uploaded any tax documents
+        const { count: docsCount } = await supabase
+          .from('documents')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId);
+
+        const hasDocuments = Boolean(docsCount && docsCount > 0);
+        const hasDraftSummary = Boolean(data && (data.agi || data.taxable_income || data.estimated_refund));
+        const feePaid = Boolean(data?.fee_paid);
+
         return {
           success: true,
           data: {
@@ -591,8 +601,12 @@ export const api = {
             federal_fee: 50.00,
             state_fee: 20.00,
             currency: 'USD',
-            fee_paid: Boolean(data?.fee_paid),
-            status: data?.status || (data?.fee_paid ? 'Fee Paid / In Queue for E-Filing' : 'Payment Due'),
+            fee_paid: feePaid,
+            has_documents: hasDocuments,
+            docs_count: docsCount || 0,
+            has_draft_summary: hasDraftSummary,
+            is_upfront_retainer: Boolean(feePaid && !hasDraftSummary),
+            status: data?.status || (feePaid ? (hasDocuments ? 'Fee Paid / In Queue for E-Filing' : 'Fee Pre-Paid / Priority Intake Queue') : 'Payment Due'),
             tax_year: data?.tax_year || '2025'
           }
         };
@@ -605,6 +619,10 @@ export const api = {
             state_fee: 20.00,
             currency: 'USD',
             fee_paid: false,
+            has_documents: false,
+            docs_count: 0,
+            has_draft_summary: false,
+            is_upfront_retainer: false,
             status: 'Payment Due',
             tax_year: '2025'
           }
@@ -616,6 +634,20 @@ export const api = {
       if (isSupabaseConfigured) {
         const userId = parseInt(token, 10);
         const txnId = paymentDetails?.txnId || `WISE-TXN-${Date.now()}`;
+
+        // Check documents existence to determine if it's an upfront retainer or e-filing authorization
+        const { count: docsCount } = await supabase
+          .from('documents')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', userId);
+
+        const hasDocs = Boolean(docsCount && docsCount > 0);
+        const targetStatus = hasDocs 
+          ? 'Fee Paid / In Queue for E-Filing' 
+          : 'Fee Pre-Paid / Priority Intake Queue';
+        const feeLabel = hasDocs 
+          ? '$70.00 USD (Paid via Wise - E-File Authorized)' 
+          : '$70.00 USD (Pre-Paid Retainer via Wise)';
 
         // 1. Check if tax_summaries row exists
         const { data: existing } = await supabase
@@ -629,8 +661,8 @@ export const api = {
             .from('tax_summaries')
             .update({
               fee_paid: 1,
-              preparer_fee: '$70.00 USD (Paid via Wise)',
-              status: 'Fee Paid / In Queue for E-Filing'
+              preparer_fee: feeLabel,
+              status: targetStatus
             })
             .eq('user_id', userId);
         } else {
@@ -639,8 +671,8 @@ export const api = {
             .insert([{
               user_id: userId,
               fee_paid: 1,
-              preparer_fee: '$70.00 USD (Paid via Wise)',
-              status: 'Fee Paid / In Queue for E-Filing',
+              preparer_fee: feeLabel,
+              status: targetStatus,
               tax_year: '2025'
             }]);
         }
@@ -649,7 +681,7 @@ export const api = {
         await supabase
           .from('users')
           .update({
-            status: 'Fee Paid / In Queue for E-Filing'
+            status: targetStatus
           })
           .eq('id', userId);
 
@@ -659,7 +691,10 @@ export const api = {
           amount: 70.00,
           currency: 'USD',
           method: paymentDetails?.method || 'ach',
-          message: 'Wise test payment cleared and synchronized with IRS e-filing queue.'
+          targetStatus,
+          message: hasDocs 
+            ? 'Wise payment cleared and authorized for electronic IRS transmission.'
+            : 'Wise retainer fee cleared! Your account is queued for priority return preparation.'
         };
       } else {
         return {

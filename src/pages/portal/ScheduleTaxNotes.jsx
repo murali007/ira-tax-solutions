@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
-import { Calendar, Clock, FileText, CheckCircle2, AlertCircle, Video } from 'lucide-react';
+import { Calendar, Clock, FileText, CheckCircle2, AlertCircle, Video, Download } from 'lucide-react';
+import { buildGoogleCalendarUrl, downloadIcsFile } from '../../lib/calendarHelper';
 import './TaxpayerInfo.css';
 
 export default function ScheduleTaxNotes() {
@@ -175,6 +176,101 @@ export default function ScheduleTaxNotes() {
             </button>
           </div>
         </form>
+
+        {/* 📅 Zero-API Google Calendar & iCalendar Action Card */}
+        <div style={{
+          marginTop: '28px',
+          padding: '18px 20px',
+          backgroundColor: '#f0f9ff',
+          border: '1px solid #bae6fd',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '16px',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '10px',
+              backgroundColor: '#e0f2fe',
+              color: '#0284c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}>
+              <Calendar size={22} />
+            </div>
+            <div>
+              <strong style={{ display: 'block', fontSize: '14px', color: '#0f172a' }}>
+                Sync Appointment to Your Personal Calendar
+              </strong>
+              <span style={{ fontSize: '12.5px', color: '#475569' }}>
+                {preferredDate ? `${preferredDate} • ${preferredTime}` : 'Select your date & time above to generate your 1-click calendar invite'}
+              </span>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+            <a 
+              href={buildGoogleCalendarUrl({
+                title: 'IRA Tax Consultation & Walkthrough',
+                description: `IRA Tax Solutions Consultation\nTax Year: ${taxYear}\nTime: ${preferredTime}\nFormat: ${meetingMode}\nClient Notes: ${notes || 'Form 1040 Preparation'}`,
+                dateStr: preferredDate,
+                timeSlotStr: preferredTime,
+                location: meetingMode
+              })}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                backgroundColor: '#0284c7',
+                color: '#ffffff',
+                fontSize: '12.5px',
+                fontWeight: 700,
+                padding: '8px 14px',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                boxShadow: '0 2px 6px rgba(2, 132, 199, 0.25)'
+              }}
+            >
+              <Calendar size={14} />
+              <span>Add to Google Calendar</span>
+            </a>
+
+            <button 
+              type="button"
+              onClick={() => downloadIcsFile({
+                title: 'IRA Tax Consultation & Walkthrough',
+                description: `IRA Tax Solutions Consultation\nTax Year: ${taxYear}\nTime: ${preferredTime}\nFormat: ${meetingMode}`,
+                dateStr: preferredDate,
+                timeSlotStr: preferredTime,
+                location: meetingMode
+              })}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #cbd5e1',
+                color: '#334155',
+                fontSize: '12.5px',
+                fontWeight: 600,
+                padding: '7px 14px',
+                borderRadius: '6px',
+                cursor: 'pointer'
+              }}
+            >
+              <Download size={14} />
+              <span>Download .ics</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

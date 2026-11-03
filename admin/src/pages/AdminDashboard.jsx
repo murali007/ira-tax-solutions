@@ -22,8 +22,10 @@ import {
   HelpCircle,
   X,
   Check,
-  RefreshCw
+  RefreshCw,
+  Download
 } from 'lucide-react';
+import { buildGoogleCalendarUrl, downloadIcsFile } from '../../../src/lib/calendarHelper';
 import './AdminDashboard.css';
 
 export default function AdminDashboard() {
@@ -643,18 +645,53 @@ export default function AdminDashboard() {
 
           <div className="consultations-list">
             {consultations.length > 0 ? (
-              consultations.slice(0, 3).map((cons, idx) => (
-                <div key={cons.id || idx} className="consultation-item">
-                  <div className="consult-time-icon">
-                    <Clock size={16} />
+              consultations.slice(0, 4).map((cons, idx) => {
+                const gCalUrl = buildGoogleCalendarUrl({
+                  title: `IRA Tax Consultation — ${cons.client_name}`,
+                  description: `Form 1040 Tax Preparation Consultation & Walkthrough\nClient: ${cons.client_name}\nNotes: ${cons.notes}\nAssigned Preparer: ${cons.assigned_to}`,
+                  dateStr: cons.date,
+                  timeSlotStr: cons.time
+                });
+
+                return (
+                  <div key={cons.id || idx} className="consultation-item">
+                    <div className="consult-time-icon">
+                      <Clock size={16} />
+                    </div>
+                    <div className="consult-details">
+                      <strong>{cons.time}</strong>
+                      <p>{cons.client_name} • {cons.notes}</p>
+                      <span className="consult-assigned">Date: <strong>{cons.date}</strong> • Preparer: <strong>{cons.assigned_to}</strong></span>
+                      <div className="consult-sync-actions">
+                        <a 
+                          href={gCalUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="btn-cal-mini"
+                          title="Open pre-filled Google Calendar event"
+                        >
+                          <Calendar size={12} />
+                          <span>Google Cal</span>
+                        </a>
+                        <button 
+                          type="button" 
+                          onClick={() => downloadIcsFile({
+                            title: `IRA Tax Consultation — ${cons.client_name}`,
+                            description: `Client: ${cons.client_name}\nNotes: ${cons.notes}`,
+                            dateStr: cons.date,
+                            timeSlotStr: cons.time
+                          })}
+                          className="btn-cal-mini-outline"
+                          title="Download Apple / Outlook .ics"
+                        >
+                          <Download size={12} />
+                          <span>.ics</span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="consult-details">
-                    <strong>{cons.time}</strong>
-                    <p>{cons.client_name} • {cons.notes}</p>
-                    <span className="consult-assigned">Date: <strong>{cons.date}</strong> • Preparer: <strong>{cons.assigned_to}</strong></span>
-                  </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <>
                 <div className="consultation-item">
@@ -665,6 +702,32 @@ export default function AdminDashboard() {
                     <strong>10:00 AM • New client intake</strong>
                     <p>Jamie Frost • Form 1040 • Initial consultation</p>
                     <span className="consult-assigned">Assigned to: <strong>Priya</strong></span>
+                    <div className="consult-sync-actions">
+                      <a 
+                        href={buildGoogleCalendarUrl({
+                          title: 'IRA Tax Consultation — Jamie Frost',
+                          description: 'Form 1040 Initial Consultation & Intake\nPreparer: Priya',
+                          timeSlotStr: '10:00 AM'
+                        })}
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-cal-mini"
+                      >
+                        <Calendar size={12} />
+                        <span>Google Cal</span>
+                      </a>
+                      <button 
+                        type="button" 
+                        onClick={() => downloadIcsFile({
+                          title: 'IRA Tax Consultation — Jamie Frost',
+                          timeSlotStr: '10:00 AM'
+                        })}
+                        className="btn-cal-mini-outline"
+                      >
+                        <Download size={12} />
+                        <span>.ics</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -676,19 +739,48 @@ export default function AdminDashboard() {
                     <strong>11:30 AM • Return walkthrough</strong>
                     <p>Lee Martins • Form 1040 • Review &amp; next steps</p>
                     <span className="consult-assigned">Assigned to: <strong>Alex</strong></span>
+                    <div className="consult-sync-actions">
+                      <a 
+                        href={buildGoogleCalendarUrl({
+                          title: 'IRA Tax Return Walkthrough — Lee Martins',
+                          description: 'Form 1040 Return Walkthrough & Explanation\nPreparer: Alex',
+                          timeSlotStr: '11:30 AM'
+                        })}
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="btn-cal-mini"
+                      >
+                        <Calendar size={12} />
+                        <span>Google Cal</span>
+                      </a>
+                      <button 
+                        type="button" 
+                        onClick={() => downloadIcsFile({
+                          title: 'IRA Tax Return Walkthrough — Lee Martins',
+                          timeSlotStr: '11:30 AM'
+                        })}
+                        className="btn-cal-mini-outline"
+                      >
+                        <Download size={12} />
+                        <span>.ics</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </>
             )}
 
-            <button 
-              type="button" 
+            <a 
+              href="https://calendar.google.com/calendar/u/0/r" 
+              target="_blank" 
+              rel="noopener noreferrer" 
               className="btn-view-calendar"
-              onClick={() => showToast('Consultation calendar synchronized with Google Calendar & Outlook')}
+              style={{ textDecoration: 'none' }}
+              title="Open Google Calendar in New Tab"
             >
               <Calendar size={16} />
-              <span>View calendar</span>
-            </button>
+              <span>Open Google Calendar</span>
+            </a>
           </div>
         </div>
       </div>

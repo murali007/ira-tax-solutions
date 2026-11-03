@@ -635,6 +635,52 @@
   color: #475569;
 }
 
+.consult-sync-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.btn-cal-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #0284c7;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-cal-mini:hover {
+  background-color: #0369a1;
+}
+
+.btn-cal-mini-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-cal-mini-outline:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
 .btn-view-calendar {
   display: inline-flex;
   align-items: center;

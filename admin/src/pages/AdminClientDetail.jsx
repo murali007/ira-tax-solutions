@@ -25,7 +25,10 @@ import {
   UploadCloud,
   Globe,
   DollarSign,
-  FileCheck
+  FileCheck,
+  Mail,
+  Phone,
+  Briefcase
 } from 'lucide-react';
 import './AdminClientDetail.css';
 
@@ -308,7 +311,7 @@ export default function AdminClientDetail() {
       {/* Top Breadcrumb & Action Header */}
       <div className="detail-top-nav">
         <Link to="/" className="btn-detail-back">
-          <ArrowLeft size={16} />
+          <ArrowLeft size={15} />
           <span>Queue</span>
         </Link>
         <span className="nav-divider">/</span>
@@ -330,10 +333,18 @@ export default function AdminClientDetail() {
               </span>
             </div>
             <div className="client-contact-row">
-              <span>✉ {client.email}</span>
-              <span>📞 {client.phone || 'No phone recorded'}</span>
-              <span>🏢 {taxpayer?.employer || 'Employer unstated'}</span>
-              <span>🛂 Visa: {taxpayer?.visa_type || 'Expat / Resident'}</span>
+              <span className="contact-chip" title="Client Email">
+                <Mail size={13} /> {client.email}
+              </span>
+              <span className="contact-chip" title="Client Phone">
+                <Phone size={13} /> {client.phone || 'No phone recorded'}
+              </span>
+              <span className="contact-chip" title="Employer">
+                <Briefcase size={13} /> {taxpayer?.employer || 'Employer unstated'}
+              </span>
+              <span className="contact-chip" title="Visa & Tax Residency">
+                <Globe size={13} /> Visa: {taxpayer?.visa_type || 'Expat / Resident'}
+              </span>
             </div>
           </div>
         </div>

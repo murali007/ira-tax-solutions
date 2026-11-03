@@ -1,275 +1,409 @@
-.admin-app-root {
+/* ========================================================
+   IRA TAX SOLUTIONS — ADMIN WORKSPACE LAYOUT & SIDEBAR
+   Matches design concept & full responsiveness
+   ======================================================== */
+
+.admin-workspace-layout {
   min-height: 100vh;
-  background-color: #f8fafc;
   display: flex;
   flex-direction: column;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: #1e293b;
 }
 
-/* Header Bar */
-.admin-header-bar {
-  background-color: #0f172a;
-  border-bottom: 1px solid #1e293b;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
-}
-
-.admin-header-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
-  height: 68px;
+/* ========================================================
+   TOP GLOBAL HEADER BAR
+   ======================================================== */
+.admin-top-header {
+  height: 64px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-}
-
-/* Brand Section */
-.admin-brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #ffffff;
-}
-
-.admin-logo-mark {
-  background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
-  color: #ffffff;
-  font-weight: 900;
-  font-size: 14px;
-  letter-spacing: 0.5px;
-  padding: 6px 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.4);
-}
-
-.admin-brand-titles {
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-brand-name {
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  color: #f8fafc;
-}
-
-.admin-portal-badge {
-  font-size: 11px;
-  font-weight: 600;
-  color: #38bdf8;
-  letter-spacing: 0.2px;
-}
-
-/* Nav Links */
-.admin-nav-links {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.admin-nav-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #94a3b8;
-  text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.admin-nav-item:hover {
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.08);
-}
-
-.admin-nav-item.active {
-  color: #ffffff;
-  background-color: #1e293b;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-}
-
-/* User Profile & Logout */
-.admin-user-section {
-  display: flex;
-  align-items: center;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
   gap: 16px;
 }
 
-.admin-profile-pill {
+.top-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.mobile-menu-toggle:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.admin-brand-link {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 6px 12px;
-  background-color: #1e293b;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-decoration: none;
 }
 
-.admin-avatar-bubble {
-  width: 28px;
-  height: 28px;
+.brand-logo-pill {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: #16a34a;
-  color: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-.admin-profile-meta {
+.brand-title-text {
+  font-size: 17px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+/* Global Search Form */
+.top-search-form {
+  flex: 1;
+  max-width: 520px;
+  position: relative;
   display: flex;
-  flex-direction: column;
-}
-
-.admin-user-name {
-  font-size: 12.5px;
-  font-weight: 700;
-  color: #f1f5f9;
-}
-
-.admin-user-role {
-  font-size: 10.5px;
-  color: #94a3b8;
-}
-
-.admin-logout-btn {
-  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  background-color: transparent;
-  color: #ef4444;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.top-search-form .search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.top-search-form input {
+  width: 100%;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 8px 14px 8px 36px;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
   transition: all 0.2s ease;
 }
 
-.admin-logout-btn:hover {
-  background-color: rgba(239, 68, 68, 0.1);
-  border-color: #ef4444;
-}
-
-/* Subnav Strip */
-.admin-subnav-strip {
+.top-search-form input:focus {
   background-color: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 10px 0;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
 }
 
-.admin-subnav-inner {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
+.top-search-form input::placeholder {
+  color: #94a3b8;
+}
+
+/* Header Right: Tax Year & Profile */
+.top-header-right {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
 }
 
-.admin-breadcrumb-path {
+.tax-year-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.tax-year-dropdown {
+  background: transparent;
+  border: none;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Profile Dropdown */
+.admin-profile-wrapper {
+  position: relative;
+}
+
+.admin-profile-button {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease;
 }
 
-.crumb-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  color: #64748b;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.15s ease;
+.admin-profile-button:hover {
+  background-color: #f1f5f9;
 }
 
-.crumb-link:hover {
+.profile-bubble {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e0f2fe;
   color: #0284c7;
-}
-
-.crumb-sep {
-  color: #cbd5e1;
-}
-
-.crumb-active {
-  color: #0f172a;
-  font-weight: 600;
-}
-
-.admin-security-pill {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: #15803d;
-  background-color: #f0fdf4;
-  padding: 4px 10px;
-  border-radius: 20px;
-  border: 1px solid #bbf7d0;
-  font-weight: 600;
+  justify-content: center;
+  font-size: 11.5px;
+  font-weight: 800;
 }
 
-/* Main Container */
-.admin-main-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 28px 24px 60px;
+.profile-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.profile-chevron {
+  color: #64748b;
+}
+
+.profile-dropdown-menu {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  width: 220px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  padding: 10px;
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+.profile-dropdown-info {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px 10px;
+}
+
+.profile-dropdown-info strong {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.profile-dropdown-info span {
+  font-size: 11.5px;
+  color: #64748b;
+  word-break: break-all;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #f1f5f9;
+  margin: 4px 0 8px;
+}
+
+.dropdown-logout-btn {
   width: 100%;
-  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #dc2626;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-@media (max-width: 900px) {
-  .admin-header-inner {
-    height: auto;
-    padding: 12px 16px;
-    flex-wrap: wrap;
-    gap: 12px;
+.dropdown-logout-btn:hover {
+  background-color: #fef2f2;
+}
+
+/* ========================================================
+   LAYOUT BODY: SIDEBAR + MAIN VIEWPORT
+   ======================================================== */
+.admin-layout-body {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+/* Left Sidebar */
+.admin-sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  z-index: 80;
+}
+
+.sidebar-scroll-wrap {
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-group-title {
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.6px;
+  padding: 0 10px 4px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #475569;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.sidebar-link:hover {
+  color: #0f172a;
+  background-color: #f8fafc;
+}
+
+/* Active State matches Screenshot Rich Green Pill */
+.sidebar-link.active {
+  background-color: #16a34a;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.28);
+}
+
+.sidebar-link.active svg {
+  color: #ffffff;
+}
+
+.sidebar-badge-pill {
+  margin-left: auto;
+  background-color: #e0f2fe;
+  color: #0284c7;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.sidebar-link.active .sidebar-badge-pill {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Main Viewport */
+.admin-main-viewport {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 28px 60px;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+/* ========================================================
+   RESPONSIVE MEDIA QUERIES (MOBILE DRAWER)
+   ======================================================== */
+@media (max-width: 992px) {
+  .mobile-menu-toggle {
+    display: flex;
   }
-  .admin-subnav-strip {
-    display: none;
+
+  .admin-sidebar {
+    position: fixed;
+    top: 64px;
+    left: -260px;
+    bottom: 0;
+    height: calc(100vh - 64px);
+    width: 250px;
+    transition: left 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   }
-  .admin-main-container {
-    padding: 16px;
+
+  .admin-sidebar.mobile-open {
+    left: 0;
+  }
+
+  .mobile-sidebar-backdrop {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 75;
+  }
+
+  .admin-main-viewport {
+    padding: 18px 16px 40px;
   }
 }
 
 @media (max-width: 640px) {
-  .admin-header-inner {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 12px 14px;
+  .admin-top-header {
+    padding: 0 14px;
   }
-  .admin-brand-section {
-    width: 100%;
+
+  .top-search-form {
+    display: none; /* Accessible in Clients tab on small phones */
   }
-  .admin-portal-badge {
+
+  .brand-title-text {
+    font-size: 15px;
+  }
+
+  .tax-year-selector {
     display: none;
-  }
-  .admin-nav-links {
-    width: 100%;
-  }
-  .admin-nav-item {
-    width: 100%;
-    justify-content: center;
-  }
-  .admin-user-section {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .admin-main-container {
-    padding: 12px 10px 40px;
   }
 }

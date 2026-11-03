@@ -1,0 +1,797 @@
+/* ========================================================
+   IRA TAX SOLUTIONS — TAX OPERATIONS DASHBOARD
+   Matches exact UI concept & styling
+   ======================================================== */
+
+.admin-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Toast Notification */
+.admin-action-toast {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  z-index: 1000;
+  border-left: 4px solid #16a34a;
+  animation: slideInRight 0.25s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================================
+   DASHBOARD TITLE & ADD CLIENT ACTION
+   ======================================================== */
+.dashboard-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dashboard-main-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-sub-title {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.btn-add-client {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #16a34a;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+  transition: all 0.18s ease;
+}
+
+.btn-add-client:hover {
+  background-color: #15803d;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ========================================================
+   TOP 4 KPI METRIC CARDS
+   ======================================================== */
+.dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.dash-kpi-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dash-kpi-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -4px rgba(15, 23, 42, 0.08);
+}
+
+.kpi-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpi-icon-pill {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kpi-icon-pill.icon-blue {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+.kpi-icon-pill.icon-cyan {
+  background-color: #ecfeff;
+  color: #0891b2;
+}
+
+.kpi-icon-pill.icon-indigo {
+  background-color: #e0e7ff;
+  color: #4f46e5;
+}
+
+.kpi-icon-pill.icon-teal {
+  background-color: #ccfbf1;
+  color: #0d9488;
+}
+
+.kpi-year-badge {
+  font-size: 11px;
+  font-weight: 700;
+  background-color: #dcfce7;
+  color: #15803d;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #bbf7d0;
+}
+
+.kpi-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-kpi-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.dash-kpi-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+
+/* ========================================================
+   5-STEP FILING WORKFLOW KANBAN
+   ======================================================== */
+.workflow-section-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 22px 24px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 8px 24px -6px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.workflow-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.workflow-title-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.workflow-title-flex h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.demo-data-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  background-color: #e0f2fe;
+  color: #0369a1;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid #bae6fd;
+  letter-spacing: 0.4px;
+}
+
+.workflow-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+
+/* Kanban 5 Columns Grid */
+.workflow-kanban-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  width: 100%;
+}
+
+.workflow-step-column {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.step-column-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.step-num-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #0284c7;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.step-head-text h3 {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px;
+}
+
+.step-head-text p {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Client Card Inside Kanban Column */
+.workflow-client-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.wf-card-client-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wf-avatar-icon {
+  color: #0284c7;
+  flex-shrink: 0;
+}
+
+.wf-client-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-client-names strong {
+  font-size: 13.5px;
+  color: #0f172a;
+}
+
+.wf-client-names span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.wf-tag-pill {
+  font-size: 11px;
+  font-weight: 600;
+  background-color: #f0f9ff;
+  color: #0284c7;
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid #bae6fd;
+  width: fit-content;
+}
+
+/* Alert Chips */
+.wf-alert-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.wf-alert-chip.alert-missing {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.wf-alert-chip.alert-progress {
+  background-color: #fffbeb;
+  color: #d97706;
+  border: 1px dashed #fde68a;
+}
+
+.wf-alert-chip.alert-review {
+  background-color: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.wf-alert-chip.alert-walkthrough {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.wf-alert-chip.alert-authorized {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.wf-next-action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11.5px;
+}
+
+.wf-next-action-row .next-label {
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.3px;
+}
+
+.wf-next-action-row .next-val {
+  color: #334155;
+  font-weight: 600;
+}
+
+.wf-assigned-row {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.wf-assigned-row strong {
+  color: #0f172a;
+}
+
+.btn-wf-action {
+  width: 100%;
+  background-color: #16a34a;
+  color: #ffffff;
+  border: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.btn-wf-action:hover {
+  background-color: #15803d;
+}
+
+/* Workflow Gate Banner */
+.workflow-gate-banner {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.workflow-gate-banner svg {
+  color: #0284c7;
+  flex-shrink: 0;
+}
+
+/* ========================================================
+   BOTTOM GRID: PRIORITY QUEUE + CONSULTATIONS
+   ======================================================== */
+.dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.dash-sub-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03), 0 6px 16px -4px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-sub-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sub-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-card-title-wrap h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+/* Priority Work Queue Table */
+.priority-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.priority-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.priority-data-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.priority-data-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  color: #1e293b;
+}
+
+.pq-client-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pq-client-cell strong {
+  color: #0f172a;
+}
+
+.pq-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pq-status-badge.badge-signature {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.pq-status-badge.badge-rejection {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.pq-status-badge.badge-invoice {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.btn-pq-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #16a34a;
+  border: 1px solid #16a34a;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-pq-outline:hover {
+  background-color: #f0fdf4;
+  border-color: #15803d;
+  color: #15803d;
+}
+
+/* Consultations List */
+.consultations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.consultation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.consult-time-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.consult-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.consult-details strong {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.consult-details p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.consult-assigned {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.consult-assigned strong {
+  color: #475569;
+}
+
+.btn-view-calendar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #16a34a;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  margin-top: 4px;
+}
+
+.btn-view-calendar:hover {
+  background-color: #15803d;
+}
+
+/* ========================================================
+   WEBSITE QUICK ACTIONS BAR
+   ======================================================== */
+.website-quick-actions-bar {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  flex-wrap: wrap;
+}
+
+.quick-actions-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.quick-actions-label svg {
+  color: #0284c7;
+}
+
+.quick-actions-divider {
+  width: 1px;
+  height: 24px;
+  background-color: #e2e8f0;
+}
+
+.quick-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-quick-action {
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-quick-action:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+  border-color: #94a3b8;
+}
+
+/* Footer Links */
+.dashboard-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+  padding-bottom: 20px;
+}
+
+.dashboard-footer-links button {
+  background: none;
+  border: none;
+  color: #64748b;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.dashboard-footer-links button:hover {
+  color: #0f172a;
+}
+
+/* ========================================================
+   RESPONSIVE MEDIA QUERIES (DESKTOP -> TABLET -> MOBILE)
+   ======================================================== */
+@media (max-width: 1200px) {
+  .workflow-kanban-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .dashboard-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .workflow-kanban-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick-actions-divider {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-kanban-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .website-quick-actions-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quick-actions-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .btn-quick-action {
+    width: 100%;
+    text-align: center;
+  }
+}

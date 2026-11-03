@@ -1,0 +1,24 @@
+# ========================================================
+# IRA Tax Solutions - Search Engine Crawling Rules (robots.txt)
+# https://irataxsolutions.com
+# ========================================================
+
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /pricing
+Allow: /refund-status
+Allow: /refer
+Allow: /contact
+Allow: /security
+Allow: /login
+Allow: /register
+
+# Disallow private customer workspaces and admin portals to protect taxpayer privacy
+Disallow: /portal/
+Disallow: /admin/
+Disallow: /api/
+
+# XML Sitemap location for Googlebot, Bingbot, and search engines
+Sitemap: https://irataxsolutions.com/sitemap.xml

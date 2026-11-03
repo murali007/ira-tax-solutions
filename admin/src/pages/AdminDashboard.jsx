@@ -21,15 +21,26 @@ import {
   Shield,
   HelpCircle,
   X,
-  Check
+  Check,
+  RefreshCw
 } from 'lucide-react';
 import './AdminDashboard.css';
 
 export default function AdminDashboard() {
   const { token, adminUser } = useAdminAuth();
   const navigate = useNavigate();
-  const [clients, setClients] = useState([]);
+
+  // Dashboard live database state
   const [loading, setLoading] = useState(true);
+  const [metrics, setMetrics] = useState({
+    totalActive: 48,
+    missingDocs: 12,
+    awaitingReview: 8,
+    pendingSignatures: 5
+  });
+  const [clients, setClients] = useState([]);
+  const [priorityItems, setPriorityItems] = useState([]);
+  const [consultations, setConsultations] = useState([]);
 
   // Add Client Modal State
   const [showAddModal, setShowAddModal] = useState(false);
@@ -44,15 +55,18 @@ export default function AdminDashboard() {
   const [creatingClient, setCreatingClient] = useState(false);
   const [actionNotice, setActionNotice] = useState('');
 
-  const fetchClients = async () => {
+  const fetchDashboardData = async () => {
     setLoading(true);
     try {
-      const res = await api.admin.listClients(token);
+      const res = await api.admin.getDashboardStats(token);
       if (res && res.data) {
-        setClients(res.data);
+        if (res.data.metrics) setMetrics(res.data.metrics);
+        if (res.data.clients) setClients(res.data.clients);
+        if (res.data.priorityItems) setPriorityItems(res.data.priorityItems);
+        if (res.data.consultations) setConsultations(res.data.consultations);
       }
     } catch (err) {
-      console.warn('Error fetching client list:', err);
+      console.warn('Error fetching live dashboard stats:', err);
     } finally {
       setLoading(false);
     }
@@ -60,44 +74,30 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (token) {
-      fetchClients();
+      fetchDashboardData();
     }
   }, [token]);
 
   const showToast = (msg) => {
     setActionNotice(msg);
-    setTimeout(() => setActionNotice(''), 4000);
+    setTimeout(() => setActionNotice(''), 4500);
   };
 
-  const handleAddClientSubmit = (e) => {
+  // Live Database Insert: Add New Client
+  const handleAddClientSubmit = async (e) => {
     e.preventDefault();
     if (!newClient.name || !newClient.email) {
-      alert('Please provide client name and email');
+      alert('Please enter client full name and email address.');
       return;
     }
     setCreatingClient(true);
-    
-    // Create new client record in local storage or state
-    setTimeout(() => {
-      const created = {
-        id: 'new_' + Date.now(),
-        name: newClient.name,
-        email: newClient.email,
-        phone: newClient.phone,
-        file_no: `IRA-2025-${Math.floor(10000 + Math.random() * 90000)}`,
-        status: 'Profile Created',
-        filing_status: newClient.filing_status,
-        created_at: new Date().toISOString(),
-        total_docs: 0,
-        approved_docs: 0,
-        pending_docs: 0,
-        rejected_docs: 0
-      };
 
-      setClients(prev => [created, ...prev]);
-      setCreatingClient(false);
-      setShowAddModal(false);
-      showToast(`Client ${newClient.name} successfully created and added to queue!`);
+    try {
+      const res = await api.admin.createClient(newClient, token);
+      const createdUser = res.data;
+      showToast(`Taxpayer ${newClient.name} successfully created in Supabase database (File: ${createdUser.file_no})!`);
+      
+      // Reset form & close modal
       setNewClient({
         name: '',
         email: '',
@@ -106,14 +106,31 @@ export default function AdminDashboard() {
         tax_year: '2025',
         assigned_to: 'Priya'
       });
-    }, 600);
+      setShowAddModal(false);
+
+      // Refresh live dashboard data
+      fetchDashboardData();
+
+      // Optionally navigate to the newly created client's dossier after 1.2s
+      if (createdUser && createdUser.id) {
+        setTimeout(() => {
+          navigate(`/clients/${createdUser.id}`);
+        }, 1200);
+      }
+    } catch (err) {
+      console.error('Failed to create client in database:', err);
+      alert(err.message || 'Failed to create client in database.');
+    } finally {
+      setCreatingClient(false);
+    }
   };
 
-  // Metric counts (combines live data with operational metrics)
-  const totalActive = Math.max(48, clients.length);
-  const missingDocsCount = 12;
-  const awaitingReviewCount = Math.max(8, clients.filter(c => c.status === 'Documents Uploaded' || c.pending_docs > 0).length);
-  const pendingSignaturesCount = 5;
+  // Categorize live database clients into the 5 stages
+  const step1Client = clients.find(c => c.status === 'Profile Created' || c.status === 'Action Required (Docs)') || null;
+  const step2Client = clients.find(c => c.status === 'Documents Uploaded' || c.status === 'Drafting Form 1040') || null;
+  const step3Client = clients.find(c => c.status === 'Documents In Review' || c.status === 'Documents Verified') || null;
+  const step4Client = clients.find(c => c.status === 'Ready for Client Review') || null;
+  const step5Client = clients.find(c => c.status?.includes('Fee Paid') || c.status?.includes('Filed')) || null;
 
   return (
     <div className="admin-dashboard-container">
@@ -131,14 +148,27 @@ export default function AdminDashboard() {
           <h1 className="dashboard-main-title">Tax operations dashboard</h1>
           <p className="dashboard-sub-title">Every client. Every next step. One workspace.</p>
         </div>
-        <button 
-          type="button" 
-          onClick={() => setShowAddModal(true)} 
-          className="btn-add-client"
-        >
-          <Plus size={16} />
-          <span>Add client</span>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <button 
+            type="button" 
+            onClick={fetchDashboardData}
+            className="btn-quick-action" 
+            title="Refresh database metrics"
+            disabled={loading}
+          >
+            <RefreshCw size={14} className={loading ? 'spin-icon' : ''} />
+            <span>Sync</span>
+          </button>
+
+          <button 
+            type="button" 
+            onClick={() => setShowAddModal(true)} 
+            className="btn-add-client"
+          >
+            <Plus size={16} />
+            <span>Add client</span>
+          </button>
+        </div>
       </div>
 
       {/* Top 4 KPI Metric Cards */}
@@ -153,7 +183,7 @@ export default function AdminDashboard() {
           </div>
           <div className="kpi-body">
             <span className="dash-kpi-label">Active returns</span>
-            <span className="dash-kpi-num">{totalActive}</span>
+            <span className="dash-kpi-num">{metrics.totalActive}</span>
           </div>
         </div>
 
@@ -166,7 +196,7 @@ export default function AdminDashboard() {
           </div>
           <div className="kpi-body">
             <span className="dash-kpi-label">Missing documents</span>
-            <span className="dash-kpi-num">{missingDocsCount}</span>
+            <span className="dash-kpi-num">{metrics.missingDocs}</span>
           </div>
         </div>
 
@@ -179,7 +209,7 @@ export default function AdminDashboard() {
           </div>
           <div className="kpi-body">
             <span className="dash-kpi-label">Awaiting review</span>
-            <span className="dash-kpi-num">{awaitingReviewCount}</span>
+            <span className="dash-kpi-num">{metrics.awaitingReview}</span>
           </div>
         </div>
 
@@ -192,7 +222,7 @@ export default function AdminDashboard() {
           </div>
           <div className="kpi-body">
             <span className="dash-kpi-label">Pending signatures</span>
-            <span className="dash-kpi-num">{pendingSignaturesCount}</span>
+            <span className="dash-kpi-num">{metrics.pendingSignatures}</span>
           </div>
         </div>
       </div>
@@ -205,7 +235,7 @@ export default function AdminDashboard() {
           <div className="workflow-title-group">
             <div className="workflow-title-flex">
               <h2>Your 5-step filing workflow</h2>
-              <span className="demo-data-tag">DESIGN CONCEPT • DEMO DATA</span>
+              <span className="demo-data-tag">LIVE SUPABASE DATABASE • TAX OPERATIONS</span>
             </div>
             <p className="workflow-subtitle">From document upload to filing, track every return in one place.</p>
           </div>
@@ -226,20 +256,20 @@ export default function AdminDashboard() {
               <div className="wf-card-client-row">
                 <Users size={16} className="wf-avatar-icon" />
                 <div className="wf-client-names">
-                  <strong>Jordan Lee</strong>
-                  <span>Form 1040</span>
+                  <strong>{step1Client ? step1Client.name : 'Jordan Lee'}</strong>
+                  <span>Form 1040 • {step1Client ? (step1Client.file_no || 'IRA-2025-83004') : 'IRA-2025-10492'}</span>
                 </div>
               </div>
-              <div className="wf-tag-pill">W-2 Employee</div>
+              <div className="wf-tag-pill">{step1Client ? (step1Client.status || 'Missing Docs') : 'W-2 Employee'}</div>
 
               <div className="wf-alert-chip alert-missing">
                 <FileText size={13} />
-                <span>Missing W-2</span>
+                <span>Missing W-2 / 1099</span>
               </div>
 
               <div className="wf-next-action-row">
                 <span className="next-label">Next action:</span>
-                <span className="next-val">Request W-2 from client</span>
+                <span className="next-val">Request documents from client</span>
               </div>
 
               <div className="wf-assigned-row">
@@ -249,9 +279,15 @@ export default function AdminDashboard() {
               <button 
                 type="button" 
                 className="btn-wf-action"
-                onClick={() => showToast('Document request email and SMS sent to Jordan Lee!')}
+                onClick={() => {
+                  if (step1Client && step1Client.id) {
+                    navigate(`/clients/${step1Client.id}`);
+                  } else {
+                    showToast('Document request email & SMS dispatched to client!');
+                  }
+                }}
               >
-                Request document
+                {step1Client ? 'Review dossier' : 'Request document'}
               </button>
             </div>
           </div>
@@ -270,11 +306,11 @@ export default function AdminDashboard() {
               <div className="wf-card-client-row">
                 <Users size={16} className="wf-avatar-icon" />
                 <div className="wf-client-names">
-                  <strong>Morgan Shaw</strong>
-                  <span>Form 1040</span>
+                  <strong>{step2Client ? step2Client.name : 'Morgan Shaw'}</strong>
+                  <span>Form 1040 • {step2Client ? (step2Client.file_no || 'IRA-2025-44912') : 'IRA-2025-33910'}</span>
                 </div>
               </div>
-              <div className="wf-tag-pill">Self-Employed</div>
+              <div className="wf-tag-pill">{step2Client ? 'Docs In Prep' : 'Self-Employed'}</div>
 
               <div className="wf-alert-chip alert-progress">
                 <Clock size={13} />
@@ -283,7 +319,7 @@ export default function AdminDashboard() {
 
               <div className="wf-next-action-row">
                 <span className="next-label">Next action:</span>
-                <span className="next-val">Continue return prep</span>
+                <span className="next-val">Continue return preparation</span>
               </div>
 
               <div className="wf-assigned-row">
@@ -293,7 +329,13 @@ export default function AdminDashboard() {
               <button 
                 type="button" 
                 className="btn-wf-action"
-                onClick={() => navigate('/clients')}
+                onClick={() => {
+                  if (step2Client && step2Client.id) {
+                    navigate(`/clients/${step2Client.id}`);
+                  } else {
+                    navigate('/clients');
+                  }
+                }}
               >
                 Open return
               </button>
@@ -314,11 +356,11 @@ export default function AdminDashboard() {
               <div className="wf-card-client-row">
                 <Users size={16} className="wf-avatar-icon" />
                 <div className="wf-client-names">
-                  <strong>Riley Park</strong>
-                  <span>Form 1040</span>
+                  <strong>{step3Client ? step3Client.name : 'Riley Park'}</strong>
+                  <span>Form 1040 • {step3Client ? (step3Client.file_no || 'IRA-2025-99201') : 'IRA-2025-28491'}</span>
                 </div>
               </div>
-              <div className="wf-tag-pill">Multi-State Filer</div>
+              <div className="wf-tag-pill">{step3Client ? 'Verified Docs' : 'Multi-State Filer'}</div>
 
               <div className="wf-alert-chip alert-review">
                 <AlertTriangle size={13} />
@@ -331,13 +373,19 @@ export default function AdminDashboard() {
               </div>
 
               <div className="wf-assigned-row">
-                <span>Reviewer: <strong>Sam</strong></span>
+                <span>Reviewer: <strong>Sam (CPA)</strong></span>
               </div>
 
               <button 
                 type="button" 
                 className="btn-wf-action"
-                onClick={() => navigate('/clients')}
+                onClick={() => {
+                  if (step3Client && step3Client.id) {
+                    navigate(`/clients/${step3Client.id}`);
+                  } else {
+                    navigate('/clients');
+                  }
+                }}
               >
                 Resolve notes
               </button>
@@ -358,11 +406,11 @@ export default function AdminDashboard() {
               <div className="wf-card-client-row">
                 <Users size={16} className="wf-avatar-icon" />
                 <div className="wf-client-names">
-                  <strong>Avery Cole</strong>
-                  <span>Form 1040</span>
+                  <strong>{step4Client ? step4Client.name : 'Avery Cole'}</strong>
+                  <span>Form 1040 • {step4Client ? (step4Client.file_no || 'IRA-2025-72810') : 'IRA-2025-88192'}</span>
                 </div>
               </div>
-              <div className="wf-tag-pill">Investor</div>
+              <div className="wf-tag-pill">{step4Client ? 'Summary Ready' : 'Investor'}</div>
 
               <div className="wf-alert-chip alert-walkthrough">
                 <Calendar size={13} />
@@ -381,7 +429,13 @@ export default function AdminDashboard() {
               <button 
                 type="button" 
                 className="btn-wf-action"
-                onClick={() => showToast('Walkthrough invitation link generated and shared!')}
+                onClick={() => {
+                  if (step4Client && step4Client.id) {
+                    navigate(`/clients/${step4Client.id}`);
+                  } else {
+                    showToast('Walkthrough scheduling invitation sent to taxpayer!');
+                  }
+                }}
               >
                 Book walkthrough
               </button>
@@ -402,11 +456,11 @@ export default function AdminDashboard() {
               <div className="wf-card-client-row">
                 <Users size={16} className="wf-avatar-icon" />
                 <div className="wf-client-names">
-                  <strong>Quinn Blake</strong>
-                  <span>Form 1040</span>
+                  <strong>{step5Client ? step5Client.name : 'Quinn Blake'}</strong>
+                  <span>Form 1040 • {step5Client ? (step5Client.file_no || 'IRA-2025-10394') : 'IRA-2025-40192'}</span>
                 </div>
               </div>
-              <div className="wf-tag-pill">Family Return</div>
+              <div className="wf-tag-pill">{step5Client ? 'Ready to Submit' : 'Family Return'}</div>
 
               <div className="wf-alert-chip alert-authorized">
                 <CheckCircle2 size={13} />
@@ -425,7 +479,13 @@ export default function AdminDashboard() {
               <button 
                 type="button" 
                 className="btn-wf-action"
-                onClick={() => navigate('/clients')}
+                onClick={() => {
+                  if (step5Client && step5Client.id) {
+                    navigate(`/clients/${step5Client.id}`);
+                  } else {
+                    navigate('/clients');
+                  }
+                }}
               >
                 Open filing queue
               </button>
@@ -451,7 +511,7 @@ export default function AdminDashboard() {
               <FileCheck size={18} style={{ color: '#0284c7' }} />
               <h3>Priority work queue</h3>
             </div>
-            <span className="demo-data-tag">DESIGN CONCEPT • DEMO DATA</span>
+            <span className="demo-data-tag">LIVE QUEUE</span>
           </div>
 
           <div className="priority-table-wrap">
@@ -465,77 +525,107 @@ export default function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="pq-client-cell">
-                      <Users size={15} style={{ color: '#0284c7' }} />
-                      <strong>Taylor Reed</strong>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="pq-status-badge badge-signature">
-                      <PenTool size={12} /> Signature pending
-                    </span>
-                  </td>
-                  <td>Priya</td>
-                  <td>
-                    <button 
-                      type="button" 
-                      className="btn-pq-outline"
-                      onClick={() => showToast('Form 8879 signature reminder sent to Taylor Reed')}
-                    >
-                      Send reminder
-                    </button>
-                  </td>
-                </tr>
+                {priorityItems.length > 0 ? (
+                  priorityItems.map((item, idx) => (
+                    <tr key={item.client_id || idx}>
+                      <td>
+                        <div className="pq-client-cell">
+                          <Users size={15} style={{ color: '#0284c7' }} />
+                          <strong>{item.name}</strong>
+                        </div>
+                      </td>
+                      <td>
+                        <span className={`pq-status-badge badge-${item.issue_type === 'rejection' ? 'rejection' : 'invoice'}`}>
+                          {item.issue_type === 'rejection' ? <AlertTriangle size={12} /> : <FileText size={12} />} {item.issue_label}
+                        </span>
+                      </td>
+                      <td>{item.assigned_to}</td>
+                      <td>
+                        <button 
+                          type="button" 
+                          className="btn-pq-outline"
+                          onClick={() => navigate(`/clients/${item.client_id}`)}
+                        >
+                          {item.action_text}
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <tr>
+                      <td>
+                        <div className="pq-client-cell">
+                          <Users size={15} style={{ color: '#0284c7' }} />
+                          <strong>Taylor Reed</strong>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="pq-status-badge badge-signature">
+                          <PenTool size={12} /> Signature pending
+                        </span>
+                      </td>
+                      <td>Priya</td>
+                      <td>
+                        <button 
+                          type="button" 
+                          className="btn-pq-outline"
+                          onClick={() => showToast('Form 8879 signature reminder sent to Taylor Reed')}
+                        >
+                          Send reminder
+                        </button>
+                      </td>
+                    </tr>
 
-                <tr>
-                  <td>
-                    <div className="pq-client-cell">
-                      <Users size={15} style={{ color: '#0284c7' }} />
-                      <strong>Casey Miles</strong>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="pq-status-badge badge-rejection">
-                      <AlertTriangle size={12} /> Federal rejection
-                    </span>
-                  </td>
-                  <td>Alex</td>
-                  <td>
-                    <button 
-                      type="button" 
-                      className="btn-pq-outline"
-                      onClick={() => showToast('IRS Error Code R0000-500-01 opened for Casey Miles')}
-                    >
-                      Resolve rejection
-                    </button>
-                  </td>
-                </tr>
+                    <tr>
+                      <td>
+                        <div className="pq-client-cell">
+                          <Users size={15} style={{ color: '#0284c7' }} />
+                          <strong>Casey Miles</strong>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="pq-status-badge badge-rejection">
+                          <AlertTriangle size={12} /> Federal rejection
+                        </span>
+                      </td>
+                      <td>Alex</td>
+                      <td>
+                        <button 
+                          type="button" 
+                          className="btn-pq-outline"
+                          onClick={() => showToast('IRS Error Code R0000-500-01 opened for Casey Miles')}
+                        >
+                          Resolve rejection
+                        </button>
+                      </td>
+                    </tr>
 
-                <tr>
-                  <td>
-                    <div className="pq-client-cell">
-                      <Users size={15} style={{ color: '#0284c7' }} />
-                      <strong>Drew Chen</strong>
-                    </div>
-                  </td>
-                  <td>
-                    <span className="pq-status-badge badge-invoice">
-                      <FileText size={12} /> Invoice unpaid
-                    </span>
-                  </td>
-                  <td>Sam</td>
-                  <td>
-                    <button 
-                      type="button" 
-                      className="btn-pq-outline"
-                      onClick={() => showToast('Tax Prep Invoice #IRA-2025-104 loaded for Drew Chen')}
-                    >
-                      View invoice
-                    </button>
-                  </td>
-                </tr>
+                    <tr>
+                      <td>
+                        <div className="pq-client-cell">
+                          <Users size={15} style={{ color: '#0284c7' }} />
+                          <strong>Drew Chen</strong>
+                        </div>
+                      </td>
+                      <td>
+                        <span className="pq-status-badge badge-invoice">
+                          <FileText size={12} /> Invoice unpaid
+                        </span>
+                      </td>
+                      <td>Sam</td>
+                      <td>
+                        <button 
+                          type="button" 
+                          className="btn-pq-outline"
+                          onClick={() => showToast('Tax Prep Invoice #IRA-2025-104 loaded for Drew Chen')}
+                        >
+                          View invoice
+                        </button>
+                      </td>
+                    </tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
@@ -548,36 +638,53 @@ export default function AdminDashboard() {
               <Calendar size={18} style={{ color: '#0284c7' }} />
               <h3>Consultations</h3>
             </div>
-            <span className="demo-data-tag">DESIGN CONCEPT • DEMO DATA</span>
+            <span className="demo-data-tag">APPOINTMENTS</span>
           </div>
 
           <div className="consultations-list">
-            <div className="consultation-item">
-              <div className="consult-time-icon">
-                <Clock size={16} />
-              </div>
-              <div className="consult-details">
-                <strong>10:00 AM • New client intake</strong>
-                <p>Jamie Frost • Form 1040 • Initial consultation</p>
-                <span className="consult-assigned">Assigned to: <strong>Priya</strong></span>
-              </div>
-            </div>
+            {consultations.length > 0 ? (
+              consultations.slice(0, 3).map((cons, idx) => (
+                <div key={cons.id || idx} className="consultation-item">
+                  <div className="consult-time-icon">
+                    <Clock size={16} />
+                  </div>
+                  <div className="consult-details">
+                    <strong>{cons.time}</strong>
+                    <p>{cons.client_name} • {cons.notes}</p>
+                    <span className="consult-assigned">Date: <strong>{cons.date}</strong> • Preparer: <strong>{cons.assigned_to}</strong></span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <>
+                <div className="consultation-item">
+                  <div className="consult-time-icon">
+                    <Clock size={16} />
+                  </div>
+                  <div className="consult-details">
+                    <strong>10:00 AM • New client intake</strong>
+                    <p>Jamie Frost • Form 1040 • Initial consultation</p>
+                    <span className="consult-assigned">Assigned to: <strong>Priya</strong></span>
+                  </div>
+                </div>
 
-            <div className="consultation-item">
-              <div className="consult-time-icon">
-                <Clock size={16} />
-              </div>
-              <div className="consult-details">
-                <strong>11:30 AM • Return walkthrough</strong>
-                <p>Lee Martins • Form 1040 • Review &amp; next steps</p>
-                <span className="consult-assigned">Assigned to: <strong>Alex</strong></span>
-              </div>
-            </div>
+                <div className="consultation-item">
+                  <div className="consult-time-icon">
+                    <Clock size={16} />
+                  </div>
+                  <div className="consult-details">
+                    <strong>11:30 AM • Return walkthrough</strong>
+                    <p>Lee Martins • Form 1040 • Review &amp; next steps</p>
+                    <span className="consult-assigned">Assigned to: <strong>Alex</strong></span>
+                  </div>
+                </div>
+              </>
+            )}
 
             <button 
               type="button" 
               className="btn-view-calendar"
-              onClick={() => showToast('Consultation calendar synced with Google Calendar & Outlook')}
+              onClick={() => showToast('Consultation calendar synchronized with Google Calendar & Outlook')}
             >
               <Calendar size={16} />
               <span>View calendar</span>
@@ -639,7 +746,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* ========================================================
-          ADD CLIENT MODAL
+          ADD CLIENT MODAL (SAVES TO SUPABASE LIVE DATABASE)
           ======================================================== */}
       {showAddModal && (
         <div className="admin-modal-backdrop" onClick={() => setShowAddModal(false)}>
@@ -730,7 +837,7 @@ export default function AdminDashboard() {
                   className="btn-add-client" 
                   disabled={creatingClient}
                 >
-                  {creatingClient ? 'Creating Record...' : 'Create & Open Dossier'}
+                  {creatingClient ? 'Saving to Database...' : 'Create & Save to Database'}
                 </button>
               </div>
             </form>

@@ -570,6 +570,109 @@ export const api = {
     }
   },
 
+  // 9.5 WISE PAYMENT & PREPARATION FEE ($70)
+  payment: {
+    async getInvoice(token) {
+      if (isSupabaseConfigured) {
+        const userId = parseInt(token, 10);
+        const { data, error } = await supabase
+          .from('tax_summaries')
+          .select('*')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        if (error) console.warn('Supabase invoice lookup:', error.message);
+
+        return {
+          success: true,
+          data: {
+            user_id: userId,
+            amount: 70.00,
+            federal_fee: 50.00,
+            state_fee: 20.00,
+            currency: 'USD',
+            fee_paid: Boolean(data?.fee_paid),
+            status: data?.status || (data?.fee_paid ? 'Fee Paid / In Queue for E-Filing' : 'Payment Due'),
+            tax_year: data?.tax_year || '2025'
+          }
+        };
+      } else {
+        return {
+          success: true,
+          data: {
+            amount: 70.00,
+            federal_fee: 50.00,
+            state_fee: 20.00,
+            currency: 'USD',
+            fee_paid: false,
+            status: 'Payment Due',
+            tax_year: '2025'
+          }
+        };
+      }
+    },
+
+    async processWisePayment(paymentDetails, token) {
+      if (isSupabaseConfigured) {
+        const userId = parseInt(token, 10);
+        const txnId = paymentDetails?.txnId || `WISE-TXN-${Date.now()}`;
+
+        // 1. Check if tax_summaries row exists
+        const { data: existing } = await supabase
+          .from('tax_summaries')
+          .select('id')
+          .eq('user_id', userId)
+          .maybeSingle();
+
+        if (existing) {
+          await supabase
+            .from('tax_summaries')
+            .update({
+              fee_paid: 1,
+              preparer_fee: '$70.00 USD (Paid via Wise)',
+              status: 'Fee Paid / In Queue for E-Filing'
+            })
+            .eq('user_id', userId);
+        } else {
+          await supabase
+            .from('tax_summaries')
+            .insert([{
+              user_id: userId,
+              fee_paid: 1,
+              preparer_fee: '$70.00 USD (Paid via Wise)',
+              status: 'Fee Paid / In Queue for E-Filing',
+              tax_year: '2025'
+            }]);
+        }
+
+        // 2. Update user status in users table
+        await supabase
+          .from('users')
+          .update({
+            status: 'Fee Paid / In Queue for E-Filing'
+          })
+          .eq('id', userId);
+
+        return {
+          success: true,
+          txnId,
+          amount: 70.00,
+          currency: 'USD',
+          method: paymentDetails?.method || 'ach',
+          message: 'Wise test payment cleared and synchronized with IRS e-filing queue.'
+        };
+      } else {
+        return {
+          success: true,
+          txnId: paymentDetails?.txnId || `WISE-LOCAL-${Date.now()}`,
+          amount: 70.00,
+          currency: 'USD',
+          method: paymentDetails?.method || 'ach'
+        };
+      }
+    }
+  },
+
   returns: {
     async list(token) {
       if (isSupabaseConfigured) {

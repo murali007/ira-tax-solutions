@@ -48,6 +48,7 @@ import ScheduleTaxNotes from './pages/portal/ScheduleTaxNotes';
 import AddressInfo from './pages/portal/AddressInfo';
 import UploadDocuments from './pages/portal/UploadDocuments';
 import TaxSummary from './pages/portal/TaxSummary';
+import PaymentFee from './pages/portal/PaymentFee';
 import DownloadReturns from './pages/portal/DownloadReturns';
 
 // Admin Portal Integration
@@ -97,6 +98,7 @@ export default function App() {
             <Route path="address" element={<AddressInfo />} />
             <Route path="upload" element={<UploadDocuments />} />
             <Route path="summary" element={<TaxSummary />} />
+            <Route path="payment" element={<PaymentFee />} />
             <Route path="download" element={<DownloadReturns />} />
           </Route>
 

@@ -19,7 +19,8 @@ import {
   Calendar,
   ExternalLink,
   ShieldCheck,
-  Headphones
+  Headphones,
+  CreditCard
 } from 'lucide-react';
 import IndiaFlag from '../common/IndiaFlag';
 import './PortalLayout.css';
@@ -281,6 +282,16 @@ export default function PortalLayout() {
               >
                 <FileText className="menu-icon" size={17} />
                 <span>Tax Summary</span>
+              </NavLink>
+
+              <NavLink 
+                to="/portal/payment" 
+                className={({ isActive }) => `menu-link-item ${isActive ? 'active' : ''}`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <CreditCard className="menu-icon" size={17} />
+                <span>Pay Preparation Fee</span>
+                <span className="sidebar-fee-badge">$70</span>
               </NavLink>
 
               <NavLink 

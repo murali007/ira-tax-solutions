@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { api } from '../../lib/api';
 import { FileText, Clock, AlertCircle, CreditCard, CheckCircle2, ShieldCheck } from 'lucide-react';
@@ -94,9 +95,9 @@ export default function TaxSummary() {
                   <CheckCircle2 size={14} /> Paid (Credit Card / ACH)
                 </span>
               ) : (
-                <button onClick={handlePayFee} className="btn btn-primary btn-sm" disabled={payingFee}>
-                  <CreditCard size={14} /> Pay Fee Securely
-                </button>
+                <Link to="/portal/payment" className="btn btn-primary btn-sm" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <CreditCard size={14} /> Pay $70 via Wise
+                </Link>
               )}
             </div>
           </div>

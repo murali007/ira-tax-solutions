@@ -9,6 +9,7 @@
   gap: 22px;
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
@@ -194,6 +195,10 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .workflow-header-row {
@@ -453,6 +458,10 @@
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   align-items: flex-start;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .dash-sub-card {
@@ -464,6 +473,11 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .dash-sub-card-header {
@@ -495,6 +509,7 @@
 
 .priority-data-table {
   width: 100%;
+  min-width: 520px;
   border-collapse: collapse;
   text-align: left;
   font-size: 13px;
@@ -807,37 +822,82 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .workflow-kanban-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-title-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .btn-add-client {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dashboard-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .workflow-section-card {
+    padding: 16px 14px;
+  }
+
+  .dash-sub-card {
+    padding: 16px 14px;
+  }
+
+  .website-quick-actions-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px 14px;
   }
 
   .quick-actions-divider {
     display: none;
   }
-}
-
-@media (max-width: 520px) {
-  .dashboard-kpi-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .workflow-kanban-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .website-quick-actions-bar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 
   .quick-actions-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
     width: 100%;
-    flex-direction: column;
   }
 
   .btn-quick-action {
     width: 100%;
+    justify-content: center;
     text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-main-title {
+    font-size: 22px;
+  }
+
+  .quick-actions-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .wf-next-action-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .consult-sync-actions {
+    width: 100%;
+  }
+
+  .btn-view-calendar {
+    width: 100%;
   }
 }

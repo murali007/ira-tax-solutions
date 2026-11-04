@@ -23,7 +23,11 @@ import {
   X,
   Check,
   RefreshCw,
-  Download
+  Download,
+  UserPlus,
+  ChevronDown,
+  Mail,
+  Phone
 } from 'lucide-react';
 import { buildGoogleCalendarUrl, downloadIcsFile } from '../../../src/lib/calendarHelper';
 import './AdminDashboard.css';
@@ -845,13 +849,19 @@ export default function AdminDashboard() {
           <div className="admin-modal-dialog" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div className="modal-title-wrap">
-                <Plus size={20} style={{ color: '#16a34a' }} />
-                <h3>Add New Taxpayer Client</h3>
+                <div className="modal-title-icon-badge">
+                  <UserPlus size={18} />
+                </div>
+                <div className="modal-title-text-wrap">
+                  <h3>Add New Taxpayer Client</h3>
+                  <p>Initialize a new Form 1040 client dossier in the live database.</p>
+                </div>
               </div>
               <button 
                 type="button" 
                 className="modal-close-btn" 
                 onClick={() => setShowAddModal(false)}
+                title="Close modal"
               >
                 <X size={18} />
               </button>
@@ -859,61 +869,93 @@ export default function AdminDashboard() {
 
             <form onSubmit={handleAddClientSubmit} className="modal-body-form">
               <div className="modal-form-group">
-                <label>Taxpayer Full Legal Name *</label>
-                <input 
-                  type="text" 
-                  value={newClient.name} 
-                  onChange={(e) => setNewClient({ ...newClient, name: e.target.value })}
-                  placeholder="e.g. John Doe"
-                  required
-                />
+                <label>
+                  Taxpayer Full Legal Name <span className="required-star">*</span>
+                </label>
+                <div className="modal-input-container">
+                  <span className="modal-input-icon">
+                    <Users size={16} />
+                  </span>
+                  <input 
+                    type="text" 
+                    className="has-icon"
+                    value={newClient.name} 
+                    onChange={(e) => setNewClient({ ...newClient, name: e.target.value })}
+                    placeholder="e.g. John Doe"
+                    required
+                  />
+                </div>
               </div>
 
-              <div className="modal-form-group">
-                <label>Email Address *</label>
-                <input 
-                  type="email" 
-                  value={newClient.email} 
-                  onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
-                  placeholder="e.g. john.doe@gmail.com"
-                  required
-                />
+              <div className="modal-form-row-2">
+                <div className="modal-form-group">
+                  <label>
+                    Email Address <span className="required-star">*</span>
+                  </label>
+                  <div className="modal-input-container">
+                    <span className="modal-input-icon">
+                      <Mail size={16} />
+                    </span>
+                    <input 
+                      type="email" 
+                      className="has-icon"
+                      value={newClient.email} 
+                      onChange={(e) => setNewClient({ ...newClient, email: e.target.value })}
+                      placeholder="e.g. john.doe@gmail.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="modal-form-group">
+                  <label>Phone Number</label>
+                  <div className="modal-input-container">
+                    <span className="modal-input-icon">
+                      <Phone size={16} />
+                    </span>
+                    <input 
+                      type="tel" 
+                      className="has-icon"
+                      value={newClient.phone} 
+                      onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })}
+                      placeholder="+1 (555) 234-5678"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="modal-form-group">
-                <label>Phone Number</label>
-                <input 
-                  type="text" 
-                  value={newClient.phone} 
-                  onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })}
-                  placeholder="e.g. +1 (555) 234-5678"
-                />
-              </div>
+              <div className="modal-form-row-2">
+                <div className="modal-form-group">
+                  <label>US Tax Filing Status</label>
+                  <div className="modal-select-wrapper">
+                    <select 
+                      value={newClient.filing_status} 
+                      onChange={(e) => setNewClient({ ...newClient, filing_status: e.target.value })}
+                    >
+                      <option value="Single / Form 1040">Single / Form 1040</option>
+                      <option value="Married Filing Jointly (MFJ)">Married Filing Jointly (MFJ)</option>
+                      <option value="Married Filing Separately (MFS)">Married Filing Separately (MFS)</option>
+                      <option value="Head of Household (HOH)">Head of Household (HOH)</option>
+                      <option value="Form 1040-NR">Form 1040-NR (Nonresident Alien)</option>
+                    </select>
+                    <ChevronDown size={15} className="modal-select-icon" />
+                  </div>
+                </div>
 
-              <div className="modal-form-group">
-                <label>Filing Status</label>
-                <select 
-                  value={newClient.filing_status} 
-                  onChange={(e) => setNewClient({ ...newClient, filing_status: e.target.value })}
-                >
-                  <option value="Single / Form 1040">Single / Form 1040</option>
-                  <option value="Married Filing Jointly (MFJ)">Married Filing Jointly (MFJ)</option>
-                  <option value="Married Filing Separately (MFS)">Married Filing Separately (MFS)</option>
-                  <option value="Head of Household (HOH)">Head of Household (HOH)</option>
-                  <option value="Form 1040-NR">Form 1040-NR (Nonresident Alien)</option>
-                </select>
-              </div>
-
-              <div className="modal-form-group">
-                <label>Assigned Tax Preparer</label>
-                <select 
-                  value={newClient.assigned_to} 
-                  onChange={(e) => setNewClient({ ...newClient, assigned_to: e.target.value })}
-                >
-                  <option value="Priya">Priya (Senior Preparer)</option>
-                  <option value="Alex">Alex (Senior Preparer)</option>
-                  <option value="Sam">Sam (Reviewer / CPA)</option>
-                </select>
+                <div className="modal-form-group">
+                  <label>Assigned Tax Preparer</label>
+                  <div className="modal-select-wrapper">
+                    <select 
+                      value={newClient.assigned_to} 
+                      onChange={(e) => setNewClient({ ...newClient, assigned_to: e.target.value })}
+                    >
+                      <option value="Priya">Priya (Senior Preparer)</option>
+                      <option value="Alex">Alex (Senior Preparer)</option>
+                      <option value="Sam">Sam (Reviewer / CPA)</option>
+                    </select>
+                    <ChevronDown size={15} className="modal-select-icon" />
+                  </div>
+                </div>
               </div>
 
               <div className="modal-footer-actions">
@@ -926,10 +968,18 @@ export default function AdminDashboard() {
                 </button>
                 <button 
                   type="submit" 
-                  className="btn-add-client" 
+                  className="btn-modal-submit" 
                   disabled={creatingClient}
                 >
-                  {creatingClient ? 'Saving to Database...' : 'Create & Save to Database'}
+                  {creatingClient ? (
+                    <>
+                      <RefreshCw size={15} className="spin-icon" /> Creating Client...
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={16} /> Create &amp; Save to Database
+                    </>
+                  )}
                 </button>
               </div>
             </form>

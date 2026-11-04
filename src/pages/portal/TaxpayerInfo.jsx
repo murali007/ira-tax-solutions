@@ -315,22 +315,8 @@ export default function TaxpayerInfo() {
             </div>
           </div>
 
-          {/* Row 3: Current Employer, Occupation, Residency / Visa Status */}
-          <div className="form-grid-3">
-            <div className="input-field-group">
-              <label>Current Employer / Company Name</label>
-              <div className="input-with-icon">
-                <User size={15} className="field-icon" />
-                <input
-                  type="text"
-                  name="employer"
-                  value={formData.employer}
-                  onChange={handleChange}
-                  placeholder="Employer / Company Name"
-                />
-              </div>
-            </div>
-
+          {/* Row 3: Occupation, Residency / Visa Status */}
+          <div className="form-grid-2">
             <div className="input-field-group">
               <label>Occupation / Profession</label>
               <div className="input-with-icon">
@@ -429,8 +415,8 @@ export default function TaxpayerInfo() {
             </div>
           </div>
 
-          {/* Row 5: US Filing Status, Own Home in US, Return Scope */}
-          <div className="form-grid-3">
+          {/* Row 5: US Filing Status, Own Home in US in 2025 */}
+          <div className="form-grid-2">
             <div className="input-field-group">
               <label>US Tax Filing Status *</label>
               <div className="input-with-icon">
@@ -452,7 +438,7 @@ export default function TaxpayerInfo() {
             </div>
 
             <div className="input-field-group">
-              <label>Did You Own a Home in the US in 2024?</label>
+              <label>Do you own a home in the U.S. in 2025?</label>
               <div className="radio-group-horizontal">
                 <label className="radio-label">
                   <input
@@ -474,26 +460,6 @@ export default function TaxpayerInfo() {
                   />
                   NO (Rented)
                 </label>
-              </div>
-            </div>
-
-            <div className="input-field-group">
-              <label>Return Scope / Tax Situation</label>
-              <div className="input-with-icon">
-                <Info size={15} className="field-icon" />
-                <select
-                  name="citizenship"
-                  value={formData.citizenship}
-                  onChange={handleChange}
-                >
-                  <option value="">- Select Return Scope -</option>
-                  <option value="Standard W-2 Salaried">Standard W-2 Salaried Return</option>
-                  <option value="W-2 + Stock / Crypto Investments">W-2 + Stock Options (RSU/ESPP) &amp; Crypto</option>
-                  <option value="Self-Employed / 1099 (Schedule C)">Self-Employed / 1099 Contractor (Schedule C)</option>
-                  <option value="Multi-State Moves &amp; Returns">Multi-State Tax Returns (Lived/Worked in 2+ States)</option>
-                  <option value="Itemized Deductions (Schedule A)">Itemized Deductions &amp; Mortgage Interest (Schedule A)</option>
-                  <option value="Rental Real Estate (Schedule E)">Rental Real Estate Properties (Schedule E)</option>
-                </select>
               </div>
             </div>
           </div>

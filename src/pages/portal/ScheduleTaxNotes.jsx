@@ -7,7 +7,7 @@ import './TaxpayerInfo.css';
 
 export default function ScheduleTaxNotes() {
   const { token } = useAuth();
-  const [taxYear, setTaxYear] = useState('Tax Year 2024 (Current Filing)');
+  const [taxYear, setTaxYear] = useState('2025');
   const [preferredDate, setPreferredDate] = useState('');
   const [preferredTime, setPreferredTime] = useState('11:00 AM - 12:00 PM EST');
   const [meetingMode, setMeetingMode] = useState('Google Meet / Screen Share');
@@ -25,7 +25,7 @@ export default function ScheduleTaxNotes() {
       try {
         const json = await api.schedule.get(token);
         if (json && json.data) {
-          setTaxYear(json.data.tax_year || 'Tax Year 2024 (Current Filing)');
+          setTaxYear(json.data.tax_year || '2025');
           setPreferredDate(json.data.preferred_date || '');
           setPreferredTime(json.data.preferred_time || '11:00 AM - 12:00 PM EST');
           setNotes(json.data.notes || '');
@@ -100,10 +100,14 @@ export default function ScheduleTaxNotes() {
               <div className="input-with-icon">
                 <Calendar size={15} className="field-icon" />
                 <select value={taxYear} onChange={(e) => setTaxYear(e.target.value)}>
-                  <option value="Tax Year 2024 (Current Filing)">Tax Year 2024 (Filing Season 2026 - Current)</option>
-                  <option value="Tax Year 2023 (Prior Year)">Tax Year 2023 (Prior Year Return)</option>
-                  <option value="Tax Year 2022 (Prior Year)">Tax Year 2022 (Prior Year Return)</option>
-                  <option value="Form 1040-X (Amended Return)">Form 1040-X (Amended US Return)</option>
+                  <option value="2022">2022</option>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  {taxYear && !['2022', '2023', '2024', '2025', '2026'].includes(taxYear) && (
+                    <option value={taxYear}>{taxYear}</option>
+                  )}
                 </select>
               </div>
             </div>

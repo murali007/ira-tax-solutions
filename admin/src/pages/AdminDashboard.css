@@ -9,6 +9,7 @@
   gap: 22px;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   overflow-x: hidden;
   box-sizing: border-box;
 }
@@ -96,7 +97,7 @@
    ======================================================== */
 .dashboard-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
 }
 
@@ -197,6 +198,7 @@
   gap: 18px;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -242,7 +244,7 @@
 /* Kanban 5 Columns Grid */
 .workflow-kanban-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 14px;
   width: 100%;
 }
@@ -455,11 +457,12 @@
    ======================================================== */
 .dashboard-bottom-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: 20px;
   align-items: flex-start;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -503,8 +506,12 @@
 
 /* Priority Work Queue Table */
 .priority-table-wrap {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  display: block;
 }
 
 .priority-data-table {
@@ -808,23 +815,23 @@
    ======================================================== */
 @media (max-width: 1200px) {
   .workflow-kanban-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 992px) {
   .dashboard-kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .dashboard-bottom-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 860px) {
   .workflow-kanban-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -841,23 +848,23 @@
   }
 
   .dashboard-kpi-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 
   .workflow-section-card {
-    padding: 16px 14px;
+    padding: 14px 12px;
   }
 
   .dash-sub-card {
-    padding: 16px 14px;
+    padding: 14px 12px;
   }
 
   .website-quick-actions-bar {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
-    padding: 16px 14px;
+    padding: 14px 12px;
   }
 
   .quick-actions-divider {
@@ -875,12 +882,13 @@
     width: 100%;
     justify-content: center;
     text-align: center;
+    box-sizing: border-box;
   }
 }
 
 @media (max-width: 480px) {
   .dashboard-main-title {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .quick-actions-buttons {
@@ -899,5 +907,21 @@
 
   .btn-view-calendar {
     width: 100%;
+  }
+
+  .workflow-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .priority-data-table {
+    min-width: 440px;
+    font-size: 12px;
+  }
+
+  .priority-data-table th,
+  .priority-data-table td {
+    padding: 8px 10px;
   }
 }

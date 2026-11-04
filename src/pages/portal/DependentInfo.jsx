@@ -12,7 +12,7 @@ const BLANK_DEPENDENT = {
   gender: '',
   dob: '',
   relationship: '',
-  visaType: '', // US Tax Credit Category (CTC $2,000 / ODC $500 / Daycare / Tuition)
+  visaType: '', // US Tax Credit Category (CTC $2,200 / ODC $500 / Daycare / Tuition)
   taxIdType: '', // Dependent SSN / ITIN
   days2025: '', // Months lived in US with taxpayer (0-12)
   days2024: '', // Full-time student (YES / NO)
@@ -146,7 +146,7 @@ export default function DependentInfo() {
             <Users size={40} style={{ color: '#94a3b8', margin: '0 auto 12px' }} />
             <h4 style={{ color: '#334155', marginBottom: '8px' }}>No Dependents Claimed Yet</h4>
             <p style={{ color: '#64748b', fontSize: '14px', maxWidth: '520px', margin: '0 auto 20px', lineHeight: '1.5' }}>
-              Add qualifying children under 17 for the <strong>$2,000 Child Tax Credit (CTC)</strong>, 
+              Add qualifying children under 17 for the <strong>$2,200 Child Tax Credit (CTC)</strong>, 
               college students for the <strong>American Opportunity Tax Credit</strong>, or elderly relatives for the <strong>$500 Credit for Other Dependents (ODC)</strong>.
             </p>
             <button
@@ -297,7 +297,10 @@ export default function DependentInfo() {
                         onChange={(e) => handleFieldChange(dep.id, 'visaType', e.target.value)}
                       >
                         <option value="">Select Credit Category</option>
-                        <option value="Child Tax Credit ($2,000)">Child Tax Credit (Under 17 - $2,000)</option>
+                        <option value="Child Tax Credit ($2,200)">Child Tax Credit (Under 17 - $2,200)</option>
+                        {dep.visaType === 'Child Tax Credit ($2,000)' && (
+                          <option value="Child Tax Credit ($2,000)">Child Tax Credit (Under 17 - $2,200)</option>
+                        )}
                         <option value="Credit for Other Dependents ($500)">Credit for Other Dependents (17+ or Parent - $500)</option>
                         <option value="Child & Dependent Care Credit">Child &amp; Dependent Care Credit (Form 2441 Daycare)</option>
                         <option value="College Student (1098-T AOTC)">College Student (Form 1098-T Education Credit)</option>

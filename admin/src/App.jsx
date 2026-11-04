@@ -23,7 +23,7 @@ function ProtectedAdminRoute({ children }) {
   const { isAuthenticated, loading } = useAdminAuth();
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0f172a', color: '#94a3b8' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f8fafc', color: '#475569' }}>
         Verifying Administrative Credentials...
       </div>
     );

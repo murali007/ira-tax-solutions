@@ -157,21 +157,21 @@ export default function Home() {
             <div className="broadcast-marquee-track">
               <div className="marquee-group">
                 <span className="marquee-item">
-                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                  Get&nbsp;<strong>Straight Away 10% OFF</strong>&nbsp;on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
                 </span>
                 <span className="marquee-separator">⚡</span>
                 <span className="marquee-item">
-                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                  Get&nbsp;<strong>Straight Away 10% OFF</strong>&nbsp;on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
                 </span>
                 <span className="marquee-separator">⚡</span>
               </div>
               <div className="marquee-group" aria-hidden="true">
                 <span className="marquee-item">
-                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                  Get&nbsp;<strong>Straight Away 10% OFF</strong>&nbsp;on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
                 </span>
                 <span className="marquee-separator">⚡</span>
                 <span className="marquee-item">
-                  Get <strong>Straight Away 10% OFF</strong> on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
+                  Get&nbsp;<strong>Straight Away 10% OFF</strong>&nbsp;on Your Total Bill / Invoice! &nbsp;•&nbsp; Limited early-bird filing slots available for Tax Season 2026.
                 </span>
                 <span className="marquee-separator">⚡</span>
               </div>
@@ -238,11 +238,6 @@ export default function Home() {
                         <div className="hero-discount-ribbon">
               <Zap size={15} className="ribbon-icon" />
               <span><strong>10% Early Filing Discount</strong> applied straight to your invoice</span>
-            </div>
-            <div className="hero-badge-footer">
-              <Link to={isAuthenticated ? "/portal" : "/register"} className="hero-portal-link">
-                {isAuthenticated ? "Go to Tax Filing Portal →" : "Create Account / Login to File →"}
-              </Link>
             </div>
           </div>
         </div>

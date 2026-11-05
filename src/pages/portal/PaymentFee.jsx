@@ -67,7 +67,7 @@ export default function PaymentFee() {
     try {
       const randomTxn = `WISE-TEST-${Math.floor(100000 + Math.random() * 900000)}`;
       const res = await api.payment.processWisePayment({
-        amount: 70.00,
+        amount: totalFeeNum,
         currency: 'USD',
         method: selectedMethod,
         txnId: randomTxn
@@ -98,6 +98,11 @@ export default function PaymentFee() {
 
   const isPaid = paymentSuccess || invoice?.fee_paid;
   const hasDocs = invoice?.has_documents || false;
+
+  const totalFeeNum = invoice?.amount ? Number(invoice.amount) : 70.00;
+  const totalFeeStr = `$${totalFeeNum.toFixed(2)}`;
+  const federalFeeStr = `$${(invoice?.federal_fee ? Number(invoice.federal_fee) : Math.max(0, totalFeeNum - 20)).toFixed(2)}`;
+  const stateFeeStr = `$${(invoice?.state_fee ? Number(invoice.state_fee) : 20.00).toFixed(2)}`;
 
   if (loading) {
     return (
@@ -184,7 +189,7 @@ export default function PaymentFee() {
                 </td>
                 <td><span className="tag-pill">US Federal / IRS</span></td>
                 <td>1</td>
-                <td style={{ textAlign: 'right', fontWeight: 700 }}>$50.00</td>
+                <td style={{ textAlign: 'right', fontWeight: 700 }}>{federalFeeStr}</td>
               </tr>
               <tr>
                 <td>
@@ -193,13 +198,13 @@ export default function PaymentFee() {
                 </td>
                 <td><span className="tag-pill">State Tax Dept</span></td>
                 <td>1</td>
-                <td style={{ textAlign: 'right', fontWeight: 700 }}>$20.00</td>
+                <td style={{ textAlign: 'right', fontWeight: 700 }}>{stateFeeStr}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
                 <td colSpan={3} style={{ textAlign: 'right', fontWeight: 600 }}>Total Preparation &amp; E-File Fee:</td>
-                <td style={{ textAlign: 'right', fontWeight: 800, fontSize: '18px', color: '#0f172a' }}>$70.00 USD</td>
+                <td style={{ textAlign: 'right', fontWeight: 800, fontSize: '18px', color: '#0f172a' }}>{totalFeeStr} USD</td>
               </tr>
             </tfoot>
           </table>
@@ -213,7 +218,7 @@ export default function PaymentFee() {
                 <CheckCircle2 size={32} />
               </div>
               <div className="cleared-content">
-                <h4>Fee Successfully Cleared — $70.00 USD via Wise</h4>
+                <h4>Fee Successfully Cleared — {totalFeeStr} USD via Wise</h4>
                 <p>
                   Your tax preparation fee has been verified and recorded. Zero balance remaining.
                 </p>
@@ -244,7 +249,7 @@ export default function PaymentFee() {
                   <div>
                     <strong>Priority Intake Activated: Next Step is Uploading Documents</strong>
                     <p>
-                      Your $70 preparation fee is fully settled upfront. Please upload your Form W-2s, 1099s, and photo ID so your dedicated tax preparer can draft your return immediately.
+                      Your {totalFeeStr} preparation fee is fully settled upfront. Please upload your Form W-2s, 1099s, and photo ID so your dedicated tax preparer can draft your return immediately.
                     </p>
                   </div>
                 </div>
@@ -289,9 +294,9 @@ export default function PaymentFee() {
                     <div className="choice-badge badge-fasttrack">
                       <Sparkles size={12} /> FAST-TRACK
                     </div>
-                    <h5>2. Pay $70 Retainer Now via Wise</h5>
+                    <h5>2. Pay {totalFeeStr} Fee Now via Wise</h5>
                     <p>
-                      Lock in your filing slot upfront. Paying your $70 fee now moves your file to our top-tier priority queue with immediate CPA assignment.
+                      Lock in your filing slot upfront. Paying your {totalFeeStr} fee now moves your file to our top-tier priority queue with immediate CPA assignment.
                     </p>
                     <div className="card-btn-wrap">
                       <button 
@@ -300,7 +305,7 @@ export default function PaymentFee() {
                         className="btn-pay-wise btn-choice-pay"
                       >
                         <CreditCard size={15} />
-                        <span>Pay $70 Upfront via Wise</span>
+                        <span>Pay {totalFeeStr} via Wise</span>
                       </button>
                     </div>
                   </div>
@@ -314,7 +319,7 @@ export default function PaymentFee() {
                     <span className="wise-pill">WISE PAY</span>
                     <span className="sandbox-indicator">SANDBOX TEST ENVIRONMENT ACTIVE</span>
                   </div>
-                  <h4>Complete $70.00 Fee Payment to Transmit Return</h4>
+                  <h4>Complete {totalFeeStr} Fee Payment to Transmit Return</h4>
                   <p>
                     Your documents are on file. Pay securely using your US Bank Account (ACH Direct Debit) or Card via Wise to authorize electronic filing with the IRS.
                   </p>
@@ -327,7 +332,7 @@ export default function PaymentFee() {
                     className="btn-pay-wise"
                   >
                     <CreditCard size={17} />
-                    <span>Pay $70.00 with Wise (Test Mode)</span>
+                    <span>Pay {totalFeeStr} with Wise</span>
                   </button>
                 </div>
               </div>
@@ -393,7 +398,7 @@ export default function PaymentFee() {
                 </div>
                 <div className="wise-summary-row highlight">
                   <span>Total Due:</span>
-                  <strong className="amount-text">$70.00 USD</strong>
+                  <strong className="amount-text">{totalFeeStr} USD</strong>
                 </div>
               </div>
 
@@ -468,7 +473,7 @@ export default function PaymentFee() {
                   ) : (
                     <>
                       <Check size={16} />
-                      <span>Simulate Successful $70.00 Payment</span>
+                      <span>Simulate Successful {totalFeeStr} Payment</span>
                     </>
                   )}
                 </button>

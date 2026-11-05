@@ -96,7 +96,7 @@ export default function TaxSummary() {
                 </span>
               ) : (
                 <Link to="/portal/payment" className="btn btn-primary btn-sm" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                  <CreditCard size={14} /> Pay $70 via Wise
+                  <CreditCard size={14} /> Pay
                 </Link>
               )}
             </div>

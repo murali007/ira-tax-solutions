@@ -633,13 +633,18 @@ export const api = {
         const hasDraftSummary = Boolean(data && (data.agi || data.taxable_income || data.estimated_refund));
         const feePaid = Boolean(data?.fee_paid);
 
+        const parsedFee = data?.preparer_fee ? parseFloat(String(data.preparer_fee).replace(/[^0-9.]/g, '')) : 0;
+        const totalAmount = (parsedFee && parsedFee > 0) ? parsedFee : 70.00;
+        const federalFee = (parsedFee && parsedFee > 0) ? Math.max(0, parsedFee - 20) : 50.00;
+        const stateFee = (parsedFee && parsedFee > 0) ? Math.min(parsedFee, 20.00) : 20.00;
+
         return {
           success: true,
           data: {
             user_id: userId,
-            amount: 70.00,
-            federal_fee: 50.00,
-            state_fee: 20.00,
+            amount: totalAmount,
+            federal_fee: federalFee,
+            state_fee: stateFee,
             currency: 'USD',
             fee_paid: feePaid,
             has_documents: hasDocuments,

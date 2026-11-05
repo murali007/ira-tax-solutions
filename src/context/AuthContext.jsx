@@ -55,9 +55,9 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (name, email, password, phone = '') => {
+  const register = async (name, email, password, phone = '', referName = '') => {
     try {
-      const data = await api.auth.register(name, email, password, phone);
+      const data = await api.auth.register(name, email, password, phone, referName);
       localStorage.setItem('ira_token', data.token);
       localStorage.setItem('ira_user_backup', JSON.stringify(data.user));
       setUser(data.user);

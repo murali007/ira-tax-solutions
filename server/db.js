@@ -26,6 +26,7 @@ db.exec(`
     password TEXT NOT NULL,
     name TEXT NOT NULL,
     phone TEXT,
+    refer_name TEXT,
     file_no TEXT UNIQUE NOT NULL,
     status TEXT DEFAULT 'New File',
     role TEXT DEFAULT 'client',
@@ -192,6 +193,8 @@ const safeAddColumn = (table, columnDef) => {
 };
 
 safeAddColumn('users', "role TEXT DEFAULT 'client'");
+safeAddColumn('users', "refer_name TEXT");
+safeAddColumn('taxpayer_info', "refer_name TEXT");
 safeAddColumn('documents', "validation_status TEXT DEFAULT 'pending'");
 safeAddColumn('documents', "rejection_reason TEXT");
 safeAddColumn('documents', "verified_by TEXT");

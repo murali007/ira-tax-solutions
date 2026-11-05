@@ -221,6 +221,11 @@ export default function AdminClientList() {
                           <span className="client-name">{client.name}</span>
                           <span className="client-email">{client.email}</span>
                           {client.phone && <span className="client-phone">{client.phone}</span>}
+                          {client.refer_name && (
+                            <span className="client-referral-tag" style={{ display: 'inline-block', fontSize: '11px', color: '#10b981', background: 'rgba(16,185,129,0.08)', padding: '2px 6px', borderRadius: '4px', marginTop: '2px', fontWeight: 500 }}>
+                              Ref: {client.refer_name}
+                            </span>
+                          )}
                         </div>
                       </td>
 

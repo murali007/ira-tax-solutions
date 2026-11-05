@@ -43,7 +43,7 @@ const hashPassword = async (plainText) => {
 export const api = {
   // 1. AUTHENTICATION
   auth: {
-    async register(name, email, password, phone = '') {
+    async register(name, email, password, phone = '', referName = '') {
       if (isSupabaseConfigured) {
         // Generate unique US Tax Filing Client ID
         const currentYear = new Date().getFullYear();
@@ -60,6 +60,7 @@ export const api = {
               email: email.toLowerCase().trim(),
               password: hashedPassword,
               phone: phone.trim(),
+              refer_name: referName ? referName.trim() : null,
               file_no: fileNo,
               status: 'Profile Created'
             }
@@ -72,7 +73,13 @@ export const api = {
       } else {
         return localFetch('/api/auth/register', {
           method: 'POST',
-          body: JSON.stringify({ name, email, password, phone })
+          body: JSON.stringify({ 
+            name, 
+            email, 
+            password, 
+            phone,
+            refer_name: referName 
+          })
         });
       }
     },

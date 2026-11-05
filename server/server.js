@@ -56,7 +56,7 @@ const requireAuth = (req, res, next) => {
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized. Please login.' });
   }
-  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(userId);
+  const user = db.prepare('SELECT id, email, name, phone, refer_name, file_no, status, role FROM users WHERE id = ?').get(userId);
   if (!user) {
     return res.status(401).json({ error: 'User session not found.' });
   }
@@ -69,7 +69,7 @@ const requireAdmin = (req, res, next) => {
   if (!userId) {
     return res.status(401).json({ error: 'Unauthorized. Please login.' });
   }
-  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(userId);
+  const user = db.prepare('SELECT id, email, name, phone, refer_name, file_no, status, role FROM users WHERE id = ?').get(userId);
   if (!user || user.role !== 'admin') {
     return res.status(403).json({ error: 'Forbidden. Administrator access required.' });
   }
@@ -81,9 +81,9 @@ const requireAdmin = (req, res, next) => {
    AUTH ROUTES
    ======================================================== */
 app.post('/api/auth/register', (req, res) => {
-  const { name, email, phone, password } = req.body;
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: 'Name, email, and password are required.' });
+  const { name, email, phone, refer_name, password } = req.body;
+  if (!name || !email || !password || !phone) {
+    return res.status(400).json({ error: 'Full legal name, email address, mobile number, and password are required.' });
   }
 
   const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email.toLowerCase().trim());
@@ -96,11 +96,11 @@ app.post('/api/auth/register', (req, res) => {
   const fileNo = `IRA-${currentYear}-${randNum}`;
 
   const info = db.prepare(`
-    INSERT INTO users (name, email, phone, password, file_no, status, role)
+    INSERT INTO users (name, email, phone, refer_name, password, file_no, status, role)
     VALUES (?, ?, ?, ?, ?, ?, 'client')
-  `).run(name.trim(), email.toLowerCase().trim(), phone || '', password, fileNo, 'Profile Created');
+  `).run(name.trim(), email.toLowerCase().trim(), phone.trim(), (refer_name || '').trim(), password, fileNo, 'Profile Created');
 
-  const newUser = db.prepare('SELECT id, email, name, phone, file_no, status, role FROM users WHERE id = ?').get(info.lastInsertRowid);
+  const newUser = db.prepare('SELECT id, email, name, phone, refer_name, file_no, status, role FROM users WHERE id = ?').get(info.lastInsertRowid);
   res.json({ success: true, user: newUser, token: String(newUser.id) });
 });
 
@@ -110,7 +110,7 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(400).json({ error: 'Email and password are required.' });
   }
 
-  const user = db.prepare('SELECT id, email, name, phone, file_no, status, role, password FROM users WHERE email = ?').get(email.toLowerCase().trim());
+  const user = db.prepare('SELECT id, email, name, phone, refer_name, file_no, status, role, password FROM users WHERE email = ?').get(email.toLowerCase().trim());
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid email or password.' });
   }
@@ -391,7 +391,7 @@ app.get('/api/documents/download/:id', requireAuth, (req, res) => {
 app.get('/api/admin/clients', requireAdmin, (req, res) => {
   const clients = db.prepare(`
     SELECT 
-      u.id, u.name, u.email, u.phone, u.file_no, u.status, u.role, u.created_at,
+      u.id, u.name, u.email, u.phone, u.refer_name, u.file_no, u.status, u.role, u.created_at,
       ti.filing_status, ti.employer, ti.ssn_itin,
       (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id) AS total_docs,
       (SELECT COUNT(*) FROM documents d WHERE d.user_id = u.id AND d.validation_status = 'approved') AS approved_docs,
@@ -409,7 +409,7 @@ app.get('/api/admin/clients', requireAdmin, (req, res) => {
 // 2. Full 360° Client Dossier
 app.get('/api/admin/clients/:id', requireAdmin, (req, res) => {
   const clientId = parseInt(req.params.id, 10);
-  const clientUser = db.prepare('SELECT id, name, email, phone, file_no, status, role, created_at FROM users WHERE id = ?').get(clientId);
+  const clientUser = db.prepare('SELECT id, name, email, phone, refer_name, file_no, status, role, created_at FROM users WHERE id = ?').get(clientId);
   
   if (!clientUser) {
     return res.status(404).json({ error: 'Client not found.' });

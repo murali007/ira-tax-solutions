@@ -226,7 +226,7 @@ export const api = {
 
   admin: {
     async createClient(clientData, token) {
-      const { name, email, phone, filing_status, tax_year, assigned_to } = clientData;
+      const { name, email, phone, refer_name, filing_status, tax_year, assigned_to } = clientData;
       const currentYear = tax_year || new Date().getFullYear();
       const randNum = Math.floor(10000 + Math.random() * 90000);
       const fileNo = `IRA-${currentYear}-${randNum}`;
@@ -248,6 +248,7 @@ export const api = {
                 name: name.trim(),
                 email: email.toLowerCase().trim(),
                 phone: phone ? phone.trim() : '',
+                refer_name: refer_name ? refer_name.trim() : null,
                 password: hashedPassword,
                 file_no: fileNo,
                 status: 'Profile Created',
@@ -267,7 +268,8 @@ export const api = {
                   user_id: newUser.id,
                   filing_status: filing_status || 'Single / Form 1040',
                   first_name: name.split(' ')[0] || name,
-                  last_name: name.split(' ').slice(1).join(' ') || ''
+                  last_name: name.split(' ').slice(1).join(' ') || '',
+                  refer_name: refer_name ? refer_name.trim() : null
                 }
               ])
               .catch(e => console.warn('taxpayer_info insert notice:', e));

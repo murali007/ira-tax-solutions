@@ -27,7 +27,8 @@ import {
   UserPlus,
   ChevronDown,
   Mail,
-  Phone
+  Phone,
+  UserCheck
 } from 'lucide-react';
 import { buildGoogleCalendarUrl, downloadIcsFile } from '../../../src/lib/calendarHelper';
 import './AdminDashboard.css';
@@ -54,6 +55,7 @@ export default function AdminDashboard() {
     name: '',
     email: '',
     phone: '',
+    refer_name: '',
     filing_status: 'Single / Form 1040',
     tax_year: '2025',
     assigned_to: 'Priya'
@@ -908,7 +910,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="modal-form-group">
-                  <label>Phone Number</label>
+                  <label>Mobile / Phone Number</label>
                   <div className="modal-input-container">
                     <span className="modal-input-icon">
                       <Phone size={16} />
@@ -918,9 +920,27 @@ export default function AdminDashboard() {
                       className="has-icon"
                       value={newClient.phone} 
                       onChange={(e) => setNewClient({ ...newClient, phone: e.target.value })}
-                      placeholder="+1 (555) 234-5678"
+                      placeholder="+1 (386) 392-8693"
                     />
                   </div>
+                </div>
+              </div>
+
+              <div className="modal-form-group">
+                <label>
+                  Referred By / Refer Name <span style={{ fontSize: '11px', color: '#64748b', fontWeight: 500 }}>(Optional)</span>
+                </label>
+                <div className="modal-input-container">
+                  <span className="modal-input-icon">
+                    <UserCheck size={16} />
+                  </span>
+                  <input 
+                    type="text" 
+                    className="has-icon"
+                    value={newClient.refer_name || ''} 
+                    onChange={(e) => setNewClient({ ...newClient, refer_name: e.target.value })}
+                    placeholder="e.g. Murali Krishna, colleague, or friend"
+                  />
                 </div>
               </div>
 

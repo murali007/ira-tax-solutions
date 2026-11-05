@@ -28,7 +28,8 @@ import {
   FileCheck,
   Mail,
   Phone,
-  Briefcase
+  Briefcase,
+  UserCheck
 } from 'lucide-react';
 import './AdminClientDetail.css';
 
@@ -339,6 +340,11 @@ export default function AdminClientDetail() {
               <span className="contact-chip" title="Client Phone">
                 <Phone size={13} /> {client.phone || 'No phone recorded'}
               </span>
+              {(client.refer_name || taxpayer?.refer_name) && (
+                <span className="contact-chip referral-chip" title="Referred By" style={{ borderColor: 'rgba(16,185,129,0.3)', color: '#059669', background: 'rgba(16,185,129,0.08)' }}>
+                  <UserCheck size={13} /> Ref: {client.refer_name || taxpayer?.refer_name}
+                </span>
+              )}
               <span className="contact-chip" title="Employer">
                 <Briefcase size={13} /> {taxpayer?.employer || 'Employer unstated'}
               </span>

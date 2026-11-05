@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { UserPlus, AlertCircle } from 'lucide-react';
 import './Login.css';
@@ -9,6 +9,7 @@ export default function Register() {
     name: '',
     email: '',
     phone: '',
+    referName: '',
     password: '',
     confirmPassword: ''
   });
@@ -30,13 +31,24 @@ export default function Register() {
       return;
     }
 
+    if (!formData.phone.trim()) {
+      setError('Mobile Number is mandatory. Please provide a valid phone number.');
+      return;
+    }
+
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters.');
       return;
     }
 
     setLoading(true);
-    const res = await register(formData.name, formData.email, formData.password, formData.phone);
+    const res = await register(
+      formData.name.trim(), 
+      formData.email.trim(), 
+      formData.password, 
+      formData.phone.trim(), 
+      formData.referName.trim()
+    );
     setLoading(false);
 
     if (res.success) {
@@ -88,13 +100,27 @@ export default function Register() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="reg-phone">Phone Number</label>
+            <label htmlFor="reg-phone">Mobile Number *</label>
             <input
               id="reg-phone"
               type="tel"
+              required
               value={formData.phone}
               onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="+91 90145 32499 or Mobile Number"
+              placeholder="+1 (386) 392-8693 or +91 90145 32499"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="reg-refer-name">
+              Refer Name <span className="field-optional-tag">(Optional)</span>
+            </label>
+            <input
+              id="reg-refer-name"
+              type="text"
+              value={formData.referName}
+              onChange={(e) => setFormData({ ...formData, referName: e.target.value })}
+              placeholder="Name of friend or colleague who referred you"
             />
           </div>
 

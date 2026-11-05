@@ -150,7 +150,7 @@ export default function Home() {
           <div className="broadcast-live-tag">
             <span className="live-pulsing-dot"></span>
             <Zap size={14} className="broadcast-zap-icon" />
-            <span>EARLY FILE DISCOUNT:</span>
+            <span>FLASH SALE:</span>
           </div>
 
           <div className="broadcast-marquee-container" title="Pause on hover">
@@ -191,11 +191,6 @@ export default function Home() {
       <section className="clip-hero-section">
         <div className="clip-hero-inner">
           <div className="clip-hero-text-col">
-                        <div className="hero-flash-discount-badge">
-              <span className="flash-badge-pulse"></span>
-              <Zap size={15} className="flash-zap" />
-              <span><strong>EARLY FILE DISCOUNT:</strong> Straight Away <strong>10% OFF</strong> on Your Total Bill / Invoice!</span>
-            </div>
             <span className="clip-eyebrow">YOUR GLOBAL TAX PARTNER</span>
             <h1 className="clip-heading">Your Taxes, Our Expertise.</h1>
             <p className="clip-subtext">

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Mail, Phone, Clock, Send, CheckCircle2, Calendar, MessageSquare, Shield, HelpCircle, Users, CheckSquare, ShieldCheck } from 'lucide-react';
 import IndiaFlag from '../../components/common/IndiaFlag';
+import UsFlag from '../../components/common/UsFlag';
 import './Contact.css';
 
 export default function Contact() {
@@ -121,8 +122,15 @@ export default function Contact() {
               <div className="direct-item">
                 <Phone size={18} className="text-green" />
                 <div>
-                  <strong>Call &amp; WhatsApp:</strong>
-                  <a href="tel:+919014532499"><IndiaFlag width={18} height={12} /> +91 90145 32499</a>
+                  <strong>US Direct &amp; WhatsApp:</strong>
+                  <a href="tel:+13863928693"><UsFlag width={18} height={12} /> +1-(386)-392-8693</a>
+                </div>
+              </div>
+              <div className="direct-item">
+                <Phone size={18} className="text-green" />
+                <div>
+                  <strong>India Helpline:</strong>
+                  <a href="tel:+919014532499"><IndiaFlag width={18} height={12} /> +91 90145 32499 (Ext: 102)</a>
                 </div>
               </div>
               <div className="direct-item">
@@ -216,7 +224,7 @@ export default function Contact() {
                     <input
                       type="tel"
                       required
-                      placeholder="+91 90145 32499"
+                      placeholder="+1 (386) 392-8693 or +91 90145 32499"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />

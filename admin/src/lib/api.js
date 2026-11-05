@@ -241,24 +241,44 @@ export const api = {
             hashedPassword = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
           }
 
-          const { data: newUser, error: uErr } = await supabase
-            .from('users')
-            .insert([
-              {
-                name: name.trim(),
-                email: email.toLowerCase().trim(),
-                phone: phone ? phone.trim() : '',
-                refer_name: refer_name ? refer_name.trim() : null,
-                password: hashedPassword,
-                file_no: fileNo,
-                status: 'Profile Created',
-                role: 'client'
-              }
-            ])
-            .select()
-            .single();
+          const baseAdminPayload = {
+            name: name.trim(),
+            email: email.toLowerCase().trim(),
+            phone: phone ? phone.trim() : '',
+            password: hashedPassword,
+            file_no: fileNo,
+            status: 'Profile Created',
+            role: 'client'
+          };
 
-          if (uErr) throw new Error(uErr.message);
+          let newUser = null;
+          if (refer_name && refer_name.trim()) {
+            const { data, error } = await supabase
+              .from('users')
+              .insert([{ ...baseAdminPayload, refer_name: refer_name.trim() }])
+              .select()
+              .single();
+            if (!error && data) {
+              newUser = data;
+            } else {
+              console.warn('Notice: refer_name column not in Supabase schema cache yet for admin insert:', error?.message);
+            }
+          }
+
+          if (!newUser) {
+            const { data, error: uErr } = await supabase
+              .from('users')
+              .insert([baseAdminPayload])
+              .select()
+              .single();
+
+            if (uErr) throw new Error(uErr.message);
+            newUser = data;
+          }
+
+          if (refer_name && refer_name.trim() && newUser) {
+            newUser.refer_name = refer_name.trim();
+          }
 
           if (newUser && newUser.id) {
             await supabase

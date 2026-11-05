@@ -52,24 +52,57 @@ export const api = {
 
         const hashedPassword = await hashPassword(password);
 
-        const { data, error } = await supabase
-          .from('users')
-          .insert([
-            {
-              name: name.trim(),
-              email: email.toLowerCase().trim(),
-              password: hashedPassword,
-              phone: phone.trim(),
-              refer_name: referName ? referName.trim() : null,
-              file_no: fileNo,
-              status: 'Profile Created'
-            }
-          ])
-          .select()
-          .single();
+        const basePayload = {
+          name: name.trim(),
+          email: email.toLowerCase().trim(),
+          password: hashedPassword,
+          phone: phone ? phone.trim() : '',
+          file_no: fileNo,
+          status: 'Profile Created'
+        };
 
-        if (error) throw new Error(error.message);
-        return { success: true, user: data, token: String(data.id) };
+        let userRecord = null;
+        let lastError = null;
+
+        // Try inserting with refer_name first if provided
+        if (referName && referName.trim()) {
+          const { data, error } = await supabase
+            .from('users')
+            .insert([{ ...basePayload, refer_name: referName.trim() }])
+            .select()
+            .single();
+
+          if (!error && data) {
+            userRecord = data;
+          } else {
+            console.warn('Notice: refer_name column not in Supabase schema cache yet. Gracefully falling back to base user profile:', error?.message);
+            lastError = error;
+          }
+        }
+
+        // If insert failed because refer_name column does not exist or wasn't provided, insert base payload
+        if (!userRecord) {
+          const { data, error } = await supabase
+            .from('users')
+            .insert([basePayload])
+            .select()
+            .single();
+
+          if (error) throw new Error(error.message);
+          userRecord = data;
+        }
+
+        // Preserve refer_name on the in-memory user object and local storage
+        if (referName && referName.trim() && userRecord) {
+          userRecord.refer_name = referName.trim();
+          try {
+            localStorage.setItem(`ira_referral_${userRecord.id}`, referName.trim());
+          } catch (e) {
+            // ignore localStorage quota error
+          }
+        }
+
+        return { success: true, user: userRecord, token: String(userRecord.id) };
       } else {
         return localFetch('/api/auth/register', {
           method: 'POST',

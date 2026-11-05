@@ -210,13 +210,15 @@ export default function PortalHome() {
           <span className="conf-divider">•</span>
           <span className="conf-stat">2-Tier Preparer &amp; QA Review Process</span>
         </div>
-        <div className="confidence-contact-bar">
-          <span>Need help with your return?</span>
+                <div className="confidence-contact-bar">
+          <a href="https://wa.me/13863928693" target="_blank" rel="noreferrer" className="conf-whatsapp-btn">
+            <MessageSquare size={14} /> US WhatsApp: +1-(386)-392-8693
+          </a>
           <a href="https://wa.me/919014532499" target="_blank" rel="noreferrer" className="conf-whatsapp-btn">
-            <MessageSquare size={14} /> WhatsApp Us
+            <MessageSquare size={14} /> India WhatsApp: +91 90145 32499
           </a>
           <Link to="/contact" className="conf-consult-btn">
-            <Calendar size={14} /> Book Free 15-Min Consultation
+            <Headphones size={14} /> Book Free Video Consultation
           </Link>
         </div>
       </section>

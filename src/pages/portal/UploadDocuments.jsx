@@ -24,6 +24,7 @@ export default function UploadDocuments() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [previewDoc, setPreviewDoc] = useState(null);
 
   const fetchDocuments = async () => {
     if (!token) {
@@ -292,9 +293,18 @@ export default function UploadDocuments() {
                         <div style={{ display: 'flex', gap: '8px' }}>
                           <button
                             type="button"
+                            onClick={() => setPreviewDoc(doc)}
+                            className="btn-link-action"
+                            style={{ color: '#0284c7' }}
+                            title="View document in browser"
+                          >
+                            <Eye size={14} /> Preview
+                          </button>
+                          <button
+                            type="button"
                             onClick={() => handleDownloadFile(doc)}
                             className="btn-link-action"
-                            title="Download or preview document"
+                            title="Download file"
                           >
                             <Download size={14} /> Download
                           </button>
@@ -318,6 +328,73 @@ export default function UploadDocuments() {
           )}
         </div>
       </div>
+      {/* In-Browser Document Preview Modal */}
+      {previewDoc && (
+        <div 
+          onClick={() => setPreviewDoc(null)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(15, 23, 42, 0.75)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px'
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#ffffff',
+              borderRadius: '14px',
+              maxWidth: '850px',
+              width: '100%',
+              maxHeight: '90vh',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              overflow: 'hidden'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
+              <div>
+                <strong style={{ fontSize: '15px', color: '#0f172a' }}>{previewDoc.document_type || previewDoc.doc_type}</strong>
+                <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>{previewDoc.filename || previewDoc.file_name} • {previewDoc.file_size || ''}</p>
+              </div>
+              <button 
+                type="button"
+                onClick={() => setPreviewDoc(null)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#64748b' }}
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div style={{ padding: '20px', overflowY: 'auto', flex: 1, minHeight: '350px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {previewDoc.file_url ? (
+                previewDoc.file_url.match(/\.(jpg|jpeg|png)$/i) ? (
+                  <img src={previewDoc.file_url} alt="Document" style={{ maxWidth: '100%', maxHeight: '70vh', borderRadius: '8px' }} />
+                ) : (
+                  <iframe src={previewDoc.file_url} title="Document PDF" style={{ width: '100%', height: '65vh', border: 'none' }} />
+                )
+              ) : (
+                <div style={{ textAlign: 'center', color: '#64748b' }}>
+                  <FileText size={48} style={{ color: '#0284c7', margin: '0 auto 12px' }} />
+                  <p>Document securely stored under IRS Sec. 7216 rules.</p>
+                  <button 
+                    type="button" 
+                    onClick={() => handleDownloadFile(previewDoc)}
+                    className="btn-upload-blue"
+                    style={{ marginTop: '10px' }}
+                  >
+                    <Download size={14} /> Download to View
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

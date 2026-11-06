@@ -13,7 +13,8 @@ import {
   ArrowRight,
   ShieldAlert,
   RefreshCw,
-  FolderOpen
+  FolderOpen,
+  Download
 } from 'lucide-react';
 import './AdminClientList.css';
 
@@ -57,7 +58,8 @@ export default function AdminClientList() {
       (client.name && client.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (client.email && client.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
       (client.file_no && client.file_no.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (client.employer && client.employer.toLowerCase().includes(searchTerm.toLowerCase()));
+      (client.phone && client.phone.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (client.refer_name && client.refer_name.toLowerCase().includes(searchTerm.toLowerCase()));
 
     if (!matchesSearch) return false;
 
@@ -69,6 +71,37 @@ export default function AdminClientList() {
 
     return client.status === statusFilter;
   });
+
+  // Export client queue as CSV
+  const handleExportCSV = () => {
+    if (!clients || clients.length === 0) {
+      alert('No clients available to export.');
+      return;
+    }
+
+    const headers = ['File No', 'Full Name', 'Email', 'Phone', 'Referral Name', 'Filing Status', 'Documents Total', 'Verified Docs', 'Lifecycle Status', 'Registration Date'];
+    const rows = filteredClients.map(c => [
+      `"${c.file_no || ''}"`,
+      `"${c.name || ''}"`,
+      `"${c.email || ''}"`,
+      `"${c.phone || ''}"`,
+      `"${c.refer_name || ''}"`,
+      `"${c.filing_status || 'Single / 1040'}"`,
+      c.total_docs || 0,
+      c.approved_docs || 0,
+      `"${c.status || 'Profile Created'}"`,
+      `"${c.created_at ? new Date(c.created_at).toLocaleDateString() : ''}"`
+    ]);
+
+    const csvContent = "data:text/csv;charset=utf-8," + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `IRA_Tax_Clients_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="admin-queue-page">
@@ -152,7 +185,7 @@ export default function AdminClientList() {
           <Search size={17} className="search-icon" />
           <input
             type="text"
-            placeholder="Search by client name, email, File ID (IRA-2026-XXXXX), or employer..."
+            placeholder="Search by client name, email, phone number, File ID, or referral..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -181,6 +214,29 @@ export default function AdminClientList() {
             <option value="ACTION_REQ">Action Required ({actionRequired})</option>
             <option value="NO_DOCS">Awaiting Uploads</option>
           </select>
+
+          <button 
+            type="button"
+            onClick={handleExportCSV}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              border: '1px solid #cbd5e1',
+              background: '#ffffff',
+              color: '#334155',
+              fontSize: '12.5px',
+              fontWeight: 600,
+              cursor: 'pointer',
+              marginLeft: '8px'
+            }}
+            title="Download client records as CSV spreadsheet"
+          >
+            <Download size={14} style={{ color: '#16a34a' }} />
+            <span>Export CSV</span>
+          </button>
         </div>
       </div>
 

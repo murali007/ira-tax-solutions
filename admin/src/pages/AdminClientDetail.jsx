@@ -66,18 +66,68 @@ export default function AdminClientDetail() {
   const [summaryForm, setSummaryForm] = useState({
     tax_year: '2025',
     filing_status: 'Single / Form 1040',
-    total_income: '$145,000',
-    adjustments: '$3,500',
-    agi: '$141,500',
-    deductions: '$14,600 Standard Deduction',
-    taxable_income: '$126,900',
-    federal_tax: '$21,400',
-    withheld: '$24,650',
-    estimated_refund: '+$3,250.00',
+    total_income: '',
+    adjustments: '$0',
+    agi: '$0',
+    deductions: '$15,000 Standard Deduction',
+    taxable_income: '$0',
+    federal_tax: '$0',
+    withheld: '$0',
+    estimated_refund: '$0.00',
     preparer_fee: '$150.00',
     fee_paid: 0,
     status: 'Ready for Review'
   });
+
+  // Emil Kowalski style reactive calculation helper for Form 1040 math
+  const parseCurrency = (val) => {
+    if (!val) return 0;
+    const num = parseFloat(String(val).replace(/[^0-9.-]/g, ''));
+    return isNaN(num) ? 0 : num;
+  };
+
+  const formatCurrency = (num, isDelta = false) => {
+    if (isNaN(num)) return '$0';
+    const formatted = Math.abs(num).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    if (isDelta) {
+      return num >= 0 ? `+$${formatted}.00` : `-$${formatted}.00`;
+    }
+    return `$${formatted}`;
+  };
+
+  const getStandardDeduction = (status) => {
+    if (status?.includes('Married Filing Jointly')) return '$30,000 Standard Deduction';
+    if (status?.includes('Head of Household')) return '$22,500 Standard Deduction';
+    if (status?.includes('Married Filing Separately')) return '$15,000 Standard Deduction';
+    return '$15,000 Standard Deduction';
+  };
+
+  const recalculateTaxes = (updates) => {
+    const updated = { ...summaryForm, ...updates };
+    const wages = parseCurrency(updated.total_income);
+    const adjustments = parseCurrency(updated.adjustments);
+    const agi = Math.max(0, wages - adjustments);
+    
+    // Auto-update standard deduction if status changes
+    let deductionsStr = updated.deductions;
+    if (updates.filing_status) {
+      deductionsStr = getStandardDeduction(updates.filing_status);
+    }
+    const deductions = parseCurrency(deductionsStr);
+    const taxable = Math.max(0, agi - deductions);
+    
+    const fedTax = parseCurrency(updated.federal_tax);
+    const withheld = parseCurrency(updated.withheld);
+    const refundOrOwed = withheld - fedTax;
+
+    setSummaryForm({
+      ...updated,
+      agi: formatCurrency(agi),
+      deductions: deductionsStr,
+      taxable_income: formatCurrency(taxable),
+      estimated_refund: formatCurrency(refundOrOwed, true)
+    });
+  };
   const [publishingSummary, setPublishingSummary] = useState(false);
   const [summarySavedSuccess, setSummarySavedSuccess] = useState(false);
 
@@ -90,6 +140,7 @@ export default function AdminClientDetail() {
     file_url: '',
     file_size: '420 KB'
   });
+  const [selectedReturnFile, setSelectedReturnFile] = useState(null);
   const [uploadingReturn, setUploadingReturn] = useState(false);
   const [returnUploadedSuccess, setReturnUploadedSuccess] = useState(false);
 
@@ -279,6 +330,23 @@ export default function AdminClientDetail() {
     }
   };
 
+  // WhatsApp & Email instant notification helper
+  const sendWhatsAppUpdate = (message) => {
+    const rawPhone = client?.phone || '';
+    const cleanPhone = rawPhone.replace(/[^0-9]/g, '');
+    const encoded = encodeURIComponent(message);
+    if (cleanPhone) {
+      window.open(`https://wa.me/${cleanPhone}?text=${encoded}`, '_blank');
+    } else {
+      window.open(`https://wa.me/?text=${encoded}`, '_blank');
+    }
+  };
+
+  const sendEmailUpdate = (subject, body) => {
+    const email = client?.email || '';
+    window.open(`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+  };
+
   if (loading) {
     return (
       <div className="admin-loading-screen">
@@ -345,9 +413,6 @@ export default function AdminClientDetail() {
                   <UserCheck size={13} /> Ref: {client.refer_name || taxpayer?.refer_name}
                 </span>
               )}
-              <span className="contact-chip" title="Employer">
-                <Briefcase size={13} /> {taxpayer?.employer || 'Employer unstated'}
-              </span>
               <span className="contact-chip" title="Visa & Tax Residency">
                 <Globe size={13} /> Visa: {taxpayer?.visa_type || 'Expat / Resident'}
               </span>
@@ -693,16 +758,16 @@ export default function AdminClientDetail() {
                     </div>
 
                     <div className="drafter-group">
-                      <label>Filing Status</label>
+                      <label>Filing Status (Auto 2025 Standard Deduction)</label>
                       <select 
                         value={summaryForm.filing_status} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, filing_status: e.target.value })}
+                        onChange={(e) => recalculateTaxes({ filing_status: e.target.value })}
                       >
-                        <option value="Single / Form 1040">Single / Form 1040</option>
-                        <option value="Married Filing Jointly (MFJ)">Married Filing Jointly (MFJ)</option>
-                        <option value="Married Filing Separately (MFS)">Married Filing Separately (MFS)</option>
-                        <option value="Head of Household (HOH)">Head of Household (HOH)</option>
-                        <option value="Form 1040-NR (Nonresident Alien)">Form 1040-NR (Nonresident Alien)</option>
+                        <option value="Single / Form 1040">Single / Form 1040 ($15,000)</option>
+                        <option value="Married Filing Jointly (MFJ)">Married Filing Jointly ($30,000)</option>
+                        <option value="Married Filing Separately (MFS)">Married Filing Separately ($15,000)</option>
+                        <option value="Head of Household (HOH)">Head of Household ($22,500)</option>
+                        <option value="Form 1040-NR (Nonresident Alien)">Form 1040-NR ($0 / Itemized)</option>
                       </select>
                     </div>
 
@@ -711,7 +776,7 @@ export default function AdminClientDetail() {
                       <input 
                         type="text" 
                         value={summaryForm.total_income} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, total_income: e.target.value })}
+                        onChange={(e) => recalculateTaxes({ total_income: e.target.value })}
                         placeholder="e.g. $145,000"
                         required
                       />
@@ -722,40 +787,42 @@ export default function AdminClientDetail() {
                       <input 
                         type="text" 
                         value={summaryForm.adjustments} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, adjustments: e.target.value })}
+                        onChange={(e) => recalculateTaxes({ adjustments: e.target.value })}
                         placeholder="e.g. $3,500"
                       />
                     </div>
 
                     <div className="drafter-group">
-                      <label>Adjusted Gross Income (AGI - Line 11)</label>
+                      <label>Adjusted Gross Income (AGI - Line 11) <span style={{ fontSize: '10.5px', color: '#0284c7', fontWeight: 600 }}>• Auto</span></label>
                       <input 
                         type="text" 
                         value={summaryForm.agi} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, agi: e.target.value })}
-                        placeholder="e.g. $141,500"
+                        readOnly
+                        style={{ background: '#f8fafc', fontWeight: 700, color: '#0f172a' }}
+                        placeholder="$0"
                         required
                       />
                     </div>
 
                     <div className="drafter-group">
-                      <label>Standard / Itemized Deductions</label>
+                      <label>Standard / Itemized Deductions <span style={{ fontSize: '10.5px', color: '#16a34a', fontWeight: 600 }}>• 2025 IRS</span></label>
                       <input 
                         type="text" 
                         value={summaryForm.deductions} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, deductions: e.target.value })}
-                        placeholder="e.g. $14,600 Standard Deduction"
+                        onChange={(e) => recalculateTaxes({ deductions: e.target.value })}
+                        placeholder="Standard Deduction"
                         required
                       />
                     </div>
 
                     <div className="drafter-group">
-                      <label>Taxable Income (Line 15)</label>
+                      <label>Taxable Income (Line 15) <span style={{ fontSize: '10.5px', color: '#0284c7', fontWeight: 600 }}>• Auto</span></label>
                       <input 
                         type="text" 
                         value={summaryForm.taxable_income} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, taxable_income: e.target.value })}
-                        placeholder="e.g. $126,900"
+                        readOnly
+                        style={{ background: '#f8fafc', fontWeight: 700, color: '#0f172a' }}
+                        placeholder="$0"
                         required
                       />
                     </div>
@@ -765,7 +832,7 @@ export default function AdminClientDetail() {
                       <input 
                         type="text" 
                         value={summaryForm.federal_tax} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, federal_tax: e.target.value })}
+                        onChange={(e) => recalculateTaxes({ federal_tax: e.target.value })}
                         placeholder="e.g. $21,400"
                         required
                       />
@@ -776,20 +843,19 @@ export default function AdminClientDetail() {
                       <input 
                         type="text" 
                         value={summaryForm.withheld} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, withheld: e.target.value })}
+                        onChange={(e) => recalculateTaxes({ withheld: e.target.value })}
                         placeholder="e.g. $24,650"
                         required
                       />
                     </div>
 
-                    <div className="drafter-group highlight-refund">
-                      <label>Net Federal Refund / (Amount Owed) *</label>
+                    <div className="drafter-group highlight-refund" style={{ border: '2px solid', borderColor: summaryForm.estimated_refund?.includes('-') ? '#fca5a5' : '#86efac', borderRadius: '8px', padding: '10px', background: summaryForm.estimated_refund?.includes('-') ? '#fef2f2' : '#f0fdf4' }}>
+                      <label style={{ color: summaryForm.estimated_refund?.includes('-') ? '#dc2626' : '#16a34a', fontWeight: 700 }}>Net Federal Refund / (Amount Owed) • Auto-Computed</label>
                       <input 
                         type="text" 
                         value={summaryForm.estimated_refund} 
-                        onChange={(e) => setSummaryForm({ ...summaryForm, estimated_refund: e.target.value })}
-                        placeholder="e.g. +$3,250.00 Refund or -$450.00 Owed"
-                        style={{ fontWeight: 700, color: summaryForm.estimated_refund?.includes('-') ? '#f87171' : '#4ade80' }}
+                        readOnly
+                        style={{ fontWeight: 800, fontSize: '18px', color: summaryForm.estimated_refund?.includes('-') ? '#dc2626' : '#15803d', background: 'transparent', border: 'none', padding: 0 }}
                         required
                       />
                     </div>
@@ -880,14 +946,56 @@ export default function AdminClientDetail() {
                       />
                     </div>
 
-                    <div className="drafter-group">
-                      <label>File URL or Storage Link</label>
-                      <input 
-                        type="text" 
-                        value={returnForm.file_url} 
-                        onChange={(e) => setReturnForm({ ...returnForm, file_url: e.target.value })}
-                        placeholder="https://... or /tax-documents/1040.pdf"
-                      />
+                    <div className="drafter-group" style={{ gridColumn: 'span 2' }}>
+                      <label>Form 1040 PDF File Upload / Attachment</label>
+                      <div style={{
+                        border: '2px dashed #93c5fd',
+                        borderRadius: '10px',
+                        padding: '16px',
+                        background: '#f0f9ff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
+                        cursor: 'pointer'
+                      }}>
+                        <input 
+                          type="file" 
+                          id="deliverable-pdf-input"
+                          accept=".pdf,.png,.jpg,.jpeg"
+                          style={{ display: 'none' }}
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              setSelectedReturnFile(file);
+                              const sizeStr = `${(file.size / 1024).toFixed(0)} KB`;
+                              const localObjUrl = URL.createObjectURL(file);
+                              setReturnForm(prev => ({
+                                ...prev,
+                                file_url: localObjUrl,
+                                file_size: sizeStr
+                              }));
+                            }
+                          }}
+                        />
+                        <label htmlFor="deliverable-pdf-input" style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          background: '#0284c7',
+                          color: '#fff',
+                          padding: '8px 14px',
+                          borderRadius: '6px',
+                          fontWeight: 600,
+                          fontSize: '12px',
+                          cursor: 'pointer',
+                          margin: 0
+                        }}>
+                          <UploadCloud size={15} /> Select PDF File
+                        </label>
+                        <span style={{ fontSize: '13px', color: selectedReturnFile ? '#0f172a' : '#64748b', fontWeight: selectedReturnFile ? 600 : 400 }}>
+                          {selectedReturnFile ? `Selected: ${selectedReturnFile.name} (${(selectedReturnFile.size / 1024).toFixed(0)} KB)` : 'Choose completed PDF return or drop here'}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -1220,6 +1328,32 @@ export default function AdminClientDetail() {
                 />
               </div>
 
+              <div style={{ display: 'flex', gap: '8px', margin: '10px 0 14px' }}>
+                <button 
+                  type="button"
+                  onClick={() => sendWhatsAppUpdate(`Hello ${client?.name || 'Taxpayer'}, this is IRA Tax Solutions regarding your US Tax File ${client?.file_no}. Your document was reviewed and requires a quick re-upload: ${rejectionReason || 'Please check portal'}. You can re-upload here: https://www.irataxsolutions.com/portal/upload`)}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px', background: '#25D366', color: '#fff', border: 'none', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  <span>💬 Notify via WhatsApp</span>
+                </button>
+                <button 
+                  type="button"
+                  onClick={() => sendEmailUpdate(`IRA Tax Solutions — Document Re-upload Requested (${client?.file_no})`, `Hi ${client?.name || 'Taxpayer'},
+
+Your tax preparer reviewed your uploaded documents and requires a re-upload:
+
+${rejectionReason || 'Please log in to your portal to see details.'}
+
+Upload your document here: https://www.irataxsolutions.com/portal/upload
+
+Best regards,
+IRA Tax Solutions LLC`)}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px', background: '#0284c7', color: '#fff', border: 'none', fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}
+                >
+                  <span>✉ Notify via Email</span>
+                </button>
+              </div>
+
               <div className="modal-footer-actions">
                 <button 
                   type="button" 
@@ -1233,7 +1367,7 @@ export default function AdminClientDetail() {
                   className="btn-modal-confirm-reject"
                   disabled={isRejecting}
                 >
-                  {isRejecting ? 'Rejecting...' : 'Confirm Rejection & Notify Client'}
+                  {isRejecting ? 'Rejecting...' : 'Confirm Rejection & Update File'}
                 </button>
               </div>
             </form>

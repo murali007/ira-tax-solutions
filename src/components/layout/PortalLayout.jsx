@@ -305,7 +305,7 @@ export default function PortalLayout() {
               >
                 <CreditCard className="menu-icon" size={17} />
                 <span>Pay Preparation Fee</span>
-                <span className="sidebar-fee-badge">$70</span>
+                <span className="sidebar-fee-badge" style={{ fontSize: "10.5px", background: "rgba(16,185,129,0.15)", color: "#10b981", border: "1px solid rgba(16,185,129,0.3)" }}>FEE</span>
               </NavLink>
 
               <NavLink 
@@ -340,8 +340,108 @@ export default function PortalLayout() {
           {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
 
-        {/* Workspace Content Canvas */}
+        {/* Workspace Content Canvas with Emil Kowalski-styled Micro-Interaction Lifecycle Stepper */}
         <main className="portal-canvas-area">
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '16px 20px',
+            marginBottom: '20px',
+            boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+              <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: '#64748b' }}>
+                Form 1040 Preparation Lifecycle
+              </span>
+              <span style={{
+                fontSize: '11.5px',
+                fontWeight: 600,
+                color: status.includes('Ready') ? '#0284c7' : status.includes('Fee Paid') || status.includes('Filed') ? '#16a34a' : '#475569',
+                background: status.includes('Ready') ? '#f0f9ff' : status.includes('Fee Paid') || status.includes('Filed') ? '#f0fdf4' : '#f8fafc',
+                padding: '3px 10px',
+                borderRadius: '20px',
+                border: '1px solid #e2e8f0'
+              }}>
+                Current Status: <strong>{status}</strong>
+              </span>
+            </div>
+
+            {/* Stepper Dots & Progress Track */}
+            <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+              {[
+                { label: 'Intake Done', stepStatus: 'Profile Created' },
+                { label: 'Docs Uploaded', stepStatus: 'Documents Uploaded' },
+                { label: 'In Review', stepStatus: 'Documents In Review' },
+                { label: '1040 Ready', stepStatus: 'Ready for Client Review' },
+                { label: 'Fee Settled', stepStatus: 'Fee Paid / In Queue for E-Filing' },
+                { label: 'IRS Accepted', stepStatus: 'Filed with IRS & Accepted' }
+              ].map((s, idx, arr) => {
+                const getStepIndex = (st) => {
+                  if (st.includes('Filed')) return 5;
+                  if (st.includes('Fee Paid')) return 4;
+                  if (st.includes('Ready for Client Review')) return 3;
+                  if (st.includes('Documents In Review') || st.includes('Documents Verified')) return 2;
+                  if (st.includes('Documents Uploaded')) return 1;
+                  return 0;
+                };
+
+                const currentIdx = getStepIndex(status);
+                const isPassed = idx < currentIdx;
+                const isCurrent = idx === currentIdx;
+
+                return (
+                  <div key={idx} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
+                    {/* Connecting line */}
+                    {idx < arr.length - 1 && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '11px',
+                        left: '50%',
+                        width: '100%',
+                        height: '2px',
+                        background: isPassed ? '#16a34a' : '#e2e8f0',
+                        zIndex: 1,
+                        transition: 'background 0.3s ease'
+                      }} />
+                    )}
+
+                    {/* Step Icon / Circle */}
+                    <div style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '50%',
+                      background: isPassed ? '#16a34a' : isCurrent ? '#0284c7' : '#ffffff',
+                      border: `2px solid ${isPassed ? '#16a34a' : isCurrent ? '#0284c7' : '#cbd5e1'}`,
+                      color: isPassed || isCurrent ? '#ffffff' : '#64748b',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      zIndex: 2,
+                      boxShadow: isCurrent ? '0 0 0 3px rgba(2, 132, 199, 0.2)' : 'none',
+                      transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}>
+                      {isPassed ? '✓' : idx + 1}
+                    </div>
+
+                    <span style={{
+                      marginTop: '6px',
+                      fontSize: '11px',
+                      fontWeight: isCurrent ? 700 : 500,
+                      color: isCurrent ? '#0f172a' : isPassed ? '#16a34a' : '#94a3b8',
+                      textAlign: 'center',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {s.label}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           <Outlet />
         </main>
       </div>

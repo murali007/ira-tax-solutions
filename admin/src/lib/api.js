@@ -490,6 +490,7 @@ export const api = {
                 email: u.email,
                 phone: u.phone || '',
                 file_no: u.file_no,
+                refer_name: u.refer_name || '',
                 status: statusText,
                 role: 'client',
                 created_at: u.created_at,
@@ -821,6 +822,112 @@ export const api = {
       }
 
       return { success: true, data: newReturn };
+    },
+
+    async listAllDocuments(token) {
+      if (isSupabaseConfigured && supabase) {
+        try {
+          const { data: users } = await supabase
+            .from('users')
+            .select('id, name, email, phone, file_no')
+            .not('email', 'like', '%blockaid%');
+          const { data: docs } = await supabase
+            .from('documents')
+            .select('*')
+            .order('id', { ascending: false });
+
+          const userMap = {};
+          (users || []).forEach(u => { userMap[u.id] = u; });
+          const valCache = getDocValidations();
+
+          const mappedDocs = (docs || []).map(d => {
+            const client = userMap[d.user_id] || {};
+            const cached = valCache[d.id] || {};
+            return {
+              id: d.id,
+              user_id: d.user_id,
+              client_name: client.name || 'Unnamed Client',
+              client_email: client.email || '—',
+              client_phone: client.phone || '—',
+              file_no: client.file_no || '—',
+              doc_type: d.doc_type || 'Tax Form',
+              original_name: d.original_name || d.stored_name || 'Document',
+              file_url: d.file_url || '',
+              file_size: d.file_size || '—',
+              uploaded_at: d.uploaded_at || d.created_at || new Date().toISOString(),
+              validation_status: d.validation_status || cached.validation_status || 'pending',
+              rejection_reason: d.rejection_reason || cached.rejection_reason || ''
+            };
+          });
+
+          return { success: true, data: mappedDocs };
+        } catch (err) {
+          console.warn('Supabase listAllDocuments failed:', err);
+        }
+      }
+      return { success: true, data: [] };
+    },
+
+    async listInvoices(token) {
+      if (isSupabaseConfigured && supabase) {
+        try {
+          const { data: users } = await supabase
+            .from('users')
+            .select('id, name, email, phone, file_no, status, created_at')
+            .not('email', 'like', '%blockaid%')
+            .order('id', { ascending: false });
+
+          const { data: summaries } = await supabase
+            .from('tax_summaries')
+            .select('*');
+
+          const summaryMap = {};
+          (summaries || []).forEach(s => { summaryMap[s.user_id] = s; });
+
+          const invoices = (users || []).map(u => {
+            const s = summaryMap[u.id] || getLocalSummary(u.id) || {};
+            const feeStr = s.preparer_fee || '$150.00';
+            const feeNum = parseFloat(String(feeStr).replace(/[^0-9.]/g, '')) || 0;
+            return {
+              id: u.id,
+              client_id: u.id,
+              file_no: u.file_no || ('IRA-2025-' + u.id),
+              client_name: u.name || 'Client',
+              client_email: u.email || '—',
+              client_phone: u.phone || '—',
+              tax_year: s.tax_year || '2024 / 2025',
+              filing_status: s.filing_status || 'Single / Form 1040',
+              preparer_fee: feeStr,
+              fee_amount: feeNum,
+              fee_paid: Boolean(s.fee_paid),
+              client_status: u.status || 'Profile Created',
+              updated_at: s.updated_at || u.created_at
+            };
+          });
+
+          return { success: true, data: invoices };
+        } catch (err) {
+          console.warn('Supabase listInvoices failed:', err);
+        }
+      }
+      return { success: true, data: [] };
+    },
+
+    async markInvoicePaid(clientId, token) {
+      const id = parseInt(clientId, 10);
+      const current = getLocalSummary(id) || {};
+      saveLocalSummary(id, { ...current, fee_paid: true });
+
+      if (isSupabaseConfigured && supabase) {
+        try {
+          await supabase
+            .from('tax_summaries')
+            .upsert([{ user_id: id, fee_paid: true, updated_at: new Date().toISOString() }], { onConflict: 'user_id' });
+        } catch (e) {
+          console.warn('Supabase markInvoicePaid failed:', e);
+        }
+      }
+      return { success: true };
     }
   }
 };

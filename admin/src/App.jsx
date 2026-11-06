@@ -6,6 +6,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminClientList from './pages/AdminClientList';
 import AdminClientDetail from './pages/AdminClientDetail';
 import AdminSectionPlaceholder from './pages/AdminSectionPlaceholder';
+import AdminReferrals from './pages/AdminReferrals';
+import AdminDocuments from './pages/AdminDocuments';
+import AdminInvoices from './pages/AdminInvoices';
 import { 
   Calendar, 
   FileText, 
@@ -83,17 +86,7 @@ export default function App() {
                 />
               } 
             />
-            <Route 
-              path="documents" 
-              element={
-                <AdminSectionPlaceholder 
-                  sectionKey="documents" 
-                  title="Tax Document Vault" 
-                  description="IRS compliance storage for client W-2s, 1099s, bank statements, and tax organizer records." 
-                  icon={Folder} 
-                />
-              } 
-            />
+            <Route path="documents" element={<AdminDocuments />} />
             <Route 
               path="team" 
               element={
@@ -116,17 +109,7 @@ export default function App() {
                 />
               } 
             />
-            <Route 
-              path="invoices" 
-              element={
-                <AdminSectionPlaceholder 
-                  sectionKey="invoices" 
-                  title="Tax Preparation Invoices" 
-                  description="Preparer fees, billing status, and payment acknowledgments for Form 1040 filings." 
-                  icon={Receipt} 
-                />
-              } 
-            />
+            <Route path="invoices" element={<AdminInvoices />} />
 
             {/* 4. Website Management */}
             <Route 
@@ -151,17 +134,7 @@ export default function App() {
                 />
               } 
             />
-            <Route 
-              path="referrals" 
-              element={
-                <AdminSectionPlaceholder 
-                  sectionKey="referrals" 
-                  title="Client Referral Program" 
-                  description="Track client referral bonuses and affiliate payouts for successful tax filings." 
-                  icon={Megaphone} 
-                />
-              } 
-            />
+            <Route path="referrals" element={<AdminReferrals />} />
 
             {/* 5. Admin Governance */}
             <Route 
